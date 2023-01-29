@@ -1,6 +1,5 @@
 package com.agrawalsuneet.dotsloader.loaders
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
@@ -155,11 +154,12 @@ class LinearDotsLoader : DotsLoaderBaseView {
             }
 
             if (i + 1 == selectedDotPos) {
+
                 canvas.drawCircle(
                         xCor,
                         (if (expandOnSelect) this.selRadius else radius).toFloat(),
                         (if (expandOnSelect) this.selRadius else radius).toFloat(),
-                        selectedCirclePaint)
+                        selectedCirclePaint!!)
             } else if (showRunningShadow && i + 1 == firstShadowPos) {
                 canvas.drawCircle(
                         xCor,
@@ -177,7 +177,7 @@ class LinearDotsLoader : DotsLoaderBaseView {
                         xCor,
                         (if (expandOnSelect) this.selRadius else radius).toFloat(),
                         radius.toFloat(),
-                        defaultCirclePaint)
+                        defaultCirclePaint!!)
             }
 
         }

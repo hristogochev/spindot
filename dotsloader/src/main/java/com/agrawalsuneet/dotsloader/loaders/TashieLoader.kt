@@ -89,7 +89,7 @@ class TashieLoader : AbstractLinearLayout {
         for (iCount in 0 until noOfDots) {
             val circle = CircleView(context, dotsRadius, dotsColor)
 
-            val params = LinearLayout.LayoutParams(2 * dotsRadius, 2 * dotsRadius)
+            val params = LayoutParams(2 * dotsRadius, 2 * dotsRadius)
 
             if (iCount != noOfDots - 1) {
                 params.rightMargin = dotsDist
@@ -107,8 +107,7 @@ class TashieLoader : AbstractLinearLayout {
         })
     }
 
-    private fun startLoading() {
-
+    fun startLoading() {
         for (iCount in 0 until noOfDots) {
             val anim = getScaleAnimation(isDotsExpanding, iCount)
             dotsArray[iCount]!!.startAnimation(anim)

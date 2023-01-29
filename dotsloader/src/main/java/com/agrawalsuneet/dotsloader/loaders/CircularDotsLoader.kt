@@ -1,6 +1,5 @@
 package com.agrawalsuneet.dotsloader.loaders
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
@@ -31,7 +30,11 @@ class CircularDotsLoader : CircularAbstractView {
         initShadowPaints()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
         initCordinates()
         initPaints()
@@ -43,7 +46,10 @@ class CircularDotsLoader : CircularAbstractView {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircularDotsLoader, 0, 0)
 
-        this.bigCircleRadius = typedArray.getDimensionPixelSize(R.styleable.CircularDotsLoader_loader_bigCircleRadius, 60)
+        this.bigCircleRadius = typedArray.getDimensionPixelSize(
+            R.styleable.CircularDotsLoader_loader_bigCircleRadius,
+            60
+        )
 
         typedArray.recycle()
     }
@@ -86,13 +92,33 @@ class CircularDotsLoader : CircularAbstractView {
         for (i in 0 until noOfDots) {
 
             if (i + 1 == selectedDotPos) {
-                canvas.drawCircle(dotsXCorArr[i], dotsYCorArr[i], radius.toFloat(), selectedCirclePaint)
+                canvas.drawCircle(
+                    dotsXCorArr[i],
+                    dotsYCorArr[i],
+                    radius.toFloat(),
+                    selectedCirclePaint!!
+                )
             } else if (this.showRunningShadow && i + 1 == firstShadowPos) {
-                canvas.drawCircle(dotsXCorArr[i], dotsYCorArr[i], radius.toFloat(), firstShadowPaint)
+                canvas.drawCircle(
+                    dotsXCorArr[i],
+                    dotsYCorArr[i],
+                    radius.toFloat(),
+                    firstShadowPaint
+                )
             } else if (this.showRunningShadow && i + 1 == secondShadowPos) {
-                canvas.drawCircle(dotsXCorArr[i], dotsYCorArr[i], radius.toFloat(), secondShadowPaint)
+                canvas.drawCircle(
+                    dotsXCorArr[i],
+                    dotsYCorArr[i],
+                    radius.toFloat(),
+                    secondShadowPaint
+                )
             } else {
-                canvas.drawCircle(dotsXCorArr[i], dotsYCorArr[i], radius.toFloat(), defaultCirclePaint)
+                canvas.drawCircle(
+                    dotsXCorArr[i],
+                    dotsYCorArr[i],
+                    radius.toFloat(),
+                    defaultCirclePaint!!
+                )
             }
 
         }
