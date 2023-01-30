@@ -35,12 +35,22 @@ class TashieLoader : AbstractLinearLayout {
         initView()
     }
 
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
         initView()
     }
 
-    constructor(context: Context?, noOfDots: Int, dotsRadius: Int, dotsDist: Int, dotsColor: Int) : super(context) {
+    constructor(
+        context: Context?,
+        noOfDots: Int,
+        dotsRadius: Int,
+        dotsDist: Int,
+        dotsColor: Int
+    ) : super(context) {
         this.noOfDots = noOfDots
         this.dotsRadius = dotsRadius
         this.dotsDist = dotsDist
@@ -54,16 +64,24 @@ class TashieLoader : AbstractLinearLayout {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.TashieLoader, 0, 0)
 
-        this.dotsRadius = typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsRadius, 30)
-        this.dotsDist = typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsDist, 15)
-        this.dotsColor = typedArray.getColor(R.styleable.TashieLoader_tashieloader_dotsColor,
-                resources.getColor(R.color.loader_selected))
+        this.dotsRadius =
+            typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsRadius, 30)
+        this.dotsDist =
+            typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsDist, 15)
+        this.dotsColor = typedArray.getColor(
+            R.styleable.TashieLoader_tashieloader_dotsColor,
+            resources.getColor(R.color.loader_selected)
+        )
 
         this.animDuration = typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDur, 500)
 
-        this.interpolator = AnimationUtils.loadInterpolator(context,
-                typedArray.getResourceId(R.styleable.TashieLoader_tashieloader_interpolator,
-                        android.R.anim.linear_interpolator))
+        this.interpolator = AnimationUtils.loadInterpolator(
+            context,
+            typedArray.getResourceId(
+                R.styleable.TashieLoader_tashieloader_interpolator,
+                android.R.anim.linear_interpolator
+            )
+        )
 
         this.noOfDots = typedArray.getInt(R.styleable.TashieLoader_tashieloader_noOfDots, 8)
         this.animDelay = typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDelay, 100)
@@ -98,13 +116,6 @@ class TashieLoader : AbstractLinearLayout {
             addView(circle, params)
             dotsArray[iCount] = circle
         }
-
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                this@TashieLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                startLoading()
-            }
-        })
     }
 
     fun startLoading() {
@@ -122,13 +133,17 @@ class TashieLoader : AbstractLinearLayout {
 
         val scaleAnim: ScaleAnimation = when (isExpanding) {
             true -> {
-                ScaleAnimation(0f, 1f, 0f, 1f,
-                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+                ScaleAnimation(
+                    0f, 1f, 0f, 1f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+                )
             }
 
             false -> {
-                ScaleAnimation(1f, 0f, 1f, 0f,
-                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+                ScaleAnimation(
+                    1f, 0f, 1f, 0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+                )
             }
         }
 
