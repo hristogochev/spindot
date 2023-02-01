@@ -116,6 +116,13 @@ class TashieLoader : AbstractLinearLayout {
             addView(circle, params)
             dotsArray[iCount] = circle
         }
+
+//        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+//            override fun onGlobalLayout() {
+//                this@TashieLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//                startLoading()
+//            }
+//        })
     }
 
     fun startLoading() {

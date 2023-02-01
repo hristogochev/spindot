@@ -2,20 +2,20 @@ package com.agrawalsuneet.dotsloader.basicviews
 
 import android.content.Context
 import android.util.AttributeSet
-import com.agrawalsuneet.dotsloader.R
-import com.agrawalsuneet.dotsloader.contracts.CircularAbstractView
 
 /**
  * Created by suneet on 12/29/17.
  */
-class CircularLoaderBaseView : CircularAbstractView {
+class CircularLoaderBaseView : CircularLoaderAbstractBaseView {
 
     constructor(context: Context) : super(context) {
         initCordinates()
         initPaints()
     }
 
-    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColor: Int) : super(context) {
+    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColor: Int) : super(
+        context
+    ) {
         this.radius = dotsRadius
         this.bigCircleRadius = bigCircleRadius
         this.defaultColor = dotsColor
@@ -24,7 +24,12 @@ class CircularLoaderBaseView : CircularAbstractView {
         initPaints()
     }
 
-    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColorsArray: IntArray) : super(context) {
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        bigCircleRadius: Int,
+        dotsColorsArray: IntArray
+    ) : super(context) {
         this.radius = dotsRadius
         this.bigCircleRadius = bigCircleRadius
         this.dotsColorsArray = dotsColorsArray
@@ -41,7 +46,11 @@ class CircularLoaderBaseView : CircularAbstractView {
         initShadowPaints()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
         initCordinates()
         initPaints()

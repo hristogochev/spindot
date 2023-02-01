@@ -11,9 +11,7 @@
         <attr name="loader_secondShadowColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="CircularDotsLoader">
-        <attr name="loader_bigCircleRadius" format="dimension" />
-    </declare-styleable>
+
 
     <declare-styleable name="LinearDotsLoader">
         <attr name="loader_noOfDots" format="integer" />
@@ -127,4 +125,14 @@
         <attr name="bounce_animDuration" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="CircularDotsLoader">
+        <attr name="circularDots_defaultColor" format="color" />
+        <attr name="circularDots_selectedColor" format="color" />
+        <attr name="circularDots_circleRadius" format="dimension" />
+        <attr name="circularDots_animDur" format="integer" />
+        <attr name="circularDots_showRunningShadow" format="boolean" />
+        <attr name="circularDots_firstShadowColor" format="color" />
+        <attr name="circularDots_secondShadowColor" format="color" />
+        <attr name="circularDots_bigCircleRadius" format="dimension" />
+    </declare-styleable>
 </resources>
