@@ -158,9 +158,6 @@ class PullInLoader : LinearLayout,AnimationContract {
         // Enable animations
         animationStopped = false
 
-        // clear previous animations
-        clearPreviousAnimations()
-
         // Create rotate animation
         val rotationAnim = getRotateAnimation()
         rotationAnim.onAnimationEnd {
