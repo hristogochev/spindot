@@ -153,8 +153,6 @@ class TrailingCircularDotsLoader : LinearLayout, AnimationContract {
     override fun startAnimation() {
         animationStopped = false
 
-        clearPreviousAnimations()
-
         val mainCircleAnim = getRotateAnimation()
         mainCircle.startAnimation(mainCircleAnim)
 
