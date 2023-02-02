@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.Helper
 import com.agrawalsuneet.dotsloader.utils.getActivity
 import com.agrawalsuneet.dotsloader.utils.getColorResource
@@ -17,7 +18,7 @@ import java.util.*
  * Modified by hristogochev on 01/02/23.
  */
 
-class CircularDotsLoader : View, AnimationContract {
+class CircularDotsLoader : View, InitializationContract, AnimationContract {
     // Input args
     companion object {
         private const val SIN_45 = 0.7071f
@@ -118,7 +119,7 @@ class CircularDotsLoader : View, AnimationContract {
     }
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircularDotsLoader, 0, 0)
 
         this.defaultColor =
@@ -174,6 +175,8 @@ class CircularDotsLoader : View, AnimationContract {
 
         typedArray.recycle()
     }
+
+    override fun initViews() {}
 
     private fun initCoordinates() {
         val sin45Radius = SIN_45 * bigCircleRadius

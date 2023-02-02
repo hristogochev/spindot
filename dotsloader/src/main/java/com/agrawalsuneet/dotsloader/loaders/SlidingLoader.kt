@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
@@ -17,7 +18,7 @@ import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
  * Created by suneet on 12/13/17.
  * Modified by hristogochev on 02/02/23.
  */
-class SlidingLoader : LinearLayout, AnimationContract {
+class SlidingLoader : LinearLayout, InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 30
@@ -102,7 +103,7 @@ class SlidingLoader : LinearLayout, AnimationContract {
     }
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingLoader, 0, 0)
 
         this.dotsRadius =
@@ -143,7 +144,7 @@ class SlidingLoader : LinearLayout, AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initViews() {
+    override fun initViews() {
         firstCircle = CircleView(context, dotsRadius, firstDotColor)
         secondCircle = CircleView(context, dotsRadius, secondDotColor)
         thirdCircle = CircleView(context, dotsRadius, thirdDotColor)

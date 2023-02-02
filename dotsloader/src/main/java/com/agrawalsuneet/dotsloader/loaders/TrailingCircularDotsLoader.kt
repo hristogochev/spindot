@@ -12,10 +12,11 @@ import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
-class TrailingCircularDotsLoader : LinearLayout, AnimationContract {
+class TrailingCircularDotsLoader : LinearLayout, InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 50
@@ -84,7 +85,7 @@ class TrailingCircularDotsLoader : LinearLayout, AnimationContract {
     }
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.TrailingCircularDotsLoader, 0, 0)
@@ -121,7 +122,7 @@ class TrailingCircularDotsLoader : LinearLayout, AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initViews() {
+   override fun initViews() {
         this.gravity = Gravity.CENTER_HORIZONTAL
 
         if (calWidthHeight == 0) {

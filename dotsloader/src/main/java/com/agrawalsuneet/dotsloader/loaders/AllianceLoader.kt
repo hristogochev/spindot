@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
@@ -19,7 +20,7 @@ import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
  * Modifier by hristogochev on 02/02/23.
  */
 
-class AllianceLoader : LinearLayout, AnimationContract {
+class AllianceLoader : LinearLayout, InitializationContract, AnimationContract {
     // Default input attributes
     private val defaultDotsRadius = 50
     private val defaultDistanceMultiplier = 4
@@ -78,20 +79,20 @@ class AllianceLoader : LinearLayout, AnimationContract {
         this.secondDotColor = secondDotColor
         this.thirdDotColor = thirdDotColor
         this.toggleOnVisibilityChange = toggleOnVisibilityChange
-        initView()
-        initInitialValues()
+        initViews()
+        initPositions()
     }
 
     // Default constructors
     constructor(context: Context) : super(context) {
-        initView()
-        initInitialValues()
+        initViews()
+        initPositions()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
-        initInitialValues()
+        initViews()
+        initPositions()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
@@ -100,13 +101,13 @@ class AllianceLoader : LinearLayout, AnimationContract {
         defStyleAttr
     ) {
         initAttributes(attrs)
-        initView()
-        initInitialValues()
+        initViews()
+        initPositions()
     }
 
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AllianceLoader, 0, 0)
 
         this.dotsRadius = typedArray.getDimensionPixelSize(
@@ -150,7 +151,7 @@ class AllianceLoader : LinearLayout, AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initView() {
+    override fun initViews() {
 
         this.gravity = Gravity.CENTER_HORIZONTAL
 
@@ -197,7 +198,7 @@ class AllianceLoader : LinearLayout, AnimationContract {
         this.addView(relativeLayout, relParam)
     }
 
-    private fun initInitialValues() {
+    private fun initPositions() {
         val fullDistance = (calWidthHeight - ((2 * dotsRadius) + strokeWidth)).toFloat()
         val halfDistance = fullDistance / 2
 

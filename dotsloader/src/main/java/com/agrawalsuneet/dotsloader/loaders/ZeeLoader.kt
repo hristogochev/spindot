@@ -11,6 +11,7 @@ import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
@@ -19,7 +20,7 @@ import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class ZeeLoader : LinearLayout, AnimationContract {
+class ZeeLoader : LinearLayout, InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 50
@@ -66,17 +67,17 @@ class ZeeLoader : LinearLayout, AnimationContract {
         this.firsDotColor = firsDotColor
         this.secondDotColor = secondDotColor
         this.toggleOnVisibilityChange = toggleOnVisibilityChange
-        initView()
+        initViews()
     }
 
     // Default constructors
     constructor(context: Context) : super(context) {
-        initView()
+        initViews()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
@@ -85,11 +86,11 @@ class ZeeLoader : LinearLayout, AnimationContract {
         defStyleAttr
     ) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZeeLoader, 0, 0)
 
         this.dotsRadius = typedArray.getDimensionPixelSize(
@@ -118,7 +119,8 @@ class ZeeLoader : LinearLayout, AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initView() {
+
+    override fun initViews() {
         this.gravity = Gravity.CENTER_HORIZONTAL
 
         relativeLayout = RelativeLayout(context).apply {

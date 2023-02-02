@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
@@ -18,13 +19,14 @@ import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class BounceLoader : LinearLayout, AnimationContract {
+class BounceLoader : LinearLayout, InitializationContract, AnimationContract {
     companion object {
         private const val STATE_GOING_DOWN: Int = 0
         private const val STATE_SQUEEZING: Int = 1
         private const val STATE_RESIZING: Int = 2
         private const val STATE_COMING_UP: Int = 3
     }
+
     // Default input attributes
     private val defaultBallRadius = 60
     private val defaultBallColor = getColorResource(android.R.color.holo_red_dark)
@@ -76,10 +78,12 @@ class BounceLoader : LinearLayout, AnimationContract {
     constructor(context: Context) : super(context) {
         initViews()
     }
+
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
         initViews()
     }
+
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
@@ -89,7 +93,7 @@ class BounceLoader : LinearLayout, AnimationContract {
         initViews()
     }
 
-    fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BounceLoader, 0, 0)
 
@@ -119,7 +123,7 @@ class BounceLoader : LinearLayout, AnimationContract {
     }
 
 
-    private fun initViews() {
+    override fun initViews() {
         if (calWidth == 0 || calHeight == 0) {
             calWidth = 5 * ballRadius
             calHeight = 8 * ballRadius

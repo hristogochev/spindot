@@ -4,8 +4,9 @@
     <declare-styleable name="CircleView">
         <attr name="circleRadius" format="dimension" />
         <attr name="circleColor" format="color" />
-        <attr name="circleDrawOnlystroke" format="boolean" />
+        <attr name="circleDrawOnlyStroke" format="boolean" />
         <attr name="circleStrokeWidth" format="dimension" />
+        <attr name="circleIsAntiAlias" format="boolean" />
     </declare-styleable>
 
 

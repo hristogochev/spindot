@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.Helper
 import com.agrawalsuneet.dotsloader.utils.Utils
 import com.agrawalsuneet.dotsloader.utils.getColorResource
@@ -17,7 +18,7 @@ import java.util.*
  * Modified by hristogochev on 02/02/23.
  */
 
-class LinearDotsLoader : View, AnimationContract {
+class LinearDotsLoader : View,InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDefaultColor = getColorResource(R.color.loader_defalut)
@@ -134,7 +135,7 @@ class LinearDotsLoader : View, AnimationContract {
     }
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LinearDotsLoader, 0, 0)
 
@@ -196,6 +197,8 @@ class LinearDotsLoader : View, AnimationContract {
             )
         typedArray.recycle()
     }
+
+    override fun initViews() {}
 
     private fun initCoordinates() {
         diffRadius = selRadius - radius

@@ -8,10 +8,11 @@ import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CirclesView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
-class PullInLoader : LinearLayout,AnimationContract {
+class PullInLoader : LinearLayout, InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 30
@@ -92,7 +93,7 @@ class PullInLoader : LinearLayout,AnimationContract {
     }
 
 
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PullInLoader, 0, 0)
 
@@ -142,7 +143,7 @@ class PullInLoader : LinearLayout,AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initViews() {
+    override fun initViews() {
         circlesView = if (useMultipleColors) {
             CirclesView(context, dotsRadius, bigCircleRadius, dotsColorsArray)
         } else {
@@ -199,6 +200,7 @@ class PullInLoader : LinearLayout,AnimationContract {
             interpolator = AccelerateDecelerateInterpolator()
         }
     }
+
     private fun getScaleAnimation(): AnimationSet {
         val scaleAnimation = ScaleAnimation(
             1.0f, 0.5f,
@@ -235,6 +237,7 @@ class PullInLoader : LinearLayout,AnimationContract {
         val calWidthHeight = 2 * this.bigCircleRadius + 2 * dotsRadius
         setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
+
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
 

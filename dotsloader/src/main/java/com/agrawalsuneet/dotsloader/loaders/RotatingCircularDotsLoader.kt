@@ -10,13 +10,14 @@ import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CirclesView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 
 /**
  * Created by suneet on 12/29/17.
  * Modifier by hristogochev on 02/02/2023
  */
-class RotatingCircularDotsLoader : LinearLayout, AnimationContract {
+class RotatingCircularDotsLoader : LinearLayout, InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 30
@@ -74,7 +75,7 @@ class RotatingCircularDotsLoader : LinearLayout, AnimationContract {
 
 
     // Initialization functions
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.RotatingCircularDotsLoader, 0, 0)
@@ -105,7 +106,7 @@ class RotatingCircularDotsLoader : LinearLayout, AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initViews() {
+    override fun initViews() {
         circlesView = CirclesView(context, dotsRadius, bigCircleRadius, dotsColor)
 
         addView(circlesView)

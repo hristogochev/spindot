@@ -9,11 +9,12 @@ import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
 import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.contracts.InitializationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.random
 import java.util.ArrayList
 
-class LightsLoader : LinearLayout,AnimationContract {
+class LightsLoader : LinearLayout,InitializationContract, AnimationContract {
 
     // Default input attributes
     private val defaultNoOfCircles = 3
@@ -73,7 +74,7 @@ class LightsLoader : LinearLayout,AnimationContract {
     }
 
 
-    private fun initAttributes(attrs: AttributeSet) {
+    override fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LightsLoader, 0, 0)
 
@@ -104,7 +105,7 @@ class LightsLoader : LinearLayout,AnimationContract {
         typedArray.recycle()
     }
 
-    private fun initViews() {
+    override fun initViews() {
         this.orientation = VERTICAL
 
         if (calWidthHeight == 0) {
