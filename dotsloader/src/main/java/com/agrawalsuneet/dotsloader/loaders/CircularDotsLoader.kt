@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import com.agrawalsuneet.dotsloader.R
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.Helper
 import com.agrawalsuneet.dotsloader.utils.getActivity
 import com.agrawalsuneet.dotsloader.utils.getColorResource
@@ -16,7 +17,7 @@ import java.util.*
  * Modified by hristogochev on 01/02/23.
  */
 
-class CircularDotsLoader : View {
+class CircularDotsLoader : View, AnimationContract {
     // Input args
     companion object {
         private const val SIN_45 = 0.7071f
@@ -97,12 +98,14 @@ class CircularDotsLoader : View {
         initDotPaints()
         initShadowDotsPaints()
     }
+
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
         initCoordinates()
         initDotPaints()
         initShadowDotsPaints()
     }
+
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
@@ -171,6 +174,7 @@ class CircularDotsLoader : View {
 
         typedArray.recycle()
     }
+
     private fun initCoordinates() {
         val sin45Radius = SIN_45 * bigCircleRadius
 
@@ -198,6 +202,7 @@ class CircularDotsLoader : View {
         dotsYCorArr[5] = dotsYCorArr[5] + sin45Radius
         dotsYCorArr[7] = dotsYCorArr[7] - sin45Radius
     }
+
     private fun initDotPaints() {
         defaultCirclePaint = Paint().apply {
             isAntiAlias = true
@@ -210,6 +215,7 @@ class CircularDotsLoader : View {
             color = selectedColor
         }
     }
+
     private fun initShadowDotsPaints() {
         if (showRunningShadow) {
             if (!isShadowColorSet) {
@@ -233,7 +239,7 @@ class CircularDotsLoader : View {
 
 
     // Animation controls
-    fun startAnimation() {
+    override fun startAnimation() {
         if (animationTimer != null) return
 
         animationTimer = Timer().apply {
@@ -250,12 +256,15 @@ class CircularDotsLoader : View {
             }, 0, animDur.toLong())
         }
     }
-    fun stopAnimation() {
+
+    override fun stopAnimation() {
         if (animationTimer == null) return
 
         animationTimer?.cancel()
         animationTimer = null
     }
+
+    override fun clearPreviousAnimations() {}
 
     // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -264,6 +273,7 @@ class CircularDotsLoader : View {
         val calWidthHeight = (2 * bigCircleRadius + 2 * radius)
         setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
+
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
 
@@ -275,6 +285,7 @@ class CircularDotsLoader : View {
             startAnimation()
         }
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (i in 0 until DOTS_COUNT) {

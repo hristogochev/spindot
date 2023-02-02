@@ -9,12 +9,14 @@ import android.view.animation.RotateAnimation
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CirclesView
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 
 /**
  * Created by suneet on 12/29/17.
+ * Modifier by hristogochev on 02/02/2023
  */
-class RotatingCircularDotsLoader : LinearLayout {
+class RotatingCircularDotsLoader : LinearLayout, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 30
@@ -110,21 +112,21 @@ class RotatingCircularDotsLoader : LinearLayout {
     }
 
     // Animation controls
-    fun startAnimation() {
+    override fun startAnimation() {
         // Clear the previous animation
-        clearPreviousAnimation()
+        clearPreviousAnimations()
 
         // Create new animation
         val rotationAnim = getRotateAnimation()
         circlesView.startAnimation(rotationAnim)
     }
 
-    fun stopAnimation() {
+    override fun stopAnimation() {
         // Clear the running animation
-        clearPreviousAnimation()
+        clearPreviousAnimations()
     }
 
-    private fun clearPreviousAnimation() {
+    override fun clearPreviousAnimations() {
         circlesView.clearAnimation()
     }
 

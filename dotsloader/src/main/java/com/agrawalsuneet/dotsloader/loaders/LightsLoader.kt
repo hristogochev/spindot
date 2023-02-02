@@ -8,11 +8,12 @@ import android.view.animation.Animation
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.random
 import java.util.ArrayList
 
-class LightsLoader : LinearLayout {
+class LightsLoader : LinearLayout,AnimationContract {
 
     // Default input attributes
     private val defaultNoOfCircles = 3
@@ -137,9 +138,9 @@ class LightsLoader : LinearLayout {
         }
     }
 
-    fun startAnimation() {
+    override fun startAnimation() {
         // Clear previous animations
-        clearPreviousAnimation()
+        clearPreviousAnimations()
 
         for (count in 0 until noOfCircles) {
             for (item in circlesList) {
@@ -148,11 +149,11 @@ class LightsLoader : LinearLayout {
         }
     }
 
-    fun stopAnimation() {
-        clearPreviousAnimation()
+    override fun stopAnimation() {
+        clearPreviousAnimations()
     }
 
-    private fun clearPreviousAnimation() {
+    override fun clearPreviousAnimations() {
         for (count in 0 until noOfCircles) {
             for (item in circlesList) {
                 item.clearAnimation()

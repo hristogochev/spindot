@@ -7,10 +7,11 @@ import android.view.animation.*
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CirclesView
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
-class PullInLoader : LinearLayout {
+class PullInLoader : LinearLayout,AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 30
@@ -153,12 +154,12 @@ class PullInLoader : LinearLayout {
 
 
     // Animation controls
-    fun startAnimation() {
+    override fun startAnimation() {
         // Enable animations
         animationStopped = false
 
         // clear previous animations
-        clearPreviousAnimation()
+        clearPreviousAnimations()
 
         // Create rotate animation
         val rotationAnim = getRotateAnimation()
@@ -175,15 +176,15 @@ class PullInLoader : LinearLayout {
         circlesView.startAnimation(rotationAnim)
     }
 
-    fun stopAnimation() {
+    override fun stopAnimation() {
         // Disable animations
         animationStopped = true
 
         // Clear the running animation
-        clearPreviousAnimation()
+        clearPreviousAnimations()
     }
 
-    private fun clearPreviousAnimation() {
+    override fun clearPreviousAnimations() {
         circlesView.clearAnimation()
     }
 

@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.getColorResource
 import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
@@ -18,7 +19,7 @@ import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class ZeeLoader : LinearLayout {
+class ZeeLoader : LinearLayout, AnimationContract {
 
     // Default input attributes
     private val defaultDotsRadius = 50
@@ -153,7 +154,7 @@ class ZeeLoader : LinearLayout {
     }
 
     // Animation controls
-    fun startAnimation() {
+    override fun startAnimation() {
         animationStopped = false
 
         clearPreviousAnimations()
@@ -175,13 +176,13 @@ class ZeeLoader : LinearLayout {
         secondCircle.startAnimation(secondCircleAnim)
     }
 
-    fun stopAnimation() {
+    override fun stopAnimation() {
         animationStopped = true
 
         clearPreviousAnimations()
     }
 
-    private fun clearPreviousAnimations() {
+    override fun clearPreviousAnimations() {
         firstCircle.clearAnimation()
         secondCircle.clearAnimation()
     }

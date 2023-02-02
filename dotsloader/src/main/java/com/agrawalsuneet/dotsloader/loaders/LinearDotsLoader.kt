@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import com.agrawalsuneet.dotsloader.R
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
 import com.agrawalsuneet.dotsloader.utils.Helper
 import com.agrawalsuneet.dotsloader.utils.Utils
 import com.agrawalsuneet.dotsloader.utils.getColorResource
@@ -16,7 +17,7 @@ import java.util.*
  * Modified by hristogochev on 02/02/23.
  */
 
-class LinearDotsLoader : View {
+class LinearDotsLoader : View, AnimationContract {
 
     // Default input attributes
     private val defaultDefaultColor = getColorResource(R.color.loader_defalut)
@@ -190,9 +191,9 @@ class LinearDotsLoader : View {
             )
         this.toggleOnVisibilityChange =
             typedArray.getBoolean(
-            R.styleable.LinearDotsLoader_loader_toggleOnVisibilityChange,
-            defaultToggleOnVisibilityChange
-        )
+                R.styleable.LinearDotsLoader_loader_toggleOnVisibilityChange,
+                defaultToggleOnVisibilityChange
+            )
         typedArray.recycle()
     }
 
@@ -241,7 +242,7 @@ class LinearDotsLoader : View {
 
 
     // Animation controls
-    fun startAnimation() {
+    override fun startAnimation() {
         if (animationTimer != null) return
 
         animationTimer = Timer().apply {
@@ -271,14 +272,13 @@ class LinearDotsLoader : View {
             }, 0, animDur.toLong())
         }
     }
-
-    fun stopAnimation() {
+    override fun stopAnimation() {
         if (animationTimer == null) return
 
         animationTimer?.cancel()
         animationTimer = null
     }
-
+    override fun clearPreviousAnimations() {}
 
     // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
