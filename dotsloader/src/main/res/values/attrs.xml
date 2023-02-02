@@ -8,26 +8,9 @@
         <attr name="circleStrokeWidth" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="SlidingLoader">
-        <attr name="slidingloader_dotsRadius" format="dimension" />
-        <attr name="slidingloader_dotsDist" format="dimension" />
-        <attr name="slidingloader_firstDotColor" format="color" />
-        <attr name="slidingloader_secondDotColor" format="color" />
-        <attr name="slidingloader_thirdDotColor" format="color" />
-        <attr name="slidingloader_animDur" format="integer" />
-        <attr name="slidingloader_distanceToMove" format="integer" />
-        <attr name="slidingloader_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
 
-    <declare-styleable name="TashieLoader">
-        <attr name="tashieloader_dotsRadius" format="dimension" />
-        <attr name="tashieloader_dotsDist" format="dimension" />
-        <attr name="tashieloader_dotsColor" format="color" />
-        <attr name="tashieloader_animDur" format="integer" />
-        <attr name="tashieloader_interpolator" format="reference" />
-        <attr name="tashieloader_noOfDots" format="integer" />
-        <attr name="tashieloader_animDelay" format="integer" />
-    </declare-styleable>
+
+
 
 
 
@@ -139,5 +122,27 @@
         <attr name="trailingcircular_animDuration" format="integer" />
         <attr name="trailingcircular_animDelay" format="integer" />
         <attr name="trailingcircular_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SlidingLoader">
+        <attr name="slidingloader_dotsRadius" format="dimension" />
+        <attr name="slidingloader_dotsDist" format="dimension" />
+        <attr name="slidingloader_firstDotColor" format="color" />
+        <attr name="slidingloader_secondDotColor" format="color" />
+        <attr name="slidingloader_thirdDotColor" format="color" />
+        <attr name="slidingloader_animDur" format="integer" />
+        <attr name="slidingloader_distanceToMove" format="integer" />
+        <attr name="slidingloader_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TashieLoader">
+        <attr name="tashieloader_dotsRadius" format="dimension" />
+        <attr name="tashieloader_dotsDist" format="dimension" />
+        <attr name="tashieloader_dotsColor" format="color" />
+        <attr name="tashieloader_animDur" format="integer" />
+        <attr name="tashieloader_interpolator" format="reference" />
+        <attr name="tashieloader_noOfDots" format="integer" />
+        <attr name="tashieloader_animDelay" format="integer" />
+        <attr name="tashieloader_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 </resources>

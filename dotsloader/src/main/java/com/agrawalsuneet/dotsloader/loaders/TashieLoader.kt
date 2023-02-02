@@ -4,78 +4,116 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
-import android.view.ViewTreeObserver
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
+import android.view.animation.*
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
-import com.agrawalsuneet.dotsloader.contracts.AbstractLinearLayout
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.utils.getColorResource
+import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
 /**
  * Created by suneet on 10/10/17.
+ * Modified by hristogochev on 02/02/23.
  */
-class TashieLoader : AbstractLinearLayout {
+class TashieLoader : LinearLayout, AnimationContract {
 
-    var noOfDots: Int = 8
-    var animDelay: Int = 100
+    // Default input attributes
+    private val defaultDotsRadius = 30
+    private val defaultDotsDist = 15
+    private val defaultDotsColor = getColorResource(R.color.loader_selected)
+    private val defaultAnimDuration = 500
+    private val defaultInterpolator = LinearInterpolator()
+    private val defaultNoOfDots = 8
+    private val defaultAnimDelay = 100
+    private val defaultToggleOnVisibilityChange = true
 
-    private lateinit var dotsArray: Array<CircleView?>
 
-    private var isDotsExpanding: Boolean = true
+    // Settable attributes
+    private var dotsRadius = defaultDotsRadius
+    private var dotsDist = defaultDotsDist
+    private var dotsColor = defaultDotsColor
+    private var animDuration = defaultAnimDuration
+    private var loaderInterpolator: Interpolator = defaultInterpolator
+    private var noOfDots = defaultNoOfDots
+    private var animDelay = defaultAnimDelay
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
 
-    constructor(context: Context?) : super(context) {
-        initView()
+
+    // Animation attributes
+    private var isDotsExpanding = true
+    private var animationStopped = false
+
+    // Views
+    private lateinit var dotsArray: List<CircleView>
+
+    // Custom constructors
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        dotsDist: Int,
+        dotsColor: Int,
+        animDuration: Int,
+        interpolator: Interpolator,
+        noOfDots: Int,
+        animDelay: Int,
+        toggleOnVisibilityChange: Boolean,
+    ) : super(context) {
+        this.dotsRadius = dotsRadius
+        this.dotsDist = dotsDist
+        this.dotsColor = dotsColor
+        this.animDuration = animDuration
+        this.loaderInterpolator = interpolator
+        this.noOfDots = noOfDots
+        this.animDelay = animDelay
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet) : super(context, attrs) {
+    // Default constructors
+    constructor(context: Context) : super(context) {
+        initViews()
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
         initAttributes(attrs)
-        initView()
-    }
-
-    constructor(
-        context: Context?,
-        noOfDots: Int,
-        dotsRadius: Int,
-        dotsDist: Int,
-        dotsColor: Int
-    ) : super(context) {
-        this.noOfDots = noOfDots
-        this.dotsRadius = dotsRadius
-        this.dotsDist = dotsDist
-        this.dotsColor = dotsColor
-
-        initView()
+        initViews()
     }
 
 
-    override fun initAttributes(attrs: AttributeSet) {
+    // Initialization functions
+    private fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.TashieLoader, 0, 0)
 
         this.dotsRadius =
-            typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsRadius, 30)
+            typedArray.getDimensionPixelSize(
+                R.styleable.TashieLoader_tashieloader_dotsRadius,
+                defaultDotsRadius
+            )
         this.dotsDist =
-            typedArray.getDimensionPixelSize(R.styleable.TashieLoader_tashieloader_dotsDist, 15)
+            typedArray.getDimensionPixelSize(
+                R.styleable.TashieLoader_tashieloader_dotsDist,
+                defaultDotsDist
+            )
         this.dotsColor = typedArray.getColor(
             R.styleable.TashieLoader_tashieloader_dotsColor,
-            resources.getColor(R.color.loader_selected)
+            defaultDotsColor
         )
 
-        this.animDuration = typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDur, 500)
+        this.animDuration =
+            typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDur, defaultAnimDuration)
 
-        this.interpolator = AnimationUtils.loadInterpolator(
+        this.loaderInterpolator = AnimationUtils.loadInterpolator(
             context,
             typedArray.getResourceId(
                 R.styleable.TashieLoader_tashieloader_interpolator,
@@ -83,12 +121,95 @@ class TashieLoader : AbstractLinearLayout {
             )
         )
 
-        this.noOfDots = typedArray.getInt(R.styleable.TashieLoader_tashieloader_noOfDots, 8)
-        this.animDelay = typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDelay, 100)
+        this.noOfDots =
+            typedArray.getInt(R.styleable.TashieLoader_tashieloader_noOfDots, defaultNoOfDots)
+        this.animDelay =
+            typedArray.getInt(R.styleable.TashieLoader_tashieloader_animDelay, defaultAnimDelay)
+        this.toggleOnVisibilityChange = typedArray.getBoolean(
+            R.styleable.TashieLoader_tashieloader_toggleOnVisibilityChange,
+            defaultToggleOnVisibilityChange
+        )
 
         typedArray.recycle()
     }
 
+    private fun initViews() {
+        setVerticalGravity(Gravity.BOTTOM)
+
+        dotsArray = (0 until noOfDots).map {
+            CircleView(context, dotsRadius, dotsColor)
+        }
+
+        dotsArray.forEachIndexed { iCount, circle ->
+            val params = LayoutParams(2 * dotsRadius, 2 * dotsRadius)
+            if (iCount != noOfDots - 1) {
+                params.rightMargin = dotsDist
+            }
+            addView(circle, params)
+        }
+    }
+
+
+    // Animation controls
+    override fun startAnimation() {
+        animationStopped = false
+
+        for (iCount in 0 until noOfDots) {
+            val anim = getScaleAnimation(isDotsExpanding, iCount)
+            dotsArray[iCount].startAnimation(anim)
+
+            if (iCount == noOfDots - 1) {
+                anim.onAnimationEnd {
+                    if (!animationStopped) startAnimation()
+                }
+            } else {
+                anim.onAnimationEnd {
+                    dotsArray[iCount].visibility =
+                        if (!isDotsExpanding) View.VISIBLE else View.INVISIBLE
+                }
+            }
+        }
+        isDotsExpanding = !isDotsExpanding
+    }
+
+    override fun stopAnimation() {
+        animationStopped = true
+
+        clearPreviousAnimations()
+    }
+
+    override fun clearPreviousAnimations() {
+        dotsArray.forEach {
+            it.clearAnimation()
+        }
+    }
+
+    // Animations
+    private fun getScaleAnimation(isExpanding: Boolean, delay: Int): AnimationSet {
+        val scaleAnim: ScaleAnimation = if (isExpanding) {
+            ScaleAnimation(
+                0f, 1f, 0f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            )
+        } else {
+            ScaleAnimation(
+                1f, 0f, 1f, 0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            )
+        }.apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            repeatCount = 0
+            startOffset = (animDelay * delay).toLong()
+        }
+
+        return AnimationSet(true).apply {
+            addAnimation(scaleAnim)
+            interpolator = loaderInterpolator
+        }
+    }
+
+    // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -97,109 +218,15 @@ class TashieLoader : AbstractLinearLayout {
 
         setMeasuredDimension(calWidth, calHeight)
     }
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
 
-    override fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
-        setVerticalGravity(Gravity.BOTTOM)
+        if (!toggleOnVisibilityChange) return
 
-        dotsArray = arrayOfNulls<CircleView?>(noOfDots)
-        for (iCount in 0 until noOfDots) {
-            val circle = CircleView(context, dotsRadius, dotsColor)
-
-            val params = LayoutParams(2 * dotsRadius, 2 * dotsRadius)
-
-            if (iCount != noOfDots - 1) {
-                params.rightMargin = dotsDist
-            }
-
-            addView(circle, params)
-            dotsArray[iCount] = circle
-        }
-
-//        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-//            override fun onGlobalLayout() {
-//                this@TashieLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
-//                startLoading()
-//            }
-//        })
-    }
-
-    fun startLoading() {
-        for (iCount in 0 until noOfDots) {
-            val anim = getScaleAnimation(isDotsExpanding, iCount)
-            dotsArray[iCount]!!.startAnimation(anim)
-
-            setAnimationListener(anim, iCount)
-        }
-        isDotsExpanding = !isDotsExpanding
-    }
-
-    private fun getScaleAnimation(isExpanding: Boolean, delay: Int): AnimationSet {
-        val anim = AnimationSet(true)
-
-        val scaleAnim: ScaleAnimation = when (isExpanding) {
-            true -> {
-                ScaleAnimation(
-                    0f, 1f, 0f, 1f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
-                )
-            }
-
-            false -> {
-                ScaleAnimation(
-                    1f, 0f, 1f, 0f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
-                )
-            }
-        }
-
-        scaleAnim.duration = animDuration.toLong()
-        scaleAnim.fillAfter = true
-        scaleAnim.repeatCount = 0
-        scaleAnim.startOffset = (animDelay * delay).toLong()
-        anim.addAnimation(scaleAnim)
-
-        anim.interpolator = interpolator
-        return anim
-    }
-
-    private fun setAnimationListener(anim: AnimationSet, dotPosition: Int) {
-        if (dotPosition == noOfDots - 1) {
-            anim.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                    startLoading()
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-                }
-
-            })
+        if (visibility != VISIBLE) {
+            stopAnimation()
         } else {
-            anim.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationRepeat(p0: Animation?) {
-                }
-
-                override fun onAnimationEnd(p0: Animation?) {
-                    when (!isDotsExpanding) {
-                        true -> {
-                            dotsArray[dotPosition]!!.visibility = View.VISIBLE
-                        }
-
-                        false -> {
-                            dotsArray[dotPosition]!!.visibility = View.INVISIBLE
-                        }
-                    }
-
-                }
-
-                override fun onAnimationStart(p0: Animation?) {
-                }
-
-            })
+            startAnimation()
         }
     }
 }
