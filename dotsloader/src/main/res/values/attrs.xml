@@ -76,16 +76,6 @@
         <attr name="alliance_animDuration" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="LightsLoader">
-        <attr name="lights_noOfCircles" format="integer" />
-        <attr name="lights_circleRadius" format="dimension" />
-        <attr name="lights_circleDistance" format="dimension" />
-        <attr name="lights_circleColor" format="color" />
-    </declare-styleable>
-
-
-
-
     <declare-styleable name="BounceLoader">
         <attr name="bounce_ballRadius" format="dimension" />
         <attr name="bounce_ballColor" format="color" />
@@ -140,5 +130,13 @@
         <attr name="loader_firstShadowColor" format="color" />
         <attr name="loader_secondShadowColor" format="color" />
         <attr name="loader_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="LightsLoader">
+        <attr name="lights_noOfCircles" format="integer" />
+        <attr name="lights_circleRadius" format="dimension" />
+        <attr name="lights_circleDistance" format="dimension" />
+        <attr name="lights_circleColor" format="color" />
+        <attr name="lights_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 </resources>

@@ -240,8 +240,6 @@ class PullInLoader : LinearLayout {
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
 
-        circlesView.visibility = visibility
-
         if (!toggleOnVisibilityChange) return
 
         if (visibility != View.VISIBLE) {
