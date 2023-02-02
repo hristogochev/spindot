@@ -55,27 +55,9 @@ class BounceLoader : LinearLayout, AnimationContract {
     private var ballCircleView: CircleView? = null
     private var ballShadowView: CircleView? = null
 
-
-    // Default constructors
-    constructor(context: Context?) : super(context) {
-        initViews()
-    }
-    constructor(context: Context?, attrs: AttributeSet) : super(context, attrs) {
-        initAttributes(attrs)
-        initViews()
-    }
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
-        initAttributes(attrs)
-        initViews()
-    }
-
     // Custom constructors
     constructor(
-        context: Context?,
+        context: Context,
         ballRadius: Int,
         ballColor: Int,
         showShadow: Boolean,
@@ -87,6 +69,23 @@ class BounceLoader : LinearLayout, AnimationContract {
         this.showShadow = showShadow
         this.shadowColor = shadowColor
         this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
+    }
+
+    // Default constructors
+    constructor(context: Context) : super(context) {
+        initViews()
+    }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        initAttributes(attrs)
+        initViews()
+    }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        initAttributes(attrs)
         initViews()
     }
 

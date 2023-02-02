@@ -4,69 +4,210 @@ import android.content.Context
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewTreeObserver
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.TranslateAnimation
+import android.view.View
+import android.view.animation.*
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
-import com.agrawalsuneet.dotsloader.basicviews.ThreeDotsBaseView
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.utils.getColorResource
+import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
 
 /**
  * Created by ballu on 13/08/17.
+ * Modified by hristogochev on 02/02/23.
  */
-class LazyLoader : ThreeDotsBaseView {
+class LazyLoader : LinearLayout, AnimationContract {
 
-    var firstDelayDuration: Int = 100
-    var secondDelayDuration: Int = 200
+    // Default input attributes
+    private val defaultDotsRadius = 30
+    private val defaultDotsDist = 15
+    private val defaultFirstDotColor = getColorResource(R.color.loader_selected)
+    private val defaultSecondDotColor = getColorResource(R.color.loader_selected)
+    private val defaultThirdDotColor = getColorResource(R.color.loader_selected)
+    private val defaultAnimDuration = 500
+    private val defaultInterpolator = LinearInterpolator()
+    private val defaultFirstDelayDuration = 100
+    private val defaultSecondDelayDuration = 200
+    private val defaultToggleOnVisibilityChange = true
 
-    constructor(context: Context, dotsRadius: Int, dotsDist: Int,
-                firstDotColor: Int, secondDotColor: Int, thirdDotColor: Int)
-            : super(context, dotsRadius, dotsDist, firstDotColor, secondDotColor, thirdDotColor){
-        initView()
+    // Settable attributes
+    private var dotsRadius = defaultDotsRadius
+    private var dotsDist = defaultDotsDist
+    private var firstDotColor = defaultFirstDotColor
+    private var secondDotColor = defaultSecondDotColor
+    private var thirdDotColor = defaultThirdDotColor
+    private var animDuration = defaultAnimDuration
+    private var interpolator: Interpolator = defaultInterpolator
+    private var firstDelayDuration = defaultFirstDelayDuration
+    private var secondDelayDuration = defaultSecondDelayDuration
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
+
+
+    // Views
+    private lateinit var firstCircle: CircleView
+    private lateinit var secondCircle: CircleView
+    private lateinit var thirdCircle: CircleView
+
+    // Animation attributes
+    private var animationStopped = false
+
+    // Custom constructors
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        dotsDist: Int,
+        firstDotColor: Int,
+        secondDotColor: Int,
+        thirdDotColor: Int,
+        toggleOnVisibilityChange: Boolean
+    ) : super(context) {
+        this.dotsRadius = dotsRadius
+        this.dotsDist = dotsDist
+        this.firstDotColor = firstDotColor
+        this.secondDotColor = secondDotColor
+        this.thirdDotColor = thirdDotColor
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
     }
 
+    // Default constructors
     constructor(context: Context?) : super(context) {
-        initView()
+        initViews()
     }
 
     constructor(context: Context?, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    override fun initAttributes(attrs: AttributeSet) {
-
+    // Initialization functions
+    private fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LazyLoader, 0, 0)
 
-        this.dotsRadius = typedArray.getDimensionPixelSize(R.styleable.LazyLoader_lazyloader_dotsRadius, 30)
-        this.dotsDist = typedArray.getDimensionPixelSize(R.styleable.LazyLoader_lazyloader_dotsDist, 15)
-        this.firstDotColor = typedArray.getColor(R.styleable.LazyLoader_lazyloader_firstDotColor,
-                resources.getColor(R.color.loader_selected))
-        this.secondDotColor = typedArray.getColor(R.styleable.LazyLoader_lazyloader_secondDotColor,
-                resources.getColor(R.color.loader_selected))
-        this.thirdDotColor = typedArray.getColor(R.styleable.LazyLoader_lazyloader_thirdDotColor,
-                resources.getColor(R.color.loader_selected))
-
-        this.animDuration = typedArray.getInt(R.styleable.LazyLoader_lazyloader_animDur, 500)
-
-        this.interpolator = AnimationUtils.loadInterpolator(context,
-                typedArray.getResourceId(R.styleable.LazyLoader_lazyloader_interpolator,
-                        android.R.anim.linear_interpolator))
-        
-        this.firstDelayDuration = typedArray.getInt(R.styleable.LazyLoader_lazyloader_firstDelayDur, 100)
-        this.secondDelayDuration = typedArray.getInt(R.styleable.LazyLoader_lazyloader_secondDelayDur, 200)
+        this.dotsRadius =
+            typedArray.getDimensionPixelSize(
+                R.styleable.LazyLoader_lazyloader_dotsRadius,
+                defaultDotsRadius
+            )
+        this.dotsDist =
+            typedArray.getDimensionPixelSize(
+                R.styleable.LazyLoader_lazyloader_dotsDist,
+                defaultDotsDist
+            )
+        this.firstDotColor = typedArray.getColor(
+            R.styleable.LazyLoader_lazyloader_firstDotColor,
+            defaultFirstDotColor
+        )
+        this.secondDotColor = typedArray.getColor(
+            R.styleable.LazyLoader_lazyloader_secondDotColor,
+            defaultSecondDotColor
+        )
+        this.thirdDotColor = typedArray.getColor(
+            R.styleable.LazyLoader_lazyloader_thirdDotColor,
+            defaultThirdDotColor
+        )
+        this.animDuration =
+            typedArray.getInt(R.styleable.LazyLoader_lazyloader_animDur, defaultAnimDuration)
+        this.interpolator = AnimationUtils.loadInterpolator(
+            context,
+            typedArray.getResourceId(
+                R.styleable.LazyLoader_lazyloader_interpolator,
+                android.R.anim.linear_interpolator
+            )
+        )
+        this.firstDelayDuration =
+            typedArray.getInt(
+                R.styleable.LazyLoader_lazyloader_firstDelayDur,
+                defaultFirstDelayDuration
+            )
+        this.secondDelayDuration =
+            typedArray.getInt(
+                R.styleable.LazyLoader_lazyloader_secondDelayDur,
+                defaultSecondDelayDuration
+            )
+        this.toggleOnVisibilityChange = typedArray.getBoolean(
+            R.styleable.LazyLoader_lazyloader_toggleOnVisibilityChange,
+            defaultToggleOnVisibilityChange
+        )
 
         typedArray.recycle()
     }
 
+    private fun initViews() {
+        firstCircle = CircleView(context, dotsRadius, firstDotColor)
+        secondCircle = CircleView(context, dotsRadius, secondDotColor)
+        thirdCircle = CircleView(context, dotsRadius, thirdDotColor)
+
+        val params = LayoutParams((2 * dotsRadius), 2 * dotsRadius)
+            .apply { leftMargin = dotsDist }
+
+        setVerticalGravity(Gravity.BOTTOM)
+
+        addView(firstCircle)
+        addView(secondCircle, params)
+        addView(thirdCircle, params)
+    }
+
+
+    // Animation controls
+    override fun startAnimation() {
+        animationStopped = false
+
+        clearPreviousAnimations()
+
+        val trans1Anim = getTranslateAnim()
+        firstCircle.startAnimation(trans1Anim)
+
+        val trans2Anim = getTranslateAnim()
+        Handler().postDelayed({
+            secondCircle.startAnimation(trans2Anim)
+        }, firstDelayDuration.toLong())
+
+        val trans3Anim = getTranslateAnim()
+        Handler().postDelayed({
+            thirdCircle.startAnimation(trans3Anim)
+        }, secondDelayDuration.toLong())
+
+        trans3Anim.onAnimationEnd {
+            if (!animationStopped) startAnimation()
+        }
+    }
+
+    override fun stopAnimation() {
+        animationStopped = true
+
+        clearPreviousAnimations()
+    }
+
+    override fun clearPreviousAnimations() {
+        firstCircle.clearAnimation()
+        secondCircle.clearAnimation()
+        thirdCircle.clearAnimation()
+    }
+
+    // Animations
+    private fun getTranslateAnim(): TranslateAnimation {
+        return TranslateAnimation(0f, 0f, 0f, (-(4 * dotsRadius).toFloat())).apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            repeatCount = 1
+            repeatMode = Animation.REVERSE
+            interpolator = interpolator
+        }
+    }
+
+    // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -76,76 +217,15 @@ class LazyLoader : ThreeDotsBaseView {
         setMeasuredDimension(calWidth, calHeight)
     }
 
-    override fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
 
-        firstCircle = CircleView(context, dotsRadius, firstDotColor)
-        secondCircle = CircleView(context, dotsRadius, secondDotColor)
-        thirdCircle = CircleView(context, dotsRadius, thirdDotColor)
+        if (!toggleOnVisibilityChange) return
 
-        val params = LinearLayout.LayoutParams((2 * dotsRadius), 2 * dotsRadius)
-        params.leftMargin = dotsDist
-
-        setVerticalGravity(Gravity.BOTTOM)
-
-        addView(firstCircle)
-        addView(secondCircle, params)
-        addView(thirdCircle, params)
-
-
-        val loaderView = this
-
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                startLoading()
-
-                val vto = loaderView.viewTreeObserver
-                vto.removeOnGlobalLayoutListener(this)
-            }
-        })
-
-    }
-
-    private fun startLoading() {
-
-        val trans1Anim = getTranslateAnim()
-        firstCircle.startAnimation(trans1Anim)
-
-        val trans2Anim = getTranslateAnim()
-
-        Handler().postDelayed({
-            secondCircle.startAnimation(trans2Anim)
-        }, firstDelayDuration.toLong())
-
-
-        val trans3Anim = getTranslateAnim()
-
-        Handler().postDelayed({
-            thirdCircle.startAnimation(trans3Anim)
-        }, secondDelayDuration.toLong())
-
-        trans3Anim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                startLoading()
-            }
-
-            override fun onAnimationStart(animation: Animation) {
-            }
-        })
-    }
-
-    private fun getTranslateAnim(): TranslateAnimation {
-        val transAnim = TranslateAnimation(0f, 0f, 0f, (-(4 * dotsRadius).toFloat()))
-        transAnim.duration = animDuration.toLong()
-        transAnim.fillAfter = true
-        transAnim.repeatCount = 1
-        transAnim.repeatMode = Animation.REVERSE
-        transAnim.interpolator = interpolator
-
-        return transAnim
+        if (visibility != VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
     }
 }

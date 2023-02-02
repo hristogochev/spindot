@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
-
-
     <declare-styleable name="CircleView">
         <attr name="circleRadius" format="dimension" />
         <attr name="circleColor" format="color" />
         <attr name="circleDrawOnlystroke" format="boolean" />
         <attr name="circleStrokeWidth" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="LazyLoader">
-        <attr name="lazyloader_dotsRadius" format="dimension" />
-        <attr name="lazyloader_dotsDist" format="dimension" />
-        <attr name="lazyloader_firstDotColor" format="color" />
-        <attr name="lazyloader_secondDotColor" format="color" />
-        <attr name="lazyloader_thirdDotColor" format="color" />
-        <attr name="lazyloader_animDur" format="integer" />
-        <attr name="lazyloader_interpolator" format="reference" />
-        <attr name="lazyloader_firstDelayDur" format="integer" />
-        <attr name="lazyloader_secondDelayDur" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="SlidingLoader">
@@ -44,7 +28,6 @@
         <attr name="tashieloader_animDelay" format="integer" />
     </declare-styleable>
 
-
     <declare-styleable name="TrailingCircularDotsLoader">
         <attr name="trailingcircular_dotsRadius" format="dimension" />
         <attr name="trailingcircular_noOfTrailingDots" format="integer" />
@@ -53,8 +36,6 @@
         <attr name="trailingcircular_animDuration" format="integer" />
         <attr name="trailingcircular_animDelay" format="integer" />
     </declare-styleable>
-
-
 
 
     <declare-styleable name="CircularDotsLoader">
@@ -143,4 +124,16 @@
         <attr name="bounce_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="LazyLoader">
+        <attr name="lazyloader_dotsRadius" format="dimension" />
+        <attr name="lazyloader_dotsDist" format="dimension" />
+        <attr name="lazyloader_firstDotColor" format="color" />
+        <attr name="lazyloader_secondDotColor" format="color" />
+        <attr name="lazyloader_thirdDotColor" format="color" />
+        <attr name="lazyloader_animDur" format="integer" />
+        <attr name="lazyloader_interpolator" format="reference" />
+        <attr name="lazyloader_firstDelayDur" format="integer" />
+        <attr name="lazyloader_secondDelayDur" format="integer" />
+        <attr name="lazyloader_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
 </resources>
