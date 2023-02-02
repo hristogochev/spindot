@@ -232,7 +232,7 @@ class CircularDotsLoader : View {
     }
 
 
-    // Animation timer controls
+    // Animation controls
     fun startAnimation() {
         if (animationTimer != null) return
 
@@ -258,6 +258,12 @@ class CircularDotsLoader : View {
     }
 
     // Overrides
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val calWidthHeight = (2 * bigCircleRadius + 2 * radius)
+        setMeasuredDimension(calWidthHeight, calWidthHeight)
+    }
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
 
@@ -268,12 +274,6 @@ class CircularDotsLoader : View {
         } else {
             startAnimation()
         }
-    }
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val calWidthHeight = (2 * bigCircleRadius + 2 * radius)
-        setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

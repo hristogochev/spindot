@@ -17,15 +17,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.agrawalsuneet.dotsloader.loaders.RotatingCircularDotsLoader
+        <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
             android:id="@+id/myLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:rotatingcircular_animDur="3000"
-            app:rotatingcircular_bigCircleRadius="42dp"
-            app:rotatingcircular_dotsColor="@color/blue_selected"
-            app:rotatingcircular_dotsRadius="14dp"
-            app:rotatingcircular_toggleOnVisibilityChange="true"/>
+            app:loader_animDur="300"
+            app:loader_noOfDots="8"
+            app:loader_circleRadius="6dp"
+            app:loader_defaultColor="@color/pink_default"
+            app:loader_selectedColor="@color/pink_selected"
+            app:loader_dotsDist="3dp"
+            app:loader_expandOnSelect="false"
+            app:loader_isSingleDir="false"
+            app:loader_selectedRadius="10dp"
+            app:loader_showRunningShadow="true"
+            app:loader_firstShadowColor="@color/blue_selected"
+            app:loader_secondShadowColor="@color/blue_delfault"/>
 
     </LinearLayout>
 
