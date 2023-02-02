@@ -151,19 +151,6 @@ class PullInLoader : LinearLayout {
         addView(circlesView)
     }
 
-    override fun onVisibilityChanged(changedView: View, visibility: Int) {
-        super.onVisibilityChanged(changedView, visibility)
-
-        circlesView.visibility = visibility
-
-        if (!toggleOnVisibilityChange) return
-
-        if (visibility != View.VISIBLE) {
-            stopAnimation()
-        } else {
-            startAnimation()
-        }
-    }
 
     // Animation controls
     fun startAnimation() {
@@ -199,6 +186,7 @@ class PullInLoader : LinearLayout {
     private fun clearPreviousAnimation() {
         circlesView.clearAnimation()
     }
+
 
     // Animations
     private fun getRotateAnimation(): RotateAnimation {
@@ -241,6 +229,29 @@ class PullInLoader : LinearLayout {
         return animSet
     }
 
+
+    // Overrides
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val calWidthHeight = 2 * this.bigCircleRadius + 2 * dotsRadius
+        setMeasuredDimension(calWidthHeight, calWidthHeight)
+    }
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+
+        circlesView.visibility = visibility
+
+        if (!toggleOnVisibilityChange) return
+
+        if (visibility != View.VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
+    }
+
+
     // Utility functions
     private fun calcDotColorsArray(arrayId: Int, defaultColor: Int): IntArray {
         val colors = IntArray(8)
@@ -249,13 +260,5 @@ class PullInLoader : LinearLayout {
             colors[i] = if (colorsArray.size > i) colorsArray[i] else defaultColor
         }
         return colors
-    }
-
-    // Overrides
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val calWidthHeight = 2 * this.bigCircleRadius + 2 * dotsRadius
-        setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
 }

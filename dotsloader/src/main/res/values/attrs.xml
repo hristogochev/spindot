@@ -60,12 +60,7 @@
         <attr name="tashieloader_animDelay" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="RotatingCircularDotsLoader">
-        <attr name="rotatingcircular_dotsColor" format="color" />
-        <attr name="rotatingcircular_dotsRadius" format="dimension" />
-        <attr name="rotatingcircular_bigCircleRadius" format="dimension" />
-        <attr name="rotatingcircular_animDur" format="integer" />
-    </declare-styleable>
+
 
 
     <declare-styleable name="TrailingCircularDotsLoader">
@@ -104,16 +99,7 @@
         <attr name="lights_circleColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="PullInLoader">
-        <attr name="pullin_dotsColor" format="color" />
-        <attr name="pullin_colorsArray" format="reference" />
-        <attr name="pullin_useMultipleColors" format="boolean" />
 
-        <attr name="pullin_dotsRadius" format="dimension" />
-        <attr name="pullin_bigCircleRadius" format="dimension" />
-        <attr name="pullin_animDur" format="integer" />
-        <attr name="pullin_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
 
 
     <declare-styleable name="BounceLoader">
@@ -124,6 +110,7 @@
         <attr name="bounce_showShadow" format="boolean" />
         <attr name="bounce_animDuration" format="integer" />
     </declare-styleable>
+
 
     <declare-styleable name="CircularDotsLoader">
         <attr name="circularDots_defaultColor" format="color" />
@@ -136,4 +123,24 @@
         <attr name="circularDots_bigCircleRadius" format="dimension" />
         <attr name="circularDots_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PullInLoader">
+        <attr name="pullin_dotsColor" format="color" />
+        <attr name="pullin_colorsArray" format="reference" />
+        <attr name="pullin_useMultipleColors" format="boolean" />
+
+        <attr name="pullin_dotsRadius" format="dimension" />
+        <attr name="pullin_bigCircleRadius" format="dimension" />
+        <attr name="pullin_animDur" format="integer" />
+        <attr name="pullin_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="RotatingCircularDotsLoader">
+        <attr name="rotatingcircular_dotsColor" format="color" />
+        <attr name="rotatingcircular_dotsRadius" format="dimension" />
+        <attr name="rotatingcircular_bigCircleRadius" format="dimension" />
+        <attr name="rotatingcircular_animDur" format="integer" />
+        <attr name="rotatingcircular_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
 </resources>

@@ -3,141 +3,165 @@ package com.agrawalsuneet.dotsloader.loaders
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CirclesView
-import com.agrawalsuneet.dotsloader.contracts.LoaderContract
+import com.agrawalsuneet.dotsloader.utils.getColorResource
 
 /**
  * Created by suneet on 12/29/17.
  */
-class RotatingCircularDotsLoader : LinearLayout, LoaderContract {
+class RotatingCircularDotsLoader : LinearLayout {
 
-    var dotsRadius: Int = 30
-    var dotsColor: Int = resources.getColor(R.color.loader_selected)
-    var bigCircleRadius: Int = 90
+    // Default input attributes
+    private val defaultDotsRadius = 30
+    private val defaultDotsColor = getColorResource(R.color.loader_selected)
+    private val defaultBigCircleRadius = 90
+    private val defaultAnimDuration = 5000
+    private val defaultToggleOnVisibilityChange = true
 
-    var animDuration: Int = 5000
 
+    // Settable attributes
+    private var dotsRadius = defaultDotsRadius
+    private var dotsColor = defaultDotsColor
+    private var bigCircleRadius = defaultBigCircleRadius
+    private var animDuration = defaultAnimDuration
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
+
+    // Base view
     private lateinit var circlesView: CirclesView
 
-
-    constructor(context: Context?) : super(context) {
-        initView()
-    }
-
-    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColor: Int) : super(
+    // Custom constructors
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        bigCircleRadius: Int,
+        dotsColor: Int,
+        toggleOnVisibilityChange: Boolean
+    ) : super(
         context
     ) {
         this.dotsRadius = dotsRadius
         this.bigCircleRadius = bigCircleRadius
         this.dotsColor = dotsColor
-        initView()
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
     }
 
+    // Default constructors
+    constructor(context: Context) : super(context) {
+        initViews()
+    }
 
-    constructor(context: Context?, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    override fun initAttributes(attrs: AttributeSet) {
+
+    // Initialization functions
+    private fun initAttributes(attrs: AttributeSet) {
 
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.RotatingCircularDotsLoader, 0, 0)
 
         this.dotsRadius = typedArray.getDimensionPixelSize(
             R.styleable.RotatingCircularDotsLoader_rotatingcircular_dotsRadius,
-            30
+            defaultDotsRadius
         )
 
         this.dotsColor = typedArray.getColor(
             R.styleable.RotatingCircularDotsLoader_rotatingcircular_dotsColor,
-            resources.getColor(R.color.loader_selected)
+            defaultDotsColor
         )
 
         this.bigCircleRadius = typedArray.getDimensionPixelSize(
             R.styleable.RotatingCircularDotsLoader_rotatingcircular_bigCircleRadius,
-            90
+            defaultBigCircleRadius
         )
 
         this.animDuration =
             typedArray.getInt(R.styleable.RotatingCircularDotsLoader_rotatingcircular_animDur, 5000)
 
+        this.isTransitionGroup = typedArray.getBoolean(
+            R.styleable.RotatingCircularDotsLoader_rotatingcircular_toggleOnVisibilityChange,
+            defaultToggleOnVisibilityChange
+        )
+
         typedArray.recycle()
     }
 
+    private fun initViews() {
+        circlesView = CirclesView(context, dotsRadius, bigCircleRadius, dotsColor)
+
+        addView(circlesView)
+    }
+
+    // Animation controls
+    fun startAnimation() {
+        // Clear the previous animation
+        clearPreviousAnimation()
+
+        // Create new animation
+        val rotationAnim = getRotateAnimation()
+        circlesView.startAnimation(rotationAnim)
+    }
+
+    fun stopAnimation() {
+        // Clear the running animation
+        clearPreviousAnimation()
+    }
+
+    private fun clearPreviousAnimation() {
+        circlesView.clearAnimation()
+    }
+
+    // Animations
+    private fun getRotateAnimation(): RotateAnimation {
+        return RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        ).apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.RESTART
+            interpolator = LinearInterpolator()
+        }
+    }
+
+    // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         val calWidth = 2 * this.bigCircleRadius + 2 * dotsRadius
-        val calHeight = calWidth
-
-        setMeasuredDimension(calWidth, calHeight)
-    }
-
-    private fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
-
-        circlesView = CirclesView(context, dotsRadius, bigCircleRadius, dotsColor)
-
-        addView(circlesView)
-
-        viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                startLoading()
-                this@RotatingCircularDotsLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
-
+        setMeasuredDimension(calWidth, calWidth)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
         super.onVisibilityChanged(changedView, visibility)
 
+        circlesView.visibility = visibility
+
+        if (!toggleOnVisibilityChange) return
+
         if (visibility != View.VISIBLE) {
-            initView()
+            stopAnimation()
         } else {
-            circlesView.clearAnimation()
+            startAnimation()
         }
     }
-
-    private fun startLoading() {
-
-        val rotationAnim = getRotateAnimation()
-        circlesView.startAnimation(rotationAnim)
-    }
-
-    private fun getRotateAnimation(): RotateAnimation {
-
-        val transAnim = RotateAnimation(
-            0f, 360f,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
-        )
-        transAnim.duration = animDuration.toLong()
-        transAnim.fillAfter = true
-        transAnim.repeatCount = Animation.INFINITE
-        transAnim.repeatMode = Animation.RESTART
-        transAnim.interpolator = LinearInterpolator()
-
-        return transAnim
-    }
-
-
 }
