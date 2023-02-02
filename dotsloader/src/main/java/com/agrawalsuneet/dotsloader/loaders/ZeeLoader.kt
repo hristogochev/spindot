@@ -157,8 +157,6 @@ class ZeeLoader : LinearLayout, AnimationContract {
     override fun startAnimation() {
         animationStopped = false
 
-        clearPreviousAnimations()
-
         val firstCircleAnim = getTranslateAnim(1)
 
         firstCircle.startAnimation(firstCircleAnim)
