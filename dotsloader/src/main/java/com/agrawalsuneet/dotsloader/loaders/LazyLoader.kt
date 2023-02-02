@@ -2,6 +2,7 @@ package com.agrawalsuneet.dotsloader.loaders
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -170,12 +171,12 @@ class LazyLoader : LinearLayout, AnimationContract {
         firstCircle.startAnimation(trans1Anim)
 
         val trans2Anim = getTranslateAnim()
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             secondCircle.startAnimation(trans2Anim)
         }, firstDelayDuration.toLong())
 
         val trans3Anim = getTranslateAnim()
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             thirdCircle.startAnimation(trans3Anim)
         }, secondDelayDuration.toLong())
 
