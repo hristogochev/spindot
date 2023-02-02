@@ -170,8 +170,6 @@ class BounceLoader : LinearLayout, AnimationContract {
     override fun startAnimation() {
         animationStopped = false
 
-        clearPreviousAnimations()
-
         val ballAnim = getBallAnimation().apply {
             this.onAnimationEnd {
                 state = (state + 1) % 4
