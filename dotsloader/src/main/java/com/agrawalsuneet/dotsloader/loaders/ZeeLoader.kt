@@ -3,45 +3,72 @@ package com.agrawalsuneet.dotsloader.loaders
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewTreeObserver
+import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
-import com.agrawalsuneet.dotsloader.contracts.LoaderContract
+import com.agrawalsuneet.dotsloader.utils.getColorResource
+import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
 /**
  * Created by agrawalsuneet on 8/26/18.
+ * Modified by hristogochev on 02/02/23.
  */
 
-class ZeeLoader : LinearLayout, LoaderContract {
+class ZeeLoader : LinearLayout {
 
-    var dotsRadius: Int = 50
+    // Default input attributes
+    private val defaultDotsRadius = 50
+    private val defaultDistanceMultiplier = 4
+    private val defaultFirstDotColor = getColorResource(R.color.loader_selected)
+    private val defaultSecondDotColor = getColorResource(R.color.loader_selected)
+    private val defaultAnimDuration = 500
+    private val defaultToggleOnVisibilityChange = true
 
-    var distanceMultiplier: Int = 4
+    // Settable attributes
+    private var dotsRadius = defaultDotsRadius
+    private var distanceMultiplier = defaultDistanceMultiplier
         set(value) {
-            if (value < 1) {
-                field = 1
-            } else {
-                field = value
-            }
+            field = if (value < 1) 1 else value
         }
+    private var firsDotColor = defaultFirstDotColor
+    private var secondDotColor = defaultSecondDotColor
+    private var animDuration = defaultAnimDuration
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
 
-    var firsDotColor: Int = resources.getColor(R.color.loader_selected)
-    var secondDotColor: Int = resources.getColor(R.color.loader_selected)
 
-    var animDuration: Int = 500
-
-    private var step: Int = 0
-
+    // Views
     private var calWidthHeight: Int = 0
     private lateinit var firstCircle: CircleView
     private lateinit var secondCircle: CircleView
     private lateinit var relativeLayout: RelativeLayout
 
+    // Animation attributes
+    private var step: Int = 0
+    private var animationStopped = false
+
+    // Custom constructors
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        distanceMultiplier: Int,
+        firsDotColor: Int,
+        secondDotColor: Int,
+        toggleOnVisibilityChange: Boolean
+
+    ) : super(context) {
+        this.dotsRadius = dotsRadius
+        this.distanceMultiplier = distanceMultiplier
+        this.firsDotColor = firsDotColor
+        this.secondDotColor = secondDotColor
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initView()
+    }
+
+    // Default constructors
     constructor(context: Context) : super(context) {
         initView()
     }
@@ -51,121 +78,118 @@ class ZeeLoader : LinearLayout, LoaderContract {
         initView()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
         initView()
     }
 
-    constructor(context: Context, dotsRadius: Int, distanceMultiplier: Int, firsDotColor: Int, secondDotColor: Int) : super(context) {
-        this.dotsRadius = dotsRadius
-        this.distanceMultiplier = distanceMultiplier
-        this.firsDotColor = firsDotColor
-        this.secondDotColor = secondDotColor
-        initView()
-    }
-
-
-    override fun initAttributes(attrs: AttributeSet) {
+    // Initialization functions
+    private fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZeeLoader, 0, 0)
 
-        this.dotsRadius = typedArray.getDimensionPixelSize(R.styleable.ZeeLoader_zee_dotsRadius, 50)
-
-        this.distanceMultiplier = typedArray.getInteger(R.styleable.ZeeLoader_zee_distanceMultiplier, 4)
-
-        this.firsDotColor = typedArray.getColor(R.styleable.ZeeLoader_zee_firstDotsColor,
-                resources.getColor(R.color.loader_selected))
-
-        this.secondDotColor = typedArray.getColor(R.styleable.ZeeLoader_zee_secondDotsColor,
-                resources.getColor(R.color.loader_selected))
-
-        this.animDuration = typedArray.getInt(R.styleable.ZeeLoader_zee_animDuration, 500)
+        this.dotsRadius = typedArray.getDimensionPixelSize(
+            R.styleable.ZeeLoader_zee_dotsRadius,
+            defaultDotsRadius
+        )
+        this.distanceMultiplier = typedArray.getInteger(
+            R.styleable.ZeeLoader_zee_distanceMultiplier,
+            defaultDistanceMultiplier
+        )
+        this.firsDotColor = typedArray.getColor(
+            R.styleable.ZeeLoader_zee_firstDotsColor,
+            defaultFirstDotColor
+        )
+        this.secondDotColor = typedArray.getColor(
+            R.styleable.ZeeLoader_zee_secondDotsColor,
+            defaultSecondDotColor
+        )
+        this.animDuration =
+            typedArray.getInt(R.styleable.ZeeLoader_zee_animDuration, defaultAnimDuration)
+        this.toggleOnVisibilityChange = typedArray.getBoolean(
+            R.styleable.ZeeLoader_zee_toggleOnVisibilityChange,
+            defaultToggleOnVisibilityChange
+        )
 
         typedArray.recycle()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        if (calWidthHeight == 0) {
-            calWidthHeight = (2 * dotsRadius * distanceMultiplier)
-        }
-
-        setMeasuredDimension(calWidthHeight, calWidthHeight)
-    }
-
     private fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
-
         this.gravity = Gravity.CENTER_HORIZONTAL
 
-        relativeLayout = RelativeLayout(context)
-        relativeLayout.gravity = Gravity.CENTER_HORIZONTAL
-
-
-        if (calWidthHeight == 0) {
-            calWidthHeight = (2 * dotsRadius * distanceMultiplier)
+        relativeLayout = RelativeLayout(context).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
         }
 
-        firstCircle = CircleView(context, dotsRadius, firsDotColor)
-        val firstParam = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        firstParam.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE)
-        firstParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE)
+        if (calWidthHeight == 0) calWidthHeight = (2 * dotsRadius * distanceMultiplier)
 
-        relativeLayout.addView(firstCircle, firstParam)
+        firstCircle = CircleView(context, dotsRadius, firsDotColor)
+        val firstParam = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE)
+            addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE)
+        }
 
         secondCircle = CircleView(context, dotsRadius, secondDotColor)
-        val secondParam = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        secondParam.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-        secondParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE)
+        val secondParam = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
+            addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE)
+        }
 
+        relativeLayout.addView(firstCircle, firstParam)
         relativeLayout.addView(secondCircle, secondParam)
 
         val relParam = RelativeLayout.LayoutParams(calWidthHeight, calWidthHeight)
-        this.addView(relativeLayout, relParam)
 
-
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                startLoading()
-                this@ZeeLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
+        addView(relativeLayout, relParam)
     }
 
-    private fun startLoading() {
+    // Animation controls
+    fun startAnimation() {
+        animationStopped = false
+
+        clearPreviousAnimations()
 
         val firstCircleAnim = getTranslateAnim(1)
+
         firstCircle.startAnimation(firstCircleAnim)
 
         val secondCircleAnim = getTranslateAnim(2)
 
-        secondCircleAnim.setAnimationListener(object : Animation.AnimationListener {
-
-            override fun onAnimationEnd(p0: Animation?) {
-                step++
-                if (step > 3) {
-                    step = 0
-                }
-                startLoading()
+        secondCircleAnim.onAnimationEnd {
+            step++
+            if (step > 3) {
+                step = 0
             }
-
-            override fun onAnimationRepeat(p0: Animation?) {
-            }
-
-            override fun onAnimationStart(p0: Animation?) {
-            }
-
-        })
+            if (!animationStopped) startAnimation()
+        }
 
         secondCircle.startAnimation(secondCircleAnim)
     }
 
-    private fun getTranslateAnim(circleCount: Int): TranslateAnimation {
+    fun stopAnimation() {
+        animationStopped = true
 
+        clearPreviousAnimations()
+    }
+
+    private fun clearPreviousAnimations() {
+        firstCircle.clearAnimation()
+        secondCircle.clearAnimation()
+    }
+
+    // Animations
+    private fun getTranslateAnim(circleCount: Int): TranslateAnimation {
         val circleDiameter = 2 * dotsRadius
         val finalDistance = ((distanceMultiplier - 1) * circleDiameter).toFloat()
-
 
         var fromXPos = 0.0f
         var fromYPos = 0.0f
@@ -174,15 +198,9 @@ class ZeeLoader : LinearLayout, LoaderContract {
         var toYPos = 0.0f
 
         when (step) {
-
             0 -> {
-                if (circleCount == 1) {
-                    toXPos = finalDistance
-                } else {
-                    toXPos = -1 * finalDistance
-                }
+                toXPos = if (circleCount == 1) finalDistance else -1 * finalDistance
             }
-
             1 -> {
                 if (circleCount == 1) {
                     fromXPos = finalDistance
@@ -192,7 +210,6 @@ class ZeeLoader : LinearLayout, LoaderContract {
                     toYPos = -1 * finalDistance
                 }
             }
-
             2 -> {
                 if (circleCount == 1) {
                     toXPos = finalDistance
@@ -204,7 +221,6 @@ class ZeeLoader : LinearLayout, LoaderContract {
                     toYPos = fromYPos
                 }
             }
-
             3 -> {
                 if (circleCount == 1) {
                     fromXPos = finalDistance
@@ -216,14 +232,36 @@ class ZeeLoader : LinearLayout, LoaderContract {
             }
         }
 
-        val transAnim = TranslateAnimation(fromXPos, toXPos,
-                fromYPos, toYPos)
-        transAnim.duration = animDuration.toLong()
-        transAnim.fillAfter = true
-        transAnim.interpolator = AccelerateDecelerateInterpolator()
-        transAnim.repeatCount = 0
-
-        return transAnim
+        return TranslateAnimation(
+            fromXPos, toXPos,
+            fromYPos, toYPos
+        ).apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            interpolator = AccelerateDecelerateInterpolator()
+            repeatCount = 0
+        }
     }
 
+    // Overrides
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        if (calWidthHeight == 0) {
+            calWidthHeight = (2 * dotsRadius * distanceMultiplier)
+        }
+        setMeasuredDimension(calWidthHeight, calWidthHeight)
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+
+        if (!toggleOnVisibilityChange) return
+
+        if (visibility != VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
+    }
 }

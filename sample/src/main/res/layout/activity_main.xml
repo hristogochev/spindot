@@ -17,15 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.agrawalsuneet.dotsloader.loaders.LightsLoader
+        <com.agrawalsuneet.dotsloader.loaders.ZeeLoader
             android:id="@+id/myLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:lights_circleColor="@color/blue_selected"
-            app:lights_circleDistance="4dp"
-            app:lights_circleRadius="12dp"
-            app:lights_noOfCircles="5" />
+            app:zee_animDuration="300"
+            app:zee_distanceMultiplier="4"
+            app:zee_dotsRadius="24dp"
+            app:zee_firstDotsColor="@color/blue_selected"
+            app:zee_secondDotsColor="@color/blue_delfault"/>
 
     </LinearLayout>
 

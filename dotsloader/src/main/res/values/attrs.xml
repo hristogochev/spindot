@@ -45,8 +45,6 @@
     </declare-styleable>
 
 
-
-
     <declare-styleable name="TrailingCircularDotsLoader">
         <attr name="trailingcircular_dotsRadius" format="dimension" />
         <attr name="trailingcircular_noOfTrailingDots" format="integer" />
@@ -54,14 +52,6 @@
         <attr name="trailingcircular_dotsColor" format="color" />
         <attr name="trailingcircular_animDuration" format="integer" />
         <attr name="trailingcircular_animDelay" format="integer" />
-    </declare-styleable>
-
-    <declare-styleable name="ZeeLoader">
-        <attr name="zee_dotsRadius" format="dimension" />
-        <attr name="zee_distanceMultiplier" format="integer" />
-        <attr name="zee_firstDotsColor" format="color" />
-        <attr name="zee_secondDotsColor" format="color" />
-        <attr name="zee_animDuration" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="AllianceLoader">
@@ -138,5 +128,14 @@
         <attr name="lights_circleDistance" format="dimension" />
         <attr name="lights_circleColor" format="color" />
         <attr name="lights_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ZeeLoader">
+        <attr name="zee_dotsRadius" format="dimension" />
+        <attr name="zee_distanceMultiplier" format="integer" />
+        <attr name="zee_firstDotsColor" format="color" />
+        <attr name="zee_secondDotsColor" format="color" />
+        <attr name="zee_animDuration" format="integer" />
+        <attr name="zee_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 </resources>
