@@ -165,8 +165,6 @@ class LazyLoader : LinearLayout, AnimationContract {
     override fun startAnimation() {
         animationStopped = false
 
-        clearPreviousAnimations()
-
         val trans1Anim = getTranslateAnim()
         firstCircle.startAnimation(trans1Anim)
 
