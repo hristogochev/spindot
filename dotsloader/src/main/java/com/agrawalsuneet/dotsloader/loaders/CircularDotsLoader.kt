@@ -13,6 +13,7 @@ import java.util.*
 
 /**
  * Created by ballu on 04/07/17.
+ * Modified by hristogochev on 01/02/23.
  */
 
 class CircularDotsLoader : View {
