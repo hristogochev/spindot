@@ -17,21 +17,16 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.agrawalsuneet.dotsloader.loaders.LazyLoader
+        <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
             android:id="@+id/myLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginTop="30dp"
-            app:lazyloader_animDur="800"
-            app:lazyloader_dotsDist="10dp"
-            app:lazyloader_dotsRadius="16dp"
-            app:lazyloader_firstDelayDur="150"
-            app:lazyloader_firstDotColor="@color/red"
-            app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
-            app:lazyloader_secondDelayDur="300"
-            app:lazyloader_secondDotColor="@color/green"
-            app:lazyloader_thirdDotColor="@color/yellow" />
+            app:trailingcircular_animDelay="200"
+            app:trailingcircular_animDuration="1200"
+            app:trailingcircular_bigCircleRadius="40dp"
+            app:trailingcircular_dotsColor="@color/green"
+            app:trailingcircular_dotsRadius="11dp"
+            app:trailingcircular_noOfTrailingDots="5" />
     </LinearLayout>
 
     <LinearLayout

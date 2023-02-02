@@ -2,180 +2,225 @@ package com.agrawalsuneet.dotsloader.loaders
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewTreeObserver
+import android.view.View
 import android.view.animation.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.agrawalsuneet.dotsloader.R
 import com.agrawalsuneet.dotsloader.basicviews.CircleView
-import com.agrawalsuneet.dotsloader.contracts.LoaderContract
+import com.agrawalsuneet.dotsloader.contracts.AnimationContract
+import com.agrawalsuneet.dotsloader.utils.getColorResource
+import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
-class TrailingCircularDotsLoader : LinearLayout, LoaderContract {
+class TrailingCircularDotsLoader : LinearLayout, AnimationContract {
 
-    var dotsRadius: Int = 50
-    var bigCircleRadius: Int = 200
+    // Default input attributes
+    private val defaultDotsRadius = 50
+    private val defaultBigCircleRadius = 200
+    private val defaultCircleColor = getColorResource(R.color.loader_selected)
+    private val defaultNoOfTrailingDots = 6
+    private val defaultAnimDuration = 2000
+    private val defaultAnimDelayDivider = 10
+    private val defaultToggleOnVisibilityChange = true
 
-    var circleColor: Int = resources.getColor(R.color.loader_selected)
-    var noOfTrailingDots: Int = 6
+    // Settable attributes
+    private var dotsRadius = defaultDotsRadius
+    private var bigCircleRadius = defaultBigCircleRadius
+    private var circleColor = defaultCircleColor
+    private var noOfTrailingDots = defaultNoOfTrailingDots
+    private var animDuration = defaultAnimDuration
+    private var animDelay = animDuration / defaultAnimDelayDivider
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
 
-    var animDuration: Int = 2000
-    var animDelay: Int = animDuration / 10
-
-    private var calWidthHeight: Int = 0
+    // Views
     private lateinit var mainCircle: CircleView
     private lateinit var relativeLayout: RelativeLayout
-    private lateinit var trailingCirclesArray: Array<CircleView?>
+    private lateinit var trailingCirclesArray: List<CircleView>
+
+    // Animation attributes
+    private var calWidthHeight: Int = 0
+    private var animationStopped = false
+
+    // Custom constructors
+    constructor(
+        context: Context?,
+        dotsRadius: Int,
+        bigCircleRadius: Int,
+        circleColor: Int,
+        noOfTrailingDots: Int,
+        animDuration: Int,
+        animDelay: Int = animDuration / 10,
+        toggleOnVisibilityChange: Boolean
+    ) : super(context) {
+        this.dotsRadius = dotsRadius
+        this.bigCircleRadius = bigCircleRadius
+        this.circleColor = circleColor
+        this.noOfTrailingDots = noOfTrailingDots
+        this.animDuration = animDuration
+        this.animDelay = animDelay
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
+    }
 
     constructor(context: Context) : super(context) {
-        initView()
+        initViews()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context?, dotsRadius: Int, circleColor: Int, bigCircleRadius: Int, noOfTrailingDots: Int) : super(context) {
-        this.dotsRadius = dotsRadius
-        this.circleColor = circleColor
-        this.bigCircleRadius = bigCircleRadius
-        this.noOfTrailingDots = noOfTrailingDots
-        initView()
-    }
+    // Initialization functions
+    private fun initAttributes(attrs: AttributeSet) {
 
+        val typedArray =
+            context.obtainStyledAttributes(attrs, R.styleable.TrailingCircularDotsLoader, 0, 0)
 
-    override fun initAttributes(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.TrailingCircularDotsLoader, 0, 0)
-
-        this.dotsRadius = typedArray.getDimensionPixelSize(R.styleable.TrailingCircularDotsLoader_trailingcircular_dotsRadius, 50)
-        this.bigCircleRadius = typedArray.getDimensionPixelSize(R.styleable.TrailingCircularDotsLoader_trailingcircular_bigCircleRadius, 200)
-
-        this.circleColor = typedArray.getColor(R.styleable.TrailingCircularDotsLoader_trailingcircular_dotsColor,
-                resources.getColor(R.color.loader_selected))
-
-        this.noOfTrailingDots = typedArray.getInt(R.styleable.TrailingCircularDotsLoader_trailingcircular_noOfTrailingDots, 6)
-
-
-        this.animDuration = typedArray.getInt(R.styleable.TrailingCircularDotsLoader_trailingcircular_animDuration, 2000)
-        this.animDelay = typedArray.getInt(R.styleable.TrailingCircularDotsLoader_trailingcircular_animDelay, animDuration / 10)
+        this.dotsRadius = typedArray.getDimensionPixelSize(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_dotsRadius,
+            defaultDotsRadius
+        )
+        this.bigCircleRadius = typedArray.getDimensionPixelSize(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_bigCircleRadius,
+            defaultBigCircleRadius
+        )
+        this.circleColor = typedArray.getColor(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_dotsColor,
+            defaultCircleColor
+        )
+        this.noOfTrailingDots = typedArray.getInt(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_noOfTrailingDots,
+            defaultNoOfTrailingDots
+        )
+        this.animDuration = typedArray.getInt(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_animDuration,
+            defaultAnimDuration
+        )
+        this.animDelay = typedArray.getInt(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_animDelay,
+            animDuration / defaultAnimDelayDivider
+        )
+        this.toggleOnVisibilityChange = typedArray.getBoolean(
+            R.styleable.TrailingCircularDotsLoader_trailingcircular_toggleOnVisibilityChange,
+            defaultToggleOnVisibilityChange
+        )
 
         typedArray.recycle()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    private fun initViews() {
+        this.gravity = Gravity.CENTER_HORIZONTAL
 
         if (calWidthHeight == 0) {
             calWidthHeight = (2 * bigCircleRadius) + (2 * dotsRadius)
         }
 
-        setMeasuredDimension(calWidthHeight, calWidthHeight)
-    }
+        relativeLayout = RelativeLayout(context).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+        }
 
-    private fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
+        mainCircle = CircleView(context, dotsRadius, circleColor)
 
-        this.gravity = Gravity.CENTER_HORIZONTAL
-
-        relativeLayout = RelativeLayout(context)
-        relativeLayout.gravity = Gravity.CENTER_HORIZONTAL
-
-
-        if (calWidthHeight == 0) {
-            calWidthHeight = (2 * bigCircleRadius) + (2 * dotsRadius)
+        trailingCirclesArray = (0 until noOfTrailingDots).map {
+            CircleView(context, dotsRadius, circleColor)
         }
 
         val relParam = RelativeLayout.LayoutParams(calWidthHeight, calWidthHeight)
 
-        mainCircle = CircleView(context, dotsRadius, circleColor)
         relativeLayout.addView(mainCircle)
-
-        this.addView(relativeLayout, relParam)
-
-
-        trailingCirclesArray = arrayOfNulls(noOfTrailingDots)
-
-        for (i in 0 until noOfTrailingDots) {
-            val circle = CircleView(context, dotsRadius, circleColor)
-            relativeLayout.addView(circle)
-            trailingCirclesArray[i] = circle
+        trailingCirclesArray.forEach {
+            relativeLayout.addView(it)
         }
 
-        val loaderView = this
-
-
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                startLoading()
-
-                val vto = loaderView.viewTreeObserver
-                vto.removeOnGlobalLayoutListener(this)
-            }
-        })
+        this.addView(relativeLayout, relParam)
     }
 
-    private fun startLoading() {
+
+    // Animation controls
+    override fun startAnimation() {
+        animationStopped = false
+
+        clearPreviousAnimations()
 
         val mainCircleAnim = getRotateAnimation()
         mainCircle.startAnimation(mainCircleAnim)
 
         for (i in 1..noOfTrailingDots) {
-            val animSet = getTrainlingAnim(i, ((animDuration * (2 + i)) / 20))
-            trailingCirclesArray[i - 1]!!.startAnimation(animSet)
+            val animSet = getTrailingAnimation(i, ((animDuration * (2 + i)) / 20))
+            trailingCirclesArray[i - 1].startAnimation(animSet)
 
             if (i == noOfTrailingDots - 1) {
-                animSet.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationEnd(p0: Animation?) {
-                        Handler().postDelayed({
-                            startLoading()
+                animSet.onAnimationEnd {
+                    if (!animationStopped) {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            startAnimation()
                         }, animDelay.toLong())
                     }
-
-                    override fun onAnimationStart(p0: Animation?) {
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) {
-                    }
-                })
+                }
             }
         }
     }
 
-    private fun getRotateAnimation(): RotateAnimation {
+    override fun stopAnimation() {
+        animationStopped = true
 
-        val rotateAnim = RotateAnimation(0f, 360f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_PARENT, 0.5f)
-        rotateAnim.duration = animDuration.toLong()
-        rotateAnim.fillAfter = true
-        rotateAnim.interpolator = AccelerateDecelerateInterpolator()
-        rotateAnim.startOffset = (animDuration / 10).toLong()
-
-        return rotateAnim
+        clearPreviousAnimations()
     }
 
-    private fun getTrainlingAnim(count: Int, delay: Int): AnimationSet {
+    override fun clearPreviousAnimations() {
+        mainCircle.clearAnimation()
+        for (i in 1..noOfTrailingDots) {
+            trailingCirclesArray[i - 1].clearAnimation()
+        }
+    }
+
+
+    // Animations
+    private fun getRotateAnimation(): RotateAnimation {
+        return RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_PARENT, 0.5f
+        ).apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            interpolator = AccelerateDecelerateInterpolator()
+            startOffset = (animDuration / 10).toLong()
+        }
+    }
+
+    private fun getTrailingAnimation(count: Int, delay: Int): AnimationSet {
         val animSet = AnimationSet(true)
 
         val scaleFactor: Float = 1.00f - (count.toFloat() / 20)
 
-        val scaleAnim = ScaleAnimation(scaleFactor, scaleFactor, scaleFactor, scaleFactor,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        val scaleAnim = ScaleAnimation(
+            scaleFactor, scaleFactor, scaleFactor, scaleFactor,
+            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+        )
         animSet.addAnimation(scaleAnim)
 
 
-        val rotateAnim = RotateAnimation(0f, 360f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_PARENT, 0.5f)
-        rotateAnim.duration = animDuration.toLong()
+        val rotateAnim = RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_PARENT, 0.5f
+        ).apply {
+            duration = animDuration.toLong()
+        }
 
         animSet.addAnimation(rotateAnim)
         animSet.duration = animDuration.toLong()
@@ -184,5 +229,27 @@ class TrailingCircularDotsLoader : LinearLayout, LoaderContract {
         animSet.startOffset = delay.toLong()
 
         return animSet
+    }
+
+    // Overrides
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        if (calWidthHeight == 0) {
+            calWidthHeight = (2 * bigCircleRadius) + (2 * dotsRadius)
+        }
+        setMeasuredDimension(calWidthHeight, calWidthHeight)
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+
+        if (!toggleOnVisibilityChange) return
+
+        if (visibility != VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
     }
 }
