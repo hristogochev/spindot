@@ -16,6 +16,7 @@
         <attr name="slidingloader_thirdDotColor" format="color" />
         <attr name="slidingloader_animDur" format="integer" />
         <attr name="slidingloader_distanceToMove" format="integer" />
+        <attr name="slidingloader_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TashieLoader">
