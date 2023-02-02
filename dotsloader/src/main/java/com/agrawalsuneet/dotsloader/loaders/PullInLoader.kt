@@ -3,208 +3,259 @@ package com.agrawalsuneet.dotsloader.loaders
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.animation.*
 import android.widget.LinearLayout
 import com.agrawalsuneet.dotsloader.R
-import com.agrawalsuneet.dotsloader.basicviews.CircularLoaderBaseView
-import com.agrawalsuneet.dotsloader.contracts.LoaderContract
-import com.agrawalsuneet.dotsloader.utils.Helper
+import com.agrawalsuneet.dotsloader.basicviews.CirclesView
+import com.agrawalsuneet.dotsloader.utils.getColorResource
+import com.agrawalsuneet.dotsloader.utils.onAnimationEnd
 
-class PullInLoader : LinearLayout, LoaderContract {
+class PullInLoader : LinearLayout {
 
-    var dotsRadius: Int = 30
-    var bigCircleRadius: Int = 90
+    // Default input attributes
+    private val defaultDotsRadius = 30
+    private val defaultUseMultipleColors = false
+    private val defaultDotsColor = getColorResource(android.R.color.darker_gray)
+    private var defaultDotsColorsArray = IntArray(8) { defaultDotsColor }
+    private val defaultBigCircleRadius = 90
+    private val defaultAnimDuration = 2000
+    private val defaultToggleOnVisibilityChange = true
 
-    var useMultipleColors: Boolean = false
+    // Input attributes
+    private var dotsRadius = defaultDotsRadius
+    private var useMultipleColors = defaultUseMultipleColors
+    private var dotsColor = defaultDotsColor
+    private var dotsColorsArray = defaultDotsColorsArray
+    private var bigCircleRadius = defaultBigCircleRadius
+    private var animDuration = defaultAnimDuration
 
-    var dotsColor: Int = resources.getColor(android.R.color.darker_gray)
-    var dotsColorsArray = IntArray(8) { resources.getColor(android.R.color.darker_gray) }
+    // Animation attributes
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
+    private var animationStopped = false
 
-    var animDuration: Int = 3000
+    // Base view
+    private lateinit var circlesView: CirclesView
 
-    private lateinit var circularLoaderBaseView: CircularLoaderBaseView
-
-    constructor(context: Context?) : super(context) {
-        initView()
-    }
-
-    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColor: Int) : super(context) {
+    // Single color constructor
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        bigCircleRadius: Int,
+        dotsColor: Int,
+        toggleOnVisibilityChange: Boolean
+    ) : super(
+        context
+    ) {
         this.dotsRadius = dotsRadius
         this.bigCircleRadius = bigCircleRadius
         this.dotsColor = dotsColor
         this.useMultipleColors = false
-        initView()
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
     }
 
-
-    constructor(context: Context, dotsRadius: Int, bigCircleRadius: Int, dotsColorsArray: IntArray) : super(context) {
+    // Multiple colors constructor
+    constructor(
+        context: Context,
+        dotsRadius: Int,
+        bigCircleRadius: Int,
+        dotsColorsArray: IntArray,
+        toggleOnVisibilityChange: Boolean
+    ) : super(context) {
         this.dotsRadius = dotsRadius
         this.bigCircleRadius = bigCircleRadius
         this.dotsColorsArray = dotsColorsArray
         this.useMultipleColors = true
-        initView()
+        this.toggleOnVisibilityChange = toggleOnVisibilityChange
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet) : super(context, attrs) {
+
+    // Default constructors
+    constructor(context: Context) : super(context) {
+        initViews()
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    constructor(context: Context?, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initAttributes(attrs)
-        initView()
+        initViews()
     }
 
-    override fun initAttributes(attrs: AttributeSet) {
+
+    private fun initAttributes(attrs: AttributeSet) {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PullInLoader, 0, 0)
 
-        dotsRadius = typedArray.getDimensionPixelSize(R.styleable.PullInLoader_pullin_dotsRadius, 30)
+        dotsRadius =
+            typedArray.getDimensionPixelSize(
+                R.styleable.PullInLoader_pullin_dotsRadius,
+                defaultDotsRadius
+            )
 
-        useMultipleColors = typedArray.getBoolean(R.styleable.PullInLoader_pullin_useMultipleColors, false)
+        useMultipleColors =
+            typedArray.getBoolean(
+                R.styleable.PullInLoader_pullin_useMultipleColors,
+                defaultUseMultipleColors
+            )
 
         if (useMultipleColors) {
-            val dotsArrayId = typedArray.getResourceId(R.styleable.PullInLoader_pullin_colorsArray, 0)
-
-            dotsColorsArray = validateColorsArray(dotsArrayId, resources.getColor(android.R.color.darker_gray))
-
+            val dotsArrayId =
+                typedArray.getResourceId(
+                    R.styleable.PullInLoader_pullin_colorsArray,
+                    0
+                )
+            dotsColorsArray =
+                if (dotsArrayId != 0) calcDotColorsArray(dotsArrayId, defaultDotsColor)
+                else defaultDotsColorsArray
         } else {
-            dotsColor = typedArray.getColor(R.styleable.PullInLoader_pullin_dotsColor,
-                    resources.getColor(android.R.color.darker_gray))
+            dotsColor = typedArray.getColor(
+                R.styleable.PullInLoader_pullin_dotsColor,
+                defaultDotsColor
+            )
         }
 
         bigCircleRadius =
-                typedArray.getDimensionPixelSize(R.styleable.PullInLoader_pullin_bigCircleRadius, 90)
+            typedArray.getDimensionPixelSize(
+                R.styleable.PullInLoader_pullin_bigCircleRadius,
+                defaultBigCircleRadius
+            )
 
-        animDuration = typedArray.getInt(R.styleable.PullInLoader_pullin_animDur, 2000)
+        animDuration =
+            typedArray.getInt(R.styleable.PullInLoader_pullin_animDur, defaultAnimDuration)
+
+        toggleOnVisibilityChange =
+            typedArray.getBoolean(
+                R.styleable.PullInLoader_pullin_toggleOnVisibilityChange,
+                defaultToggleOnVisibilityChange
+            )
 
         typedArray.recycle()
     }
 
+    private fun initViews() {
+        circlesView = if (useMultipleColors) {
+            CirclesView(context, dotsRadius, bigCircleRadius, dotsColorsArray)
+        } else {
+            CirclesView(context, dotsRadius, bigCircleRadius, dotsColor)
+        }
+
+        addView(circlesView)
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+
+        circlesView.visibility = visibility
+
+        if (!toggleOnVisibilityChange) return
+
+        if (visibility != View.VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
+    }
+
+    // Animation controls
+    fun startAnimation() {
+        // Enable animations
+        animationStopped = false
+
+        // clear previous animations
+        clearPreviousAnimation()
+
+        // Create rotate animation
+        val rotationAnim = getRotateAnimation()
+        rotationAnim.onAnimationEnd {
+            // Create scale animation
+            val scaleAnimation = getScaleAnimation()
+            scaleAnimation.onAnimationEnd {
+                if (!animationStopped) startAnimation()
+            }
+            circlesView.startAnimation(scaleAnimation)
+        }
+
+        // Start the rotate animation
+        circlesView.startAnimation(rotationAnim)
+    }
+
+    fun stopAnimation() {
+        // Disable animations
+        animationStopped = true
+
+        // Clear the running animation
+        clearPreviousAnimation()
+    }
+
+    private fun clearPreviousAnimation() {
+        circlesView.clearAnimation()
+    }
+
+    // Animations
+    private fun getRotateAnimation(): RotateAnimation {
+        return RotateAnimation(
+            0f, 360f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        ).apply {
+            duration = animDuration.toLong()
+            fillAfter = true
+            repeatCount = 0
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+    }
+    private fun getScaleAnimation(): AnimationSet {
+        val scaleAnimation = ScaleAnimation(
+            1.0f, 0.5f,
+            1.0f, 0.5f,
+            (circlesView.width / 2).toFloat(),
+            (circlesView.height / 2).toFloat()
+        ).apply {
+            repeatCount = 1
+            repeatMode = Animation.REVERSE
+        }
+
+        val alphaAnimation = AlphaAnimation(1.0f, 0.0f).apply {
+            repeatCount = 1
+            repeatMode = Animation.REVERSE
+        }
+
+        val animSet = AnimationSet(true).apply {
+            addAnimation(scaleAnimation)
+            addAnimation(alphaAnimation)
+            repeatCount = 1
+            repeatMode = Animation.REVERSE
+            duration = if (animDuration > 0) (animDuration / 8).toLong() else 100
+            interpolator = AccelerateInterpolator()
+        }
+
+        return animSet
+    }
+
+    // Utility functions
+    private fun calcDotColorsArray(arrayId: Int, defaultColor: Int): IntArray {
+        val colors = IntArray(8)
+        val colorsArray = resources.getIntArray(arrayId)
+        for (i in 0..7) {
+            colors[i] = if (colorsArray.size > i) colorsArray[i] else defaultColor
+        }
+        return colors
+    }
+
+    // Overrides
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         val calWidthHeight = 2 * this.bigCircleRadius + 2 * dotsRadius
         setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
-
-    private fun validateColorsArray(arrayId: Int, color: Int): IntArray {
-
-
-        return if (arrayId != 0) {
-            val colors = IntArray(8)
-            val colorsArray = resources.getIntArray(arrayId)
-            for (i in 0..7) {
-                colors[i] = if (colorsArray.size > i) colorsArray[i] else color
-            }
-
-            colors
-        } else {
-            IntArray(8) { color }
-        }
-    }
-
-
-    private fun initView() {
-        removeAllViews()
-        removeAllViewsInLayout()
-
-        circularLoaderBaseView = if (useMultipleColors) {
-            CircularLoaderBaseView(context, dotsRadius, bigCircleRadius, dotsColorsArray)
-        } else {
-            CircularLoaderBaseView(context, dotsRadius, bigCircleRadius, dotsColor)
-        }
-
-        addView(circularLoaderBaseView)
-
-        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                startLoading()
-                this@PullInLoader.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
-    }
-
-    override fun onVisibilityChanged(changedView: View, visibility: Int) {
-        super.onVisibilityChanged(changedView, visibility)
-
-        if (visibility != View.VISIBLE) {
-            initView()
-        } else {
-            circularLoaderBaseView.clearAnimation()
-        }
-    }
-
-    private fun startLoading() {
-
-        circularLoaderBaseView.clearAnimation()
-
-        val rotationAnim = getRotateAnimation()
-        rotationAnim.setListener {
-            val scaleAnimation = getScaleAnimation()
-            scaleAnimation.setListener {
-                startLoading()
-            }
-
-            circularLoaderBaseView.startAnimation(scaleAnimation)
-        }
-        circularLoaderBaseView.startAnimation(rotationAnim)
-    }
-
-    private fun Animation.setListener(onEnd: () -> Unit) {
-        this.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-                onEnd()
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-            }
-
-        })
-    }
-
-    private fun getRotateAnimation(): RotateAnimation {
-
-        val transAnim = RotateAnimation(0f, 360f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f)
-        transAnim.duration = animDuration.toLong()
-        transAnim.fillAfter = true
-        transAnim.repeatCount = 0
-        transAnim.interpolator = AccelerateDecelerateInterpolator()
-
-        return transAnim
-    }
-
-    private fun getScaleAnimation(): AnimationSet {
-        val scaleAnimation = ScaleAnimation(1.0f, 0.5f,
-                1.0f, 0.5f,
-                (circularLoaderBaseView.width / 2).toFloat(),
-                (circularLoaderBaseView.height / 2).toFloat())
-
-        scaleAnimation.repeatCount = 1
-        scaleAnimation.repeatMode = Animation.REVERSE
-
-
-        val alphaAnimation = AlphaAnimation(1.0f, 0.0f)
-        alphaAnimation.repeatCount = 1
-        alphaAnimation.repeatMode = Animation.REVERSE
-
-        val animSet = AnimationSet(true)
-        animSet.addAnimation(scaleAnimation)
-        animSet.addAnimation(alphaAnimation)
-        animSet.repeatCount = 1
-        animSet.repeatMode = Animation.REVERSE
-        animSet.duration = if (animDuration > 0) (animDuration / 8).toLong() else 100
-        animSet.interpolator = AccelerateInterpolator()
-
-        return animSet
-
-    }
-
-
 }

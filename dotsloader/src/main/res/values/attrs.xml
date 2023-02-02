@@ -12,7 +12,6 @@
     </declare-styleable>
 
 
-
     <declare-styleable name="LinearDotsLoader">
         <attr name="loader_noOfDots" format="integer" />
         <attr name="loader_dotsDist" format="dimension" />
@@ -113,6 +112,7 @@
         <attr name="pullin_dotsRadius" format="dimension" />
         <attr name="pullin_bigCircleRadius" format="dimension" />
         <attr name="pullin_animDur" format="integer" />
+        <attr name="pullin_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
 
@@ -134,5 +134,6 @@
         <attr name="circularDots_firstShadowColor" format="color" />
         <attr name="circularDots_secondShadowColor" format="color" />
         <attr name="circularDots_bigCircleRadius" format="dimension" />
+        <attr name="circularDots_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 </resources>

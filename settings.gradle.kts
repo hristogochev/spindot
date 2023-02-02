@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -18,3 +19,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "DotLoadersPack-Android"
 include(":dotsloader")
+include(":sample")
+

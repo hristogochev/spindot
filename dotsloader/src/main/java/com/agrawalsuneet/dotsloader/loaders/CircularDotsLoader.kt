@@ -32,6 +32,7 @@ class CircularDotsLoader : View {
     private val defaultFirstShadowColor = 0
     private val defaultSecondShadowColor = 0
     private val defaultBigCircleRadius = 60
+    private val defaultToggleOnVisibilityChange = true
 
     // Settable attributes
     private var defaultColor = defaultDefaultColor
@@ -39,7 +40,6 @@ class CircularDotsLoader : View {
             field = defaultColor
             defaultCirclePaint?.color = defaultColor
         }
-
     private var selectedColor = defaultSelectedColor
         set(selectedColor) {
             field = selectedColor
@@ -48,17 +48,13 @@ class CircularDotsLoader : View {
                 initShadowDotsPaints()
             }
         }
-
     private var radius = defaultRadius
         set(radius) {
             field = radius
             initCoordinates()
         }
-
     private var animDur = defaultAnimDur
-
     private var showRunningShadow = defaultShowRunningShadow
-
     private var firstShadowColor = defaultFirstShadowColor
         set(value) {
             field = value
@@ -67,7 +63,6 @@ class CircularDotsLoader : View {
                 initShadowDotsPaints()
             }
         }
-
     private var secondShadowColor = defaultSecondShadowColor
         set(value) {
             field = value
@@ -76,8 +71,8 @@ class CircularDotsLoader : View {
                 initShadowDotsPaints()
             }
         }
-
     private var bigCircleRadius = defaultBigCircleRadius
+    private var toggleOnVisibilityChange = defaultToggleOnVisibilityChange
 
     // Colors
     private var defaultCirclePaint: Paint? = null
@@ -86,37 +81,28 @@ class CircularDotsLoader : View {
     private lateinit var firstShadowPaint: Paint
     private lateinit var secondShadowPaint: Paint
     private var isShadowColorSet = false
-    private var dotsColorsArray =
-        IntArray(8) { getColorResource(android.R.color.darker_gray) }
+    private var dotsColorsArray = IntArray(8) { getColorResource(android.R.color.darker_gray) }
 
     // Dots coordinates
     private lateinit var dotsXCorArr: FloatArray
     private lateinit var dotsYCorArr: FloatArray
 
     // Animation attributes
-    var startAndStopAnimationOnVisibilityChange = true
-        set(value) {
-            field = value
-            invalidate()
-        }
-
     private var animationTimer: Timer? = null
-
     private var selectedDotPos = 1
 
+    // Default constructors
     constructor(context: Context) : super(context) {
         initCoordinates()
         initDotPaints()
         initShadowDotsPaints()
     }
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initAttributes(attrs)
         initCoordinates()
         initDotPaints()
         initShadowDotsPaints()
     }
-
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,
         attrs,
@@ -177,9 +163,14 @@ class CircularDotsLoader : View {
                 defaultBigCircleRadius
             )
 
+        this.toggleOnVisibilityChange =
+            typedArray.getBoolean(
+                R.styleable.CircularDotsLoader_circularDots_toggleOnVisibilityChange,
+                defaultToggleOnVisibilityChange
+            )
+
         typedArray.recycle()
     }
-
     private fun initCoordinates() {
         val sin45Radius = SIN_45 * bigCircleRadius
 
@@ -207,7 +198,6 @@ class CircularDotsLoader : View {
         dotsYCorArr[5] = dotsYCorArr[5] + sin45Radius
         dotsYCorArr[7] = dotsYCorArr[7] - sin45Radius
     }
-
     private fun initDotPaints() {
         defaultCirclePaint = Paint().apply {
             isAntiAlias = true
@@ -220,7 +210,6 @@ class CircularDotsLoader : View {
             color = selectedColor
         }
     }
-
     private fun initShadowDotsPaints() {
         if (showRunningShadow) {
             if (!isShadowColorSet) {
@@ -242,8 +231,9 @@ class CircularDotsLoader : View {
         }
     }
 
+
     // Animation timer controls
-    fun startAnimationTimer() {
+    fun startAnimation() {
         if (animationTimer != null) return
 
         animationTimer = Timer().apply {
@@ -260,35 +250,31 @@ class CircularDotsLoader : View {
             }, 0, animDur.toLong())
         }
     }
-
-    fun stopAnimationTimer() {
+    fun stopAnimation() {
         if (animationTimer == null) return
 
         animationTimer?.cancel()
         animationTimer = null
     }
 
-
     // Overrides
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+
+        if (!toggleOnVisibilityChange) return
+
+        if (visibility != VISIBLE) {
+            stopAnimation()
+        } else {
+            startAnimation()
+        }
+    }
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
         val calWidthHeight = (2 * bigCircleRadius + 2 * radius)
         setMeasuredDimension(calWidthHeight, calWidthHeight)
     }
-
-    override fun onVisibilityChanged(changedView: View, visibility: Int) {
-        super.onVisibilityChanged(changedView, visibility)
-
-        if (!startAndStopAnimationOnVisibilityChange) return
-
-        if (visibility != VISIBLE) {
-            stopAnimationTimer()
-        } else {
-            startAnimationTimer()
-        }
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (i in 0 until DOTS_COUNT) {
@@ -304,6 +290,7 @@ class CircularDotsLoader : View {
         drawCircles(canvas)
     }
 
+    // Utility functions
     private fun drawCircles(canvas: Canvas) {
         val firstShadowPos = if (selectedDotPos == 1) 8 else selectedDotPos - 1
         val secondShadowPos = if (firstShadowPos == 1) 8 else firstShadowPos - 1
