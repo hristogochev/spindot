@@ -17,19 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <com.agrawalsuneet.dotsloader.loaders.AllianceLoader
+        <com.agrawalsuneet.dotsloader.loaders.BounceLoader
             android:id="@+id/myLoader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:alliance_animDuration="500"
-            app:alliance_distanceMultiplier="4"
-            app:alliance_dotsRadius="20dp"
-            app:alliance_drawOnlyStroke="true"
-            app:alliance_firstDotsColor="@color/red"
-            app:alliance_secondDotsColor="@color/amber"
-            app:alliance_strokeWidth="8dp"
-            app:alliance_thirdDotsColor="@color/green" />
-
+            app:bounce_animDuration="1200"
+            app:bounce_ballColor="@color/blue_selected"
+            app:bounce_ballRadius="22dp"
+            app:bounce_shadowColor="@color/black"
+            app:bounce_showShadow="true" />
     </LinearLayout>
 
     <LinearLayout

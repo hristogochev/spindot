@@ -56,15 +56,6 @@
 
 
 
-    <declare-styleable name="BounceLoader">
-        <attr name="bounce_ballRadius" format="dimension" />
-        <attr name="bounce_ballColor" format="color" />
-        <attr name="bounce_shadowColor" format="color" />
-
-        <attr name="bounce_showShadow" format="boolean" />
-        <attr name="bounce_animDuration" format="integer" />
-    </declare-styleable>
-
 
     <declare-styleable name="CircularDotsLoader">
         <attr name="circularDots_defaultColor" format="color" />
@@ -141,4 +132,15 @@
         <attr name="alliance_animDuration" format="integer" />
         <attr name="alliance_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="BounceLoader">
+        <attr name="bounce_ballRadius" format="dimension" />
+        <attr name="bounce_ballColor" format="color" />
+        <attr name="bounce_shadowColor" format="color" />
+        <attr name="bounce_showShadow" format="boolean" />
+        <attr name="bounce_animDuration" format="integer" />
+        <attr name="bounce_toggleOnVisibilityChange" format="boolean" />
+    </declare-styleable>
+
 </resources>
