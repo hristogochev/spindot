@@ -1,97 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <declare-styleable name="CircleView">
-        <attr name="circleRadius" format="dimension" />
-        <attr name="circleColor" format="color" />
-        <attr name="circleDrawOnlyStroke" format="boolean" />
-        <attr name="circleStrokeWidth" format="dimension" />
-        <attr name="circleIsAntiAlias" format="boolean" />
+    <declare-styleable name="AnimationView">
+        <attr name="view_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
-
-
-
-
-
-
-
-    <declare-styleable name="CircularDotsLoader">
-        <attr name="circularDots_defaultColor" format="color" />
-        <attr name="circularDots_selectedColor" format="color" />
-        <attr name="circularDots_circleRadius" format="dimension" />
-        <attr name="circularDots_animDur" format="integer" />
-        <attr name="circularDots_showRunningShadow" format="boolean" />
-        <attr name="circularDots_firstShadowColor" format="color" />
-        <attr name="circularDots_secondShadowColor" format="color" />
-        <attr name="circularDots_bigCircleRadius" format="dimension" />
-        <attr name="circularDots_toggleOnVisibilityChange" format="boolean" />
+    <declare-styleable name="AnimationLayout">
+        <attr name="layout_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="PullInLoader">
-        <attr name="pullin_dotsColor" format="color" />
-        <attr name="pullin_colorsArray" format="reference" />
-        <attr name="pullin_useMultipleColors" format="boolean" />
-        <attr name="pullin_dotsRadius" format="dimension" />
-        <attr name="pullin_bigCircleRadius" format="dimension" />
-        <attr name="pullin_animDur" format="integer" />
-        <attr name="pullin_toggleOnVisibilityChange" format="boolean" />
+    <declare-styleable name="DotView">
+        <attr name="dotRadius" format="dimension" />
+        <attr name="dotColor" format="color" />
+        <attr name="dotDrawOnlyStroke" format="boolean" />
+        <attr name="dotStrokeWidth" format="dimension" />
+        <attr name="dotIsAntiAlias" format="boolean" />
     </declare-styleable>
-
-    <declare-styleable name="RotatingCircularDotsLoader">
-        <attr name="rotatingcircular_dotsColor" format="color" />
-        <attr name="rotatingcircular_dotsRadius" format="dimension" />
-        <attr name="rotatingcircular_bigCircleRadius" format="dimension" />
-        <attr name="rotatingcircular_animDur" format="integer" />
-        <attr name="rotatingcircular_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="LinearDotsLoader">
-        <attr name="loader_noOfDots" format="integer" />
-        <attr name="loader_dotsDist" format="dimension" />
-        <attr name="loader_isSingleDir" format="boolean" />
-        <attr name="loader_expandOnSelect" format="boolean" />
-        <attr name="loader_selectedRadius" format="dimension" />
-        <attr name="loader_defaultColor" format="color" />
-        <attr name="loader_selectedColor" format="color" />
-        <attr name="loader_circleRadius" format="dimension" />
-        <attr name="loader_animDur" format="integer" />
-        <attr name="loader_showRunningShadow" format="boolean" />
-        <attr name="loader_firstShadowColor" format="color" />
-        <attr name="loader_secondShadowColor" format="color" />
-        <attr name="loader_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="LightsLoader">
-        <attr name="lights_noOfCircles" format="integer" />
-        <attr name="lights_circleRadius" format="dimension" />
-        <attr name="lights_circleDistance" format="dimension" />
-        <attr name="lights_circleColor" format="color" />
-        <attr name="lights_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="ZeeLoader">
-        <attr name="zee_dotsRadius" format="dimension" />
-        <attr name="zee_distanceMultiplier" format="integer" />
-        <attr name="zee_firstDotsColor" format="color" />
-        <attr name="zee_secondDotsColor" format="color" />
-        <attr name="zee_animDuration" format="integer" />
-        <attr name="zee_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="AllianceLoader">
-        <attr name="alliance_dotsRadius" format="dimension" />
-        <attr name="alliance_drawOnlyStroke" format="boolean" />
-        <attr name="alliance_strokeWidth" format="dimension" />
-
-        <attr name="alliance_distanceMultiplier" format="integer" />
-        <attr name="alliance_firstDotsColor" format="color" />
-        <attr name="alliance_secondDotsColor" format="color" />
-        <attr name="alliance_thirdDotsColor" format="color" />
-        <attr name="alliance_animDuration" format="integer" />
-        <attr name="alliance_toggleOnVisibilityChange" format="boolean" />
-    </declare-styleable>
-
 
     <declare-styleable name="BounceLoader">
         <attr name="bounce_ballRadius" format="dimension" />
@@ -99,51 +22,117 @@
         <attr name="bounce_shadowColor" format="color" />
         <attr name="bounce_showShadow" format="boolean" />
         <attr name="bounce_animDuration" format="integer" />
-        <attr name="bounce_toggleOnVisibilityChange" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="LazyLoader">
-        <attr name="lazyloader_dotsRadius" format="dimension" />
-        <attr name="lazyloader_dotsDist" format="dimension" />
-        <attr name="lazyloader_firstDotColor" format="color" />
-        <attr name="lazyloader_secondDotColor" format="color" />
-        <attr name="lazyloader_thirdDotColor" format="color" />
-        <attr name="lazyloader_animDur" format="integer" />
-        <attr name="lazyloader_interpolator" format="reference" />
-        <attr name="lazyloader_firstDelayDur" format="integer" />
-        <attr name="lazyloader_secondDelayDur" format="integer" />
-        <attr name="lazyloader_toggleOnVisibilityChange" format="boolean" />
+    <declare-styleable name="ClassicLoader">
+        <attr name="classic_inactiveColor" format="color" />
+        <attr name="classic_activeColor" format="color" />
+        <attr name="classic_dotRadius" format="dimension" />
+        <attr name="classic_animDuration" format="integer" />
+        <attr name="classic_showRunningShadow" format="boolean" />
+        <attr name="classic_firstShadowColor" format="color" />
+        <attr name="classic_secondShadowColor" format="color" />
+        <attr name="classic_radius" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="TrailingCircularDotsLoader">
-        <attr name="trailingcircular_dotsRadius" format="dimension" />
-        <attr name="trailingcircular_noOfTrailingDots" format="integer" />
-        <attr name="trailingcircular_bigCircleRadius" format="dimension" />
-        <attr name="trailingcircular_dotsColor" format="color" />
-        <attr name="trailingcircular_animDuration" format="integer" />
-        <attr name="trailingcircular_animDelay" format="integer" />
-        <attr name="trailingcircular_toggleOnVisibilityChange" format="boolean" />
+    <declare-styleable name="FidgetLoader">
+        <attr name="fidget_dotRadius" format="dimension" />
+        <attr name="fidget_distanceMultiplier" format="integer" />
+        <attr name="fidget_firstDotColor" format="color" />
+        <attr name="fidget_secondDotColor" format="color" />
+        <attr name="fidget_thirdDotColor" format="color" />
+        <attr name="fidget_drawOnlyStroke" format="boolean" />
+        <attr name="fidget_strokeWidth" format="dimension" />
+        <attr name="fidget_animDuration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LightsLoader">
+        <attr name="lights_size" format="integer" />
+        <attr name="lights_dotRadius" format="dimension" />
+        <attr name="lights_spacing" format="dimension" />
+        <attr name="lights_dotColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SlidingLoader">
-        <attr name="slidingloader_dotsRadius" format="dimension" />
-        <attr name="slidingloader_dotsDist" format="dimension" />
-        <attr name="slidingloader_firstDotColor" format="color" />
-        <attr name="slidingloader_secondDotColor" format="color" />
-        <attr name="slidingloader_thirdDotColor" format="color" />
-        <attr name="slidingloader_animDur" format="integer" />
-        <attr name="slidingloader_distanceToMove" format="integer" />
-        <attr name="slidingloader_toggleOnVisibilityChange" format="boolean" />
+        <attr name="sliding_dotRadius" format="dimension" />
+        <attr name="sliding_spacing" format="dimension" />
+        <attr name="sliding_firstDotColor" format="color" />
+        <attr name="sliding_secondDotColor" format="color" />
+        <attr name="sliding_thirdDotColor" format="color" />
+        <attr name="sliding_animDuration" format="integer" />
+        <attr name="sliding_distanceToMove" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="TashieLoader">
-        <attr name="tashieloader_dotsRadius" format="dimension" />
-        <attr name="tashieloader_dotsDist" format="dimension" />
-        <attr name="tashieloader_dotsColor" format="color" />
-        <attr name="tashieloader_animDur" format="integer" />
-        <attr name="tashieloader_interpolator" format="reference" />
-        <attr name="tashieloader_noOfDots" format="integer" />
-        <attr name="tashieloader_animDelay" format="integer" />
-        <attr name="tashieloader_toggleOnVisibilityChange" format="boolean" />
+    <declare-styleable name="JumpLoader">
+        <attr name="jump_dotRadius" format="dimension" />
+        <attr name="jump_spacing" format="dimension" />
+        <attr name="jump_firstDotColor" format="color" />
+        <attr name="jump_secondDotColor" format="color" />
+        <attr name="jump_thirdDotColor" format="color" />
+        <attr name="jump_animDuration" format="integer" />
+        <attr name="jump_interpolator" format="reference" />
+        <attr name="jump_firstDotDelay" format="integer" />
+        <attr name="jump_secondDotDelay" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="LinearLoader">
+        <attr name="linear_inactiveColor" format="color" />
+        <attr name="linear_activeColor" format="color" />
+        <attr name="linear_dotRadius" format="dimension" />
+        <attr name="linear_animDuration" format="integer" />
+        <attr name="linear_showRunningShadow" format="boolean" />
+        <attr name="linear_firstShadowColor" format="color" />
+        <attr name="linear_secondShadowColor" format="color" />
+        <attr name="linear_dotCount" format="integer" />
+        <attr name="linear_expandedLeadingDotRadius" format="dimension" />
+        <attr name="linear_spacing" format="dimension" />
+        <attr name="linear_singleDirection" format="boolean" />
+        <attr name="linear_expandLeadingDot" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SpinningLoader">
+        <attr name="spinning_dotRadius" format="dimension" />
+        <attr name="spinning_dotColor" format="color" />
+        <attr name="spinning_radius" format="dimension" />
+        <attr name="spinning_animDuration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="TrailLoader">
+        <attr name="trail_dotRadius" format="dimension" />
+        <attr name="trail_radius" format="dimension" />
+        <attr name="trail_dotColor" format="color" />
+        <attr name="trail_dotTrailCount" format="integer" />
+        <attr name="trail_animDuration" format="integer" />
+        <attr name="trail_animDelay" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="PulseLoader">
+        <attr name="pulse_dotRadius" format="dimension" />
+        <attr name="pulse_spacing" format="dimension" />
+        <attr name="pulse_dotColor" format="color" />
+        <attr name="pulse_animDuration" format="integer" />
+        <attr name="pulse_interpolator" format="reference" />
+        <attr name="pulse_dotCount" format="integer" />
+        <attr name="pulse_animDelay" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ZigLoader">
+        <attr name="zig_dotRadius" format="dimension" />
+        <attr name="zig_distanceMultiplier" format="integer" />
+        <attr name="zig_firstDotColor" format="color" />
+        <attr name="zig_secondDotColor" format="color" />
+        <attr name="zig_animDuration" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PullLoader">
+        <attr name="pull_dotRadius" format="dimension" />
+        <attr name="pull_useMultipleColors" format="boolean" />
+        <attr name="pull_dotColors" format="reference" />
+        <attr name="pull_dotColor" format="color" />
+        <attr name="pull_radius" format="dimension" />
+        <attr name="pull_animDuration" format="integer" />
+    </declare-styleable>
+
+
 </resources>

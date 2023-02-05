@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.agrawalsuneet.dotsloader"
+    namespace = "com.hristogochev.dotloaders"
     this.compileSdkVersion = "android-33"
 
     defaultConfig {
@@ -19,11 +19,18 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
     }
+    buildFeatures{
+        compose=true
+    }
+    composeOptions{
+        kotlinCompilerExtensionVersion="1.4.0"
+    }
 }
 
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0")
+    implementation("androidx.compose.ui:ui:1.3.3")
+    implementation("androidx.compose.material:material:1.3.1")
 }
 
 afterEvaluate {

@@ -7,17 +7,17 @@
     tools:context=".MainActivity">
 
 
-    <com.agrawalsuneet.dotsloader.loaders.TashieLoader
+    <com.hristogochev.dotloaders.loaders.PulseLoader
         android:id="@+id/myLoader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:tashieloader_animDelay="20"
-        app:tashieloader_animDur="350"
-        app:tashieloader_dotsColor="@color/purple_selected"
-        app:tashieloader_dotsDist="5dp"
-        app:tashieloader_dotsRadius="20dp"
-        app:tashieloader_interpolator="@android:anim/accelerate_interpolator"
-        app:tashieloader_noOfDots="6"
+        app:pulse_animDelay="100"
+        app:pulse_animDuration="1000"
+        app:pulse_dotColor="@color/purple_selected"
+        app:pulse_spacing="5dp"
+        app:pulse_dotRadius="20dp"
+        app:pulse_interpolator="@android:anim/accelerate_interpolator"
+        app:pulse_dotCount="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

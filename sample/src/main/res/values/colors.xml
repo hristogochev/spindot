@@ -17,7 +17,7 @@
 
     <color name="grey_default">#77A9A9A9</color>
 
-    <color name="loader_defalut">#44ffffff</color>
+    <color name="loader_default">#44ffffff</color>
     <color name="loader_selected">#ffffff</color>
 
 
@@ -28,7 +28,7 @@
     <color name="purple_default">#D1C4E9</color>
 
     <color name="blue_selected">#2196F3</color>
-    <color name="blue_delfault">#BBDEFB</color>
+    <color name="blue_default">#BBDEFB</color>
 
     <color name="red">#ff0000</color>
     <color name="green">#00e500</color>
@@ -45,7 +45,7 @@
     <color name="orange">#FF7F00</color>
 
 
-    <integer-array name="vibgyorg">
+    <integer-array name="random">
         <item>@color/violet</item>
         <item>@color/indigo</item>
         <item>@color/blue</item>
