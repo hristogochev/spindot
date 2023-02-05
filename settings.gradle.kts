@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DotLoadersPack-Android"
-include(":dotsloader")
+rootProject.name = "DotLoaders"
+include(":dotloaders")
 include(":sample")
 

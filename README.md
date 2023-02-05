@@ -6,8 +6,7 @@ This library is a heavily modified fork of
 [DotLoadersPack-Android](https://github.com/agrawalsuneet/DotLoadersPack-Android).</br>
 All code except that required to implement the logic of each animation has been rewritten.</br>
 All modified files have been explicitly marked as such.</br>
-For the original APACHE-2.0 license check
-the [LICENSE-original](https://github.com/hristogochev/DotLoaders/blob/main/LICENSE-original) file.
+For the original APACHE-2.0 license please view [LICENSE-original](https://github.com/hristogochev/DotLoaders/blob/main/LICENSE-original).
 
 ### Usage
 
@@ -32,10 +31,10 @@ implementation 'com.github.hristogochev:dotloaders:1.0.0'
 ### Differences with the original
 
 * Each loader is now available for Jetpack Compose.
-* Additional optimizations have been applied to account for smoother experience.
+* Additional optimizations have been applied resulting in smoother experience.
+* You can now disable the automatic playing of animations and control it manually.
 * Loaders only play their animations when they are visible and as soon as they get into any other
   state they stop to save resources.
-* You can now disable the automatic playing of animations and control it manually.
 * Only available for API 21 and forward.
 * Project has been updated to the newest Kotlin and Compose versions.
 * Code has been made more maintainable by removing tight coupling and extracting common logic.

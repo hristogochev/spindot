@@ -38,8 +38,8 @@ afterEvaluate {
         publications {
             create<MavenPublication>("maven") {
                 groupId = "com.hristogochev"
-                artifactId = "dotsloader"
-                version = "1.5.0"
+                artifactId = "dotloaders"
+                version = "1.0.0"
 
                 from(components["release"])
             }
