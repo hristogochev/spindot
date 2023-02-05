@@ -4,9 +4,9 @@
 
 This library is a heavily modified fork of
 [DotLoadersPack-Android](https://github.com/agrawalsuneet/DotLoadersPack-Android).</br>
-All code except that required to implement the logic of each animation has been rewritten.</br>
 All modified files have been explicitly marked as such.</br>
 For the original APACHE-2.0 license please view [LICENSE-original](https://github.com/hristogochev/DotLoaders/blob/main/LICENSE-original).
+All code except that required to implement the logic of each animation has been rewritten.</br>
 
 ### Usage
 
