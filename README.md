@@ -40,6 +40,7 @@ implementation 'com.github.hristogochev:dotloaders:1.0.0'
 
 <details>
   <summary>Bounce Loader</summary>
+<br>
 
 ![BounceLoader](./preview/bounceloader.gif)
 
