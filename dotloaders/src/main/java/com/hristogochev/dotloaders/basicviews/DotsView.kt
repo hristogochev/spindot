@@ -21,7 +21,7 @@ class DotsView : View {
     }
 
     // Default input attributes
-    private val defaultDotColor = getColorResource(R.color.loader_defalut)
+    private val defaultDotColor = getColorResource(R.color.loader_default)
     private val defaultDotRadius = 30f
     private val defaultRadius = 60f
     private val defaultDotColors =

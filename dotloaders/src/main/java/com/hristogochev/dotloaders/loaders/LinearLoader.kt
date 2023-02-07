@@ -19,7 +19,7 @@ import com.hristogochev.dotloaders.utils.getColorResource
 class LinearLoader : AnimationView {
 
     // Default input attributes
-    private val defaultInactiveColor = getColorResource(R.color.loader_defalut)
+    private val defaultInactiveColor = getColorResource(R.color.loader_default)
     private val defaultActiveColor = getColorResource(R.color.loader_selected)
     private val defaultDotRadius = 30f
     private val defaultAnimDuration: Long = 500

@@ -25,7 +25,7 @@ class ClassicLoader : AnimationView {
     }
 
     // Default input attributes
-    private val defaultInactiveColor = getColorResource(R.color.loader_defalut)
+    private val defaultInactiveColor = getColorResource(R.color.loader_default)
     private val defaultActiveColor = getColorResource(R.color.loader_selected)
     private val defaultDotRadius = 42f
     private val defaultAnimDuration: Long = 500
