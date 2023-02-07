@@ -7,35 +7,33 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.hristogochev.dotloaders.loaders.TrailLoader
+import com.hristogochev.dotloaders.loaders.ZeeLoader
 
 /**
  * Created by hristogochev on 01/02/23.
  */
 
 @Composable
-fun TrailLoader(
+fun ZeeLoader(
     modifier: Modifier = Modifier,
-    radius: Dp? = null,
     dotRadius: Dp? = null,
-    dotColor: Color? = null,
-    dotTrailCount: Int? = null,
-    animDelay: Long? = null,
+    firstDotColor: Color? = null,
+    secondDotColor: Color? = null,
+    distanceMultiplier: Int? = null,
     animDuration: Long? = null,
     toggleOnVisibilityChange: Boolean? = null,
-    onUpdate: (TrailLoader) -> Unit = {}
+    onUpdate: (ZeeLoader) -> Unit = {}
 ) {
     val dotRadiusPx = with(LocalDensity.current) { dotRadius?.toPx() }
-    val radiusPx = with(LocalDensity.current) { radius?.toPx() }
+
     AndroidView(modifier = modifier, factory = {
-        TrailLoader(
+        ZeeLoader(
             context = it,
             dotRadius = dotRadiusPx,
-            radius = radiusPx,
-            dotColor = dotColor?.toArgb(),
-            dotTrailCount = dotTrailCount,
+            distanceMultiplier = distanceMultiplier,
+            firstDotColor = firstDotColor?.toArgb(),
+            secondDotColor = secondDotColor?.toArgb(),
             animDuration = animDuration,
-            animDelay = animDelay,
             toggleOnVisibilityChange = toggleOnVisibilityChange
         )
     }, update = onUpdate)

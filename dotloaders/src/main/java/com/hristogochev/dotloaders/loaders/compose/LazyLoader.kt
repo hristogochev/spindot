@@ -8,14 +8,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.hristogochev.dotloaders.loaders.JumpLoader
+import com.hristogochev.dotloaders.loaders.LazyLoader
 
 /**
  * Created by hristogochev on 01/02/23.
  */
 
 @Composable
-fun JumpLoader(
+fun LazyLoader(
     modifier: Modifier = Modifier,
     spacing: Dp? = null,
     dotRadius: Dp? = null,
@@ -27,12 +27,12 @@ fun JumpLoader(
     secondDotDelay: Long? = null,
     interpolator: Interpolator? = null,
     toggleOnVisibilityChange: Boolean? = null,
-    onUpdate: (JumpLoader) -> Unit = {}
+    onUpdate: (LazyLoader) -> Unit = {}
 ) {
     val dotRadiusPx = with(LocalDensity.current) { dotRadius?.toPx() }
     val spacingPx = with(LocalDensity.current) { spacing?.toPx()?.toInt() }
     AndroidView(modifier = modifier, factory = {
-        JumpLoader(
+        LazyLoader(
             context = it,
             dotRadius = dotRadiusPx,
             spacing = spacingPx,

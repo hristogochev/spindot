@@ -7,33 +7,35 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.hristogochev.dotloaders.loaders.ZigLoader
+import com.hristogochev.dotloaders.loaders.TrailingLoader
 
 /**
  * Created by hristogochev on 01/02/23.
  */
 
 @Composable
-fun ZigLoader(
+fun TrailingLoader(
     modifier: Modifier = Modifier,
+    radius: Dp? = null,
     dotRadius: Dp? = null,
-    firstDotColor: Color? = null,
-    secondDotColor: Color? = null,
-    distanceMultiplier: Int? = null,
+    dotColor: Color? = null,
+    dotTrailCount: Int? = null,
+    animDelay: Long? = null,
     animDuration: Long? = null,
     toggleOnVisibilityChange: Boolean? = null,
-    onUpdate: (ZigLoader) -> Unit = {}
+    onUpdate: (TrailingLoader) -> Unit = {}
 ) {
     val dotRadiusPx = with(LocalDensity.current) { dotRadius?.toPx() }
-
+    val radiusPx = with(LocalDensity.current) { radius?.toPx() }
     AndroidView(modifier = modifier, factory = {
-        ZigLoader(
+        TrailingLoader(
             context = it,
             dotRadius = dotRadiusPx,
-            distanceMultiplier = distanceMultiplier,
-            firstDotColor = firstDotColor?.toArgb(),
-            secondDotColor = secondDotColor?.toArgb(),
+            radius = radiusPx,
+            dotColor = dotColor?.toArgb(),
+            dotTrailCount = dotTrailCount,
             animDuration = animDuration,
+            animDelay = animDelay,
             toggleOnVisibilityChange = toggleOnVisibilityChange
         )
     }, update = onUpdate)
