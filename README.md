@@ -124,6 +124,21 @@ FidgetLoader(
 )
 ```
 
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.FidgetLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:fidget_dotRadius="30dp"
+    app:fidget_drawOnlyStroke="true"
+    app:fidget_strokeWidth="8dp"
+    app:fidget_firstDotColor="@color/red"
+    app:fidget_secondDotColor="@color/green"
+    app:fidget_thirdDotColor="@color/blue"
+    app:fidget_distanceMultiplier="4"
+    app:fidget_animDuration="500" />
+```
+
 </details>
 
 <details>
@@ -145,6 +160,21 @@ LazyLoader(
 )
 ```
 
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.LazyLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:lazy_spacing="5dp"
+    app:lazy_dotRadius="10dp"
+    app:lazy_firstDotColor="@color/red"
+    app:lazy_secondDotColor="@color/green"
+    app:lazy_thirdDotColor="@color/blue"
+    app:lazy_animDuration="500"
+    app:lazy_firstDotDelay="100"
+    app:lazy_secondDotDelay="200" />
+```
+
 </details>
 
 <details>
@@ -160,6 +190,17 @@ LightsLoader(
     dotRadius = 12.dp,
     dotColor = Color.Green
 )
+```
+
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.LightsLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:lights_size="4"
+    app:lights_spacing="5dp"
+    app:lights_dotRadius="12dp"
+    app:lights_dotColor="@color/green" />
 ```
 
 </details>
@@ -183,6 +224,23 @@ LinearLoader(
     expandLeadingDot = true,
     expandedLeadingDotRadius = 10.dp
 )
+```
+
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.LinearLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:linear_activeColor="@color/light_gray"
+    app:linear_inactiveColor="@color/gray"
+    app:linear_dotRadius="6dp"
+    app:linear_dotCount="8"
+    app:linear_showRunningShadow="false"
+    app:linear_spacing="6dp"
+    app:linear_animDuration="200"
+    app:linear_singleDuration="false"
+    app:linear_expandLeadingDot="false"
+    app:linear_expandLeadingDotRadius="10dp"  />
 ```
 
 </details>
@@ -211,6 +269,18 @@ PullingLoader(
 )
 ```
 
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.PullingLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:pulling_radius="42dp"
+    app:pulling_dotRadius="10dp"
+    app:pulling_dotColors="@array/dot_colors"
+    app:pulling_animDuration="2000" />
+```
+
+
 </details>
 
 <details>
@@ -228,6 +298,19 @@ PulsingLoader(
     animDelay = 200,
     animDuration = 1000,
 )
+```
+
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.PulsingLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:pulsing_dotRadius="12dp"
+    app:pulsing_dotColor="@color/green"
+    app:pulsing_dotCount="6"
+    app:pulsing_spacing="4dp"
+    app:pulsing_animDelay="200"
+    app:pulsing_animDuration="1000" />
 ```
 
 </details>
@@ -249,6 +332,19 @@ SlidingLoader(
     animDuration = 2000
 )
 ```
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.SlidingLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:sliding_dotRadius="10dp"
+    app:sliding_firstDotColor="@color/red"
+    app:sliding_secondDotColor="@color/green"
+    app:sliding_thirdDotColor="@color/blue"
+    app:sliding_spacing="6dp"
+    app:sliding_distanceToMove="12"
+    app:sliding_animDuration="2000" />
+```
 
 </details>
 
@@ -266,6 +362,16 @@ SpinningLoader(
     dotColor = Color.Green,
     animDuration = 4000
 )
+```
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.SpinningLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:spinning_radius="40dp"
+    app:spinning_dotRadius="10dp"
+    app:spinning_dotColor="@color/green"
+    app:spinning_animDuration="4000" />
 ```
 
 </details>
@@ -287,6 +393,19 @@ TrailingLoader(
 )
 ```
 
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.TrailingLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:trailing_radius="40dp"
+    app:trailing_dotRadius="10dp"
+    app:trailing_dotColor="@color/green"
+    app:trailing_dotTrailCount="5"
+    app:trailing_animDelay="200"
+    app:trailing_animDuration="1200" />
+```
+
 </details>
 
 <details>
@@ -303,6 +422,18 @@ ZeeLoader(
     distanceMultiplier = 4,
     animDuration = 300
 )
+```
+
+#### XML implementation
+```xml
+<com.hristogochev.dotloaders.loaders.ZeeLoader
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:zee_dotRadius="24dp"
+    app:zee_firstDotColor="@color/green"
+    app:zee_secondDotColor="@color/blue"
+    app:zee_distanceMultiplier="4"
+    app:zee_animDuration="300" />
 ```
 
 </details>
