@@ -72,6 +72,7 @@ BounceLoader(
 
 <details>
   <summary>Classic Loader</summary>
+<br>
 
 ![ClassicLoader](./preview/classicloader.gif)
 
@@ -108,6 +109,7 @@ ClassicLoader(
 
 <details>
   <summary>Fidget Loader</summary>
+<br>
 
 ![FidgetLoader](./preview/fidgetloader.gif)
 
@@ -144,6 +146,7 @@ FidgetLoader(
 
 <details>
   <summary>Lazy Loader</summary>
+<br>
 
 ![LazyLoader](./preview/lazyloader.gif)
 
@@ -180,6 +183,7 @@ LazyLoader(
 
 <details>
   <summary>Lights Loader</summary>
+<br>
 
 ![LightsLoader](./preview/lightsloader.gif)
 
@@ -208,6 +212,7 @@ LightsLoader(
 
 <details>
   <summary>Linear Loader</summary>
+<br>
 
 ![LinearLoader](./preview/linearloader.gif)
 
@@ -248,6 +253,7 @@ LinearLoader(
 
 <details>
   <summary>Pulling Loader</summary>
+<br>
 
 ![PullingLoader](./preview/pullingloader.gif)
 
@@ -286,6 +292,7 @@ PullingLoader(
 
 <details>
   <summary>Pulsing Loader</summary>
+<br>
 
 ![PulsingLoader](./preview/pulsingloader.gif)
 
@@ -318,6 +325,7 @@ PulsingLoader(
 
 <details>
   <summary>Sliding Loader</summary>
+<br>
 
 ![SlidingLoader](./preview/slidingloader.gif)
 
@@ -352,6 +360,7 @@ SlidingLoader(
 
 <details>
   <summary>Spinning Loader</summary>
+<br>
 
 ![SpinningLoader](./preview/spinningloader.gif)
 
@@ -379,6 +388,7 @@ SpinningLoader(
 
 <details>
   <summary>Trailing Loader</summary>
+<br>
 
 ![TrailingLoader](./preview/trailingloader.gif)
 
@@ -411,6 +421,7 @@ TrailingLoader(
 
 <details>
   <summary>Zee Loader</summary>
+<br>
 
 ![ZeeLoader](./preview/zeeloader.gif)
 
