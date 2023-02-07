@@ -16,14 +16,14 @@ import com.hristogochev.dotloaders.utils.onAnimationEnd
  *
  * Modified by hristogochev on 02/02/23.
  */
-class PulseLoader : AnimationLayout {
+class PulsingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
     private val defaultSpacing = 15
     private val defaultDotsColor = getColorResource(R.color.loader_selected)
     private val defaultAnimDuration: Long = 500
-    private val defaultInterpolator = LinearInterpolator()
+    private val defaultInterpolator = AccelerateInterpolator()
     private val defaultDotCount = 8
     private val defaultAnimDelay: Long = 100
 
@@ -89,46 +89,50 @@ class PulseLoader : AnimationLayout {
     override fun initAttributes(attrs: AttributeSet) {
         super.initAttributes(attrs)
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PulseLoader, 0, 0)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PulsingLoader, 0, 0)
 
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.PulseLoader_pulse_dotRadius,
-                defaultDotRadius
-            )
-        this.spacing =
-            typedArray.getDimensionPixelSize(
-                R.styleable.PulseLoader_pulse_spacing,
-                defaultSpacing
-            )
-        this.dotColor = typedArray.getColor(
-            R.styleable.PulseLoader_pulse_dotColor,
-            defaultDotsColor
-        )
+        try {
+            with(typedArray) {
+                dotRadius =
+                    getDimension(
+                        R.styleable.PulsingLoader_pulsing_dotRadius,
+                        defaultDotRadius
+                    )
+                spacing =
+                    getDimensionPixelSize(
+                        R.styleable.PulsingLoader_pulsing_spacing,
+                        defaultSpacing
+                    )
+                dotColor = getColor(
+                    R.styleable.PulsingLoader_pulsing_dotColor,
+                    defaultDotsColor
+                )
 
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.PulseLoader_pulse_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
+                animDuration =
+                    getInt(
+                        R.styleable.PulsingLoader_pulsing_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
 
-        this.loaderInterpolator = AnimationUtils.loadInterpolator(
-            context,
-            typedArray.getResourceId(
-                R.styleable.PulseLoader_pulse_interpolator,
-                android.R.anim.linear_interpolator
-            )
-        )
+                loaderInterpolator = AnimationUtils.loadInterpolator(
+                    context,
+                    getResourceId(
+                        R.styleable.PulsingLoader_pulsing_interpolator,
+                        android.R.anim.linear_interpolator
+                    )
+                )
 
-        this.dotCount =
-            typedArray.getInt(R.styleable.PulseLoader_pulse_dotCount, defaultDotCount)
-        this.animDelay =
-            typedArray.getInt(
-                R.styleable.PulseLoader_pulse_animDelay,
-                defaultAnimDelay.toInt()
-            ).toLong()
-
-        typedArray.recycle()
+                dotCount =
+                    getInt(R.styleable.PulsingLoader_pulsing_dotCount, defaultDotCount)
+                animDelay =
+                    getInt(
+                        R.styleable.PulsingLoader_pulsing_animDelay,
+                        defaultAnimDelay.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

@@ -32,12 +32,16 @@ abstract class AnimationView : View {
     open fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimationView, 0, 0)
 
-        this.toggleOnVisibilityChange = typedArray.getBoolean(
-            R.styleable.AnimationView_view_toggleOnVisibilityChange,
-            defaultToggleOnVisibilityChange
-        )
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                toggleOnVisibilityChange = getBoolean(
+                    R.styleable.AnimationView_view_toggleOnVisibilityChange,
+                    defaultToggleOnVisibilityChange
+                )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     fun startAnimation() {

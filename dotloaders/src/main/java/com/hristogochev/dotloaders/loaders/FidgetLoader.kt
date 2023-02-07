@@ -67,6 +67,7 @@ class FidgetLoader : AnimationLayout {
         firstDotColor: Int? = null,
         secondDotColor: Int? = null,
         thirdDotColor: Int? = null,
+        animDuration: Long? = null,
         toggleOnVisibilityChange: Boolean? = null
     ) : super(context) {
         this.dotRadius = dotRadius ?: defaultDotRadius
@@ -76,6 +77,7 @@ class FidgetLoader : AnimationLayout {
         this.firstDotColor = firstDotColor ?: defaultFirstDotColor
         this.secondDotColor = secondDotColor ?: defaultSecondDotColor
         this.thirdDotColor = thirdDotColor ?: defaultThirdDotColor
+        this.animDuration = animDuration ?: defaultAnimDuration
         this.toggleOnVisibilityChange = toggleOnVisibilityChange ?: defaultToggleOnVisibilityChange
         initViews()
         initPositions()
@@ -110,44 +112,47 @@ class FidgetLoader : AnimationLayout {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.FidgetLoader, 0, 0)
 
-        this.dotRadius = typedArray.getDimension(
-            R.styleable.FidgetLoader_fidget_dotRadius,
-            defaultDotRadius
-        )
-        this.distanceMultiplier = typedArray.getInteger(
-            R.styleable.FidgetLoader_fidget_distanceMultiplier,
-            defaultDistanceMultiplier
-        )
-        this.firstDotColor = typedArray.getColor(
-            R.styleable.FidgetLoader_fidget_firstDotColor,
-            defaultFirstDotColor
-        )
-        this.secondDotColor = typedArray.getColor(
-            R.styleable.FidgetLoader_fidget_secondDotColor,
-            defaultSecondDotColor
-        )
-        this.thirdDotColor = typedArray.getColor(
-            R.styleable.FidgetLoader_fidget_thirdDotColor,
-            defaultThirdDotColor
-        )
-        this.drawOnlyStroke = typedArray.getBoolean(
-            R.styleable.FidgetLoader_fidget_drawOnlyStroke,
-            defaultDrawOnlyStroke
-        )
-        if (drawOnlyStroke) {
-            this.strokeWidth = typedArray.getDimensionPixelSize(
-                R.styleable.FidgetLoader_fidget_strokeWidth,
-                defaultStrokeWidth
-            )
+        try {
+            with(typedArray) {
+                dotRadius = getDimension(
+                    R.styleable.FidgetLoader_fidget_dotRadius,
+                    defaultDotRadius
+                )
+                distanceMultiplier = getInteger(
+                    R.styleable.FidgetLoader_fidget_distanceMultiplier,
+                    defaultDistanceMultiplier
+                )
+                firstDotColor = getColor(
+                    R.styleable.FidgetLoader_fidget_firstDotColor,
+                    defaultFirstDotColor
+                )
+                secondDotColor = getColor(
+                    R.styleable.FidgetLoader_fidget_secondDotColor,
+                    defaultSecondDotColor
+                )
+                thirdDotColor = getColor(
+                    R.styleable.FidgetLoader_fidget_thirdDotColor,
+                    defaultThirdDotColor
+                )
+                drawOnlyStroke = getBoolean(
+                    R.styleable.FidgetLoader_fidget_drawOnlyStroke,
+                    defaultDrawOnlyStroke
+                )
+                if (drawOnlyStroke) {
+                    strokeWidth = getDimensionPixelSize(
+                        R.styleable.FidgetLoader_fidget_strokeWidth,
+                        defaultStrokeWidth
+                    )
+                }
+                animDuration =
+                    getInt(
+                        R.styleable.FidgetLoader_fidget_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
         }
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.FidgetLoader_fidget_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-
-
-        typedArray.recycle()
     }
 
     override fun initViews() {

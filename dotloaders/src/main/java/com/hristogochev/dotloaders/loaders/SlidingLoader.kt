@@ -105,40 +105,44 @@ class SlidingLoader : AnimationLayout {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingLoader, 0, 0)
 
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.SlidingLoader_sliding_dotRadius,
-                defaultDotRadius
-            )
-        this.spacing =
-            typedArray.getDimensionPixelSize(
-                R.styleable.SlidingLoader_sliding_spacing,
-                defaultSpacing
-            )
-        this.firstDotColor = typedArray.getColor(
-            R.styleable.SlidingLoader_sliding_firstDotColor,
-            defaultFirstDotColor
-        )
-        this.secondDotColor = typedArray.getColor(
-            R.styleable.SlidingLoader_sliding_secondDotColor,
-            defaultSecondDotColor
-        )
-        this.thirdDotColor = typedArray.getColor(
-            R.styleable.SlidingLoader_sliding_thirdDotColor,
-            defaultThirdDotColor
-        )
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.SlidingLoader_sliding_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-        this.distanceToMove =
-            typedArray.getInteger(
-                R.styleable.SlidingLoader_sliding_distanceToMove,
-                defaultDistanceToMove
-            )
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                dotRadius =
+                    getDimension(
+                        R.styleable.SlidingLoader_sliding_dotRadius,
+                        defaultDotRadius
+                    )
+                spacing =
+                    getDimensionPixelSize(
+                        R.styleable.SlidingLoader_sliding_spacing,
+                        defaultSpacing
+                    )
+                firstDotColor = getColor(
+                    R.styleable.SlidingLoader_sliding_firstDotColor,
+                    defaultFirstDotColor
+                )
+                secondDotColor = getColor(
+                    R.styleable.SlidingLoader_sliding_secondDotColor,
+                    defaultSecondDotColor
+                )
+                thirdDotColor = getColor(
+                    R.styleable.SlidingLoader_sliding_thirdDotColor,
+                    defaultThirdDotColor
+                )
+                animDuration =
+                    getInt(
+                        R.styleable.SlidingLoader_sliding_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+                distanceToMove =
+                    getInteger(
+                        R.styleable.SlidingLoader_sliding_distanceToMove,
+                        defaultDistanceToMove
+                    )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

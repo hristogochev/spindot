@@ -63,16 +63,16 @@
         <attr name="sliding_distanceToMove" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="JumpLoader">
-        <attr name="jump_dotRadius" format="dimension" />
-        <attr name="jump_spacing" format="dimension" />
-        <attr name="jump_firstDotColor" format="color" />
-        <attr name="jump_secondDotColor" format="color" />
-        <attr name="jump_thirdDotColor" format="color" />
-        <attr name="jump_animDuration" format="integer" />
-        <attr name="jump_interpolator" format="reference" />
-        <attr name="jump_firstDotDelay" format="integer" />
-        <attr name="jump_secondDotDelay" format="integer" />
+    <declare-styleable name="LazyLoader">
+        <attr name="lazy_dotRadius" format="dimension" />
+        <attr name="lazy_spacing" format="dimension" />
+        <attr name="lazy_firstDotColor" format="color" />
+        <attr name="lazy_secondDotColor" format="color" />
+        <attr name="lazy_thirdDotColor" format="color" />
+        <attr name="lazy_animDuration" format="integer" />
+        <attr name="lazy_interpolator" format="reference" />
+        <attr name="lazy_firstDotDelay" format="integer" />
+        <attr name="lazy_secondDotDelay" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="LinearLoader">
@@ -97,41 +97,41 @@
         <attr name="spinning_animDuration" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="TrailLoader">
-        <attr name="trail_dotRadius" format="dimension" />
-        <attr name="trail_radius" format="dimension" />
-        <attr name="trail_dotColor" format="color" />
-        <attr name="trail_dotTrailCount" format="integer" />
-        <attr name="trail_animDuration" format="integer" />
-        <attr name="trail_animDelay" format="integer" />
+    <declare-styleable name="TrailingLoader">
+        <attr name="trailing_dotRadius" format="dimension" />
+        <attr name="trailing_radius" format="dimension" />
+        <attr name="trailing_dotColor" format="color" />
+        <attr name="trailing_dotTrailCount" format="integer" />
+        <attr name="trailing_animDuration" format="integer" />
+        <attr name="trailing_animDelay" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="PulseLoader">
-        <attr name="pulse_dotRadius" format="dimension" />
-        <attr name="pulse_spacing" format="dimension" />
-        <attr name="pulse_dotColor" format="color" />
-        <attr name="pulse_animDuration" format="integer" />
-        <attr name="pulse_interpolator" format="reference" />
-        <attr name="pulse_dotCount" format="integer" />
-        <attr name="pulse_animDelay" format="integer" />
+    <declare-styleable name="PulsingLoader">
+        <attr name="pulsing_dotRadius" format="dimension" />
+        <attr name="pulsing_spacing" format="dimension" />
+        <attr name="pulsing_dotColor" format="color" />
+        <attr name="pulsing_animDuration" format="integer" />
+        <attr name="pulsing_interpolator" format="reference" />
+        <attr name="pulsing_dotCount" format="integer" />
+        <attr name="pulsing_animDelay" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="ZigLoader">
-        <attr name="zig_dotRadius" format="dimension" />
-        <attr name="zig_distanceMultiplier" format="integer" />
-        <attr name="zig_firstDotColor" format="color" />
-        <attr name="zig_secondDotColor" format="color" />
-        <attr name="zig_animDuration" format="integer" />
+    <declare-styleable name="ZeeLoader">
+        <attr name="zee_dotRadius" format="dimension" />
+        <attr name="zee_distanceMultiplier" format="integer" />
+        <attr name="zee_firstDotColor" format="color" />
+        <attr name="zee_secondDotColor" format="color" />
+        <attr name="zee_animDuration" format="integer" />
     </declare-styleable>
 
 
-    <declare-styleable name="PullLoader">
-        <attr name="pull_dotRadius" format="dimension" />
-        <attr name="pull_useMultipleColors" format="boolean" />
-        <attr name="pull_dotColors" format="reference" />
-        <attr name="pull_dotColor" format="color" />
-        <attr name="pull_radius" format="dimension" />
-        <attr name="pull_animDuration" format="integer" />
+    <declare-styleable name="PullingLoader">
+        <attr name="pulling_dotRadius" format="dimension" />
+        <attr name="pulling_useMultipleColors" format="boolean" />
+        <attr name="pulling_dotColors" format="reference" />
+        <attr name="pulling_dotColor" format="color" />
+        <attr name="pulling_radius" format="dimension" />
+        <attr name="pulling_animDuration" format="integer" />
     </declare-styleable>
 
 

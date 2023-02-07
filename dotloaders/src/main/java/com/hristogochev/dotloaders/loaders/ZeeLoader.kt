@@ -18,7 +18,7 @@ import com.hristogochev.dotloaders.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class ZigLoader : AnimationLayout {
+class ZeeLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 50f
@@ -90,29 +90,35 @@ class ZigLoader : AnimationLayout {
     override fun initAttributes(attrs: AttributeSet) {
         super.initAttributes(attrs)
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZigLoader, 0, 0)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ZeeLoader, 0, 0)
 
-        this.dotRadius = typedArray.getDimension(
-            R.styleable.ZigLoader_zig_dotRadius,
-            defaultDotRadius
-        )
-        this.distanceMultiplier = typedArray.getInteger(
-            R.styleable.ZigLoader_zig_distanceMultiplier,
-            defaultDistanceMultiplier
-        )
-        this.firstDotColor = typedArray.getColor(
-            R.styleable.ZigLoader_zig_firstDotColor,
-            defaultFirstDotColor
-        )
-        this.secondDotColor = typedArray.getColor(
-            R.styleable.ZigLoader_zig_secondDotColor,
-            defaultSecondDotColor
-        )
-        this.animDuration =
-            typedArray.getInt(R.styleable.ZigLoader_zig_animDuration, defaultAnimDuration.toInt())
-                .toLong()
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                dotRadius = getDimension(
+                    R.styleable.ZeeLoader_zee_dotRadius,
+                    defaultDotRadius
+                )
+                distanceMultiplier = getInteger(
+                    R.styleable.ZeeLoader_zee_distanceMultiplier,
+                    defaultDistanceMultiplier
+                )
+                firstDotColor = getColor(
+                    R.styleable.ZeeLoader_zee_firstDotColor,
+                    defaultFirstDotColor
+                )
+                secondDotColor = getColor(
+                    R.styleable.ZeeLoader_zee_secondDotColor,
+                    defaultSecondDotColor
+                )
+                animDuration =
+                    getInt(
+                        R.styleable.ZeeLoader_zee_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
 

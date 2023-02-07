@@ -31,12 +31,16 @@ abstract class AnimationLayout : LinearLayout {
     open fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimationLayout, 0, 0)
 
-        this.toggleOnVisibilityChange = typedArray.getBoolean(
-            R.styleable.AnimationLayout_layout_toggleOnVisibilityChange,
-            defaultToggleOnVisibilityChange
-        )
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                toggleOnVisibilityChange = getBoolean(
+                    R.styleable.AnimationLayout_layout_toggleOnVisibilityChange,
+                    defaultToggleOnVisibilityChange
+                )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     abstract fun initViews()

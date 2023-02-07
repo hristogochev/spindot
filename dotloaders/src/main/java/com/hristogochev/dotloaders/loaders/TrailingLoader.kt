@@ -17,7 +17,7 @@ import com.hristogochev.dotloaders.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class TrailLoader : AnimationLayout {
+class TrailingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 50f
@@ -42,7 +42,7 @@ class TrailLoader : AnimationLayout {
 
     // Animation attributes
     private var calWidthHeight: Int = 0
-    private val accelerateDecelerateInterpolator=AccelerateDecelerateInterpolator()
+    private val accelerateDecelerateInterpolator = AccelerateDecelerateInterpolator()
 
     // Custom constructors
     constructor(
@@ -88,34 +88,38 @@ class TrailLoader : AnimationLayout {
         super.initAttributes(attrs)
 
         val typedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.TrailLoader, 0, 0)
+            context.obtainStyledAttributes(attrs, R.styleable.TrailingLoader, 0, 0)
 
-        this.dotRadius = typedArray.getDimension(
-            R.styleable.TrailLoader_trail_dotRadius,
-            defaultDotRadius
-        )
-        this.radius = typedArray.getDimension(
-            R.styleable.TrailLoader_trail_radius,
-            defaultRadius
-        )
-        this.dotColor = typedArray.getColor(
-            R.styleable.TrailLoader_trail_dotColor,
-            defaultDotColor
-        )
-        this.dotTrailCount = typedArray.getInt(
-            R.styleable.TrailLoader_trail_dotTrailCount,
-            defaultDotTrailCount
-        )
-        this.animDuration = typedArray.getInt(
-            R.styleable.TrailLoader_trail_animDuration,
-            defaultAnimDuration.toInt()
-        ).toLong()
-        this.animDelay = typedArray.getInt(
-            R.styleable.TrailLoader_trail_animDelay,
-            (animDuration / defaultAnimDelayDivider).toInt()
-        ).toLong()
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                dotRadius = getDimension(
+                    R.styleable.TrailingLoader_trailing_dotRadius,
+                    defaultDotRadius
+                )
+                radius = getDimension(
+                    R.styleable.TrailingLoader_trailing_radius,
+                    defaultRadius
+                )
+                dotColor = getColor(
+                    R.styleable.TrailingLoader_trailing_dotColor,
+                    defaultDotColor
+                )
+                dotTrailCount = getInt(
+                    R.styleable.TrailingLoader_trailing_dotTrailCount,
+                    defaultDotTrailCount
+                )
+                animDuration = getInt(
+                    R.styleable.TrailingLoader_trailing_animDuration,
+                    defaultAnimDuration.toInt()
+                ).toLong()
+                animDelay = getInt(
+                    R.styleable.TrailingLoader_trailing_animDelay,
+                    (animDuration / defaultAnimDelayDivider).toInt()
+                ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

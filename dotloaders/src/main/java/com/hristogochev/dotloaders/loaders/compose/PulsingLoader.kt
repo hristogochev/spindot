@@ -8,14 +8,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.hristogochev.dotloaders.loaders.PulseLoader
+import com.hristogochev.dotloaders.loaders.PulsingLoader
 
 /**
  * Created by hristogochev on 01/02/23.
  */
 
 @Composable
-fun PulseLoader(
+fun PulsingLoader(
     modifier: Modifier = Modifier,
     dotRadius: Dp? = null,
     dotColor: Color? = null,
@@ -25,12 +25,12 @@ fun PulseLoader(
     animDuration: Long? = null,
     interpolator: Interpolator? = null,
     toggleOnVisibilityChange: Boolean? = null,
-    onUpdate: (PulseLoader) -> Unit = {}
+    onUpdate: (PulsingLoader) -> Unit = {}
 ) {
     val dotRadiusPx = with(LocalDensity.current) { dotRadius?.toPx()}
     val spacingPx = with(LocalDensity.current) { spacing?.toPx()?.toInt() }
     AndroidView(modifier = modifier, factory = {
-        PulseLoader(
+        PulsingLoader(
             context = it,
             dotRadius = dotRadiusPx,
             spacing = spacingPx,

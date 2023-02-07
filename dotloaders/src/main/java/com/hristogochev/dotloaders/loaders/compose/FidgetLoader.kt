@@ -23,6 +23,7 @@ fun FidgetLoader(
     secondDotColor: Color? = null,
     thirdDotColor: Color? = null,
     distanceMultiplier: Int? = null,
+    animDuration: Long? = null,
     toggleOnVisibilityChange: Boolean? = null,
     onUpdate: (FidgetLoader) -> Unit = {}
 ) {
@@ -38,6 +39,7 @@ fun FidgetLoader(
             firstDotColor = firstDotColor?.toArgb(),
             secondDotColor = secondDotColor?.toArgb(),
             thirdDotColor = thirdDotColor?.toArgb(),
+            animDuration = animDuration,
             toggleOnVisibilityChange = toggleOnVisibilityChange
         )
     }, update = onUpdate)

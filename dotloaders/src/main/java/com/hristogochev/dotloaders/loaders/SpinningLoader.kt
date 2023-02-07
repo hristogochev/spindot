@@ -82,28 +82,32 @@ class SpinningLoader : AnimationLayout {
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.SpinningLoader, 0, 0)
 
-        this.dotRadius = typedArray.getDimension(
-            R.styleable.SpinningLoader_spinning_dotRadius,
-            defaultDotRadius
-        )
+        try {
+            with(typedArray) {
+                dotRadius = getDimension(
+                    R.styleable.SpinningLoader_spinning_dotRadius,
+                    defaultDotRadius
+                )
 
-        this.dotColor = typedArray.getColor(
-            R.styleable.SpinningLoader_spinning_dotColor,
-            defaultDotColor
-        )
+                dotColor = getColor(
+                    R.styleable.SpinningLoader_spinning_dotColor,
+                    defaultDotColor
+                )
 
-        this.radius = typedArray.getDimension(
-            R.styleable.SpinningLoader_spinning_radius,
-            defaultRadius
-        )
+                radius = getDimension(
+                    R.styleable.SpinningLoader_spinning_radius,
+                    defaultRadius
+                )
 
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.SpinningLoader_spinning_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-
-        typedArray.recycle()
+                animDuration =
+                    getInt(
+                        R.styleable.SpinningLoader_spinning_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

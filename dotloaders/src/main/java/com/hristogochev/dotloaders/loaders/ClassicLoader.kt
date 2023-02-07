@@ -144,52 +144,56 @@ class ClassicLoader : AnimationView {
     override fun initAttributes(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ClassicLoader, 0, 0)
 
-        this.inactiveColor =
-            typedArray.getColor(
-                R.styleable.ClassicLoader_classic_inactiveColor,
-                defaultInactiveColor
-            )
-        this.activeColor =
-            typedArray.getColor(
-                R.styleable.ClassicLoader_classic_activeColor,
-                defaultActiveColor
-            )
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.ClassicLoader_classic_dotRadius,
-                defaultDotRadius
-            )
+        try {
+            with(typedArray) {
+                inactiveColor =
+                    getColor(
+                        R.styleable.ClassicLoader_classic_inactiveColor,
+                        defaultInactiveColor
+                    )
+                activeColor =
+                    getColor(
+                        R.styleable.ClassicLoader_classic_activeColor,
+                        defaultActiveColor
+                    )
+                dotRadius =
+                    getDimension(
+                        R.styleable.ClassicLoader_classic_dotRadius,
+                        defaultDotRadius
+                    )
 
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.ClassicLoader_classic_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
+                animDuration =
+                    getInt(
+                        R.styleable.ClassicLoader_classic_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
 
-        this.showRunningShadow =
-            typedArray.getBoolean(
-                R.styleable.ClassicLoader_classic_showRunningShadow,
-                defaultShowRunningShadow
-            )
+                showRunningShadow =
+                    getBoolean(
+                        R.styleable.ClassicLoader_classic_showRunningShadow,
+                        defaultShowRunningShadow
+                    )
 
-        this.firstShadowColor =
-            typedArray.getColor(
-                R.styleable.ClassicLoader_classic_firstShadowColor,
-                defaultFirstShadowColor
-            )
-        this.secondShadowColor =
-            typedArray.getColor(
-                R.styleable.ClassicLoader_classic_secondShadowColor,
-                defaultSecondShadowColor
-            )
+                firstShadowColor =
+                    getColor(
+                        R.styleable.ClassicLoader_classic_firstShadowColor,
+                        defaultFirstShadowColor
+                    )
+                secondShadowColor =
+                    getColor(
+                        R.styleable.ClassicLoader_classic_secondShadowColor,
+                        defaultSecondShadowColor
+                    )
 
-        this.radius =
-            typedArray.getDimension(
-                R.styleable.ClassicLoader_classic_radius,
-                defaultRadius
-            )
-
-        typedArray.recycle()
+                radius =
+                    getDimension(
+                        R.styleable.ClassicLoader_classic_radius,
+                        defaultRadius
+                    )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
 

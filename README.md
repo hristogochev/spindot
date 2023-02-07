@@ -4,10 +4,6 @@
 
 This library is a heavily modified fork of
 [DotLoadersPack-Android](https://github.com/agrawalsuneet/DotLoadersPack-Android).</br>
-All modified files have been explicitly marked as such.</br>
-For the original Apache-2.0 license please
-view [LICENSE-original](https://github.com/hristogochev/DotLoaders/blob/main/LICENSE-original).</br>
-All code except that required to implement the logic of each animation has been rewritten.</br>
 
 ### Usage
 
@@ -39,3 +35,35 @@ implementation 'com.github.hristogochev:dotloaders:1.0.0'
 * Project has been updated to the newest Kotlin and Compose versions.
 * Code has been made more maintainable by removing tight coupling and extracting common logic.
 * Each loader can now be modified separately without breaking the others.
+
+### BounceLoader
+
+<details>
+  <summary>Implementations</summary>
+
+#### Compose
+```kotlin
+BounceLoader(
+    ballRadius = 30.dp,
+    ballColor = Color.Magenta,
+    showShadow = true,
+    shadowColor = Color.LightGray,
+    animDuration = 1200
+)
+```
+
+#### XML
+```xml
+
+<com.hristogochev.dotloaders.loaders.BounceLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:bounce_ballRadius="30dp"
+    app:bounce_ballcolor="@color/magenta"
+    app:bounce_showShadow="true"
+    app:bounce_shadowColor="@color/light_gray"
+    app:bounce_animDuration="1200" />
+```
+
+</details>
+

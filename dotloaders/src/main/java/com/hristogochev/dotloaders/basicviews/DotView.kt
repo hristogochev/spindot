@@ -88,29 +88,33 @@ class DotView : View {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DotView, 0, 0)
 
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.DotView_dotRadius,
-                defaultDotRadius
-            )
-        this.dotColor =
-            typedArray.getColor(R.styleable.DotView_dotColor, defaultDotColor)
-        this.drawOnlyStroke =
-            typedArray.getBoolean(
-                R.styleable.DotView_dotDrawOnlyStroke,
-                defaultDrawOnlyStroke
-            )
-        if (drawOnlyStroke) {
-            this.strokeWidth =
-                typedArray.getDimensionPixelSize(
-                    R.styleable.DotView_dotStrokeWidth,
-                    defaultStrokeWidth
-                )
+        try{
+            with(typedArray){
+                dotRadius =
+                    getDimension(
+                        R.styleable.DotView_dotRadius,
+                        defaultDotRadius
+                    )
+                dotColor =
+                    getColor(R.styleable.DotView_dotColor, defaultDotColor)
+                drawOnlyStroke =
+                    getBoolean(
+                        R.styleable.DotView_dotDrawOnlyStroke,
+                        defaultDrawOnlyStroke
+                    )
+                if (drawOnlyStroke) {
+                    strokeWidth =
+                        getDimensionPixelSize(
+                            R.styleable.DotView_dotStrokeWidth,
+                            defaultStrokeWidth
+                        )
+                }
+                isAntiAlias =
+                    getBoolean(R.styleable.DotView_dotIsAntiAlias, defaultIsAntiAlias)
+            }
+        }finally {
+            typedArray.recycle()
         }
-        this.isAntiAlias =
-            typedArray.getBoolean(R.styleable.DotView_dotIsAntiAlias, defaultIsAntiAlias)
-
-        typedArray.recycle()
     }
 
     private fun initValues() {

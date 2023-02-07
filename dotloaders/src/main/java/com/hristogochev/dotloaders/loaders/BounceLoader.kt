@@ -98,27 +98,31 @@ class BounceLoader : AnimationLayout {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BounceLoader, 0, 0)
 
-        this.ballRadius = typedArray.getDimension(
-            R.styleable.BounceLoader_bounce_ballRadius,
-            defaultBallRadius
-        )
-        this.ballColor = typedArray.getColor(
-            R.styleable.BounceLoader_bounce_ballColor,
-            defaultBallColor
-        )
-        this.shadowColor = typedArray.getColor(
-            R.styleable.BounceLoader_bounce_shadowColor,
-            defaultShadowColor
-        )
-        this.showShadow =
-            typedArray.getBoolean(R.styleable.BounceLoader_bounce_showShadow, defaultShowShadow)
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.BounceLoader_bounce_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                ballRadius = getDimension(
+                    R.styleable.BounceLoader_bounce_ballRadius,
+                    defaultBallRadius
+                )
+                ballColor = getColor(
+                    R.styleable.BounceLoader_bounce_ballColor,
+                    defaultBallColor
+                )
+                shadowColor = getColor(
+                    R.styleable.BounceLoader_bounce_shadowColor,
+                    defaultShadowColor
+                )
+                showShadow =
+                    getBoolean(R.styleable.BounceLoader_bounce_showShadow, defaultShowShadow)
+                animDuration =
+                    getInt(
+                        R.styleable.BounceLoader_bounce_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
 

@@ -18,7 +18,7 @@ import com.hristogochev.dotloaders.utils.onAnimationEnd
  *
  * Modified by hristogochev on 02/02/23.
  */
-class JumpLoader : AnimationLayout {
+class LazyLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
@@ -27,7 +27,7 @@ class JumpLoader : AnimationLayout {
     private val defaultSecondDotColor = getColorResource(R.color.loader_selected)
     private val defaultThirdDotColor = getColorResource(R.color.loader_selected)
     private val defaultAnimDuration: Long = 500
-    private val defaultInterpolator = LinearInterpolator()
+    private val defaultInterpolator = DecelerateInterpolator()
     private val defaultFirstDotDelay: Long = 100
     private val defaultSecondDotDelay: Long = 200
 
@@ -101,54 +101,58 @@ class JumpLoader : AnimationLayout {
     override fun initAttributes(attrs: AttributeSet) {
         super.initAttributes(attrs)
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.JumpLoader, 0, 0)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LazyLoader, 0, 0)
 
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.JumpLoader_jump_dotRadius,
-                defaultDotRadius
-            )
-        this.spacing =
-            typedArray.getDimensionPixelSize(
-                R.styleable.JumpLoader_jump_spacing,
-                defaultSpacing
-            )
-        this.firstDotColor = typedArray.getColor(
-            R.styleable.JumpLoader_jump_firstDotColor,
-            defaultFirstDotColor
-        )
-        this.secondDotColor = typedArray.getColor(
-            R.styleable.JumpLoader_jump_secondDotColor,
-            defaultSecondDotColor
-        )
-        this.thirdDotColor = typedArray.getColor(
-            R.styleable.JumpLoader_jump_thirdDotColor,
-            defaultThirdDotColor
-        )
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.JumpLoader_jump_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-        this.animInterpolator = AnimationUtils.loadInterpolator(
-            context,
-            typedArray.getResourceId(
-                R.styleable.JumpLoader_jump_interpolator,
-                android.R.anim.linear_interpolator
-            )
-        )
-        this.firstDotDelay =
-            typedArray.getInt(
-                R.styleable.JumpLoader_jump_firstDotDelay,
-                defaultFirstDotDelay.toInt()
-            ).toLong()
-        this.secondDotDelay =
-            typedArray.getInt(
-                R.styleable.JumpLoader_jump_secondDotDelay,
-                defaultSecondDotDelay.toInt()
-            ).toLong()
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                dotRadius =
+                    getDimension(
+                        R.styleable.LazyLoader_lazy_dotRadius,
+                        defaultDotRadius
+                    )
+                spacing =
+                    getDimensionPixelSize(
+                        R.styleable.LazyLoader_lazy_spacing,
+                        defaultSpacing
+                    )
+                firstDotColor = getColor(
+                    R.styleable.LazyLoader_lazy_firstDotColor,
+                    defaultFirstDotColor
+                )
+                secondDotColor = getColor(
+                    R.styleable.LazyLoader_lazy_secondDotColor,
+                    defaultSecondDotColor
+                )
+                thirdDotColor = getColor(
+                    R.styleable.LazyLoader_lazy_thirdDotColor,
+                    defaultThirdDotColor
+                )
+                animDuration =
+                    getInt(
+                        R.styleable.LazyLoader_lazy_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+                animInterpolator = AnimationUtils.loadInterpolator(
+                    context,
+                    getResourceId(
+                        R.styleable.LazyLoader_lazy_interpolator,
+                        android.R.anim.linear_interpolator
+                    )
+                )
+                firstDotDelay =
+                    getInt(
+                        R.styleable.LazyLoader_lazy_firstDotDelay,
+                        defaultFirstDotDelay.toInt()
+                    ).toLong()
+                secondDotDelay =
+                    getInt(
+                        R.styleable.LazyLoader_lazy_secondDotDelay,
+                        defaultSecondDotDelay.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

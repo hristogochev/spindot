@@ -81,26 +81,30 @@ class LightsLoader : AnimationLayout {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LightsLoader, 0, 0)
 
-        size =
-            typedArray.getInteger(R.styleable.LightsLoader_lights_size, defaultSize)
+        try {
+            with(typedArray) {
+                size =
+                    getInteger(R.styleable.LightsLoader_lights_size, defaultSize)
 
-        dotRadius =
-            typedArray.getDimension(
-                R.styleable.LightsLoader_lights_dotRadius,
-                defaultDotRadius
-            )
-        spacing =
-            typedArray.getDimensionPixelSize(
-                R.styleable.LightsLoader_lights_spacing,
-                defaultSpacing
-            )
+                dotRadius =
+                    getDimension(
+                        R.styleable.LightsLoader_lights_dotRadius,
+                        defaultDotRadius
+                    )
+                spacing =
+                    getDimensionPixelSize(
+                        R.styleable.LightsLoader_lights_spacing,
+                        defaultSpacing
+                    )
 
-        dotColor = typedArray.getColor(
-            R.styleable.LightsLoader_lights_dotColor,
-            defaultDotColor
-        )
-
-        typedArray.recycle()
+                dotColor = getColor(
+                    R.styleable.LightsLoader_lights_dotColor,
+                    defaultDotColor
+                )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     override fun initViews() {

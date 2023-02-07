@@ -41,7 +41,7 @@ class LinearLoader : AnimationView {
     private var activeColor = defaultActiveColor
         set(selectedColor) {
             field = selectedColor
-            activedotPaint?.let {
+            activeDotPaint?.let {
                 it.color = selectedColor
                 initShadowPaints()
             }
@@ -74,7 +74,8 @@ class LinearLoader : AnimationView {
             field = noOfDots
             initCoordinates()
         }
-    private var expandedLeadingDotRadius = defaultDotRadius + defaultExpandedLeadingDotRadiusAddition
+    private var expandedLeadingDotRadius =
+        defaultDotRadius + defaultExpandedLeadingDotRadiusAddition
         set(selRadius) {
             field = selRadius
             initCoordinates()
@@ -93,7 +94,7 @@ class LinearLoader : AnimationView {
 
     // Colors
     private var inactiveDotPaint: Paint? = null
-    private var activedotPaint: Paint? = null
+    private var activeDotPaint: Paint? = null
     private lateinit var firstShadowPaint: Paint
     private lateinit var secondShadowPaint: Paint
     private var isShadowColorSet = false
@@ -131,7 +132,8 @@ class LinearLoader : AnimationView {
         this.secondShadowColor = secondShadowColor ?: defaultSecondShadowColor
         this.dotCount = dotCount ?: defaultDotCount
         this.expandedLeadingDotRadius =
-            expandedLeadingDotRadius ?: (this.defaultDotRadius + defaultExpandedLeadingDotRadiusAddition)
+            expandedLeadingDotRadius
+                ?: (this.defaultDotRadius + defaultExpandedLeadingDotRadiusAddition)
         this.spacing = spacing ?: defaultSpacing
         this.singleDirection = singleDirection ?: defaultSingleDirection
         this.expandLeadingDot = expandLeadingDot ?: defaultExpandLeadingDot
@@ -170,62 +172,66 @@ class LinearLoader : AnimationView {
 
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.LinearLoader, 0, 0)
 
-        this.inactiveColor = typedArray.getColor(
-            R.styleable.LinearLoader_linear_inactiveColor,
-            defaultInactiveColor
-        )
-        this.activeColor = typedArray.getColor(
-            R.styleable.LinearLoader_linear_activeColor,
-            defaultActiveColor
-        )
-        this.dotRadius =
-            typedArray.getDimension(
-                R.styleable.LinearLoader_linear_dotRadius,
-                defaultDotRadius
-            )
-        this.animDuration =
-            typedArray.getInt(
-                R.styleable.LinearLoader_linear_animDuration,
-                defaultAnimDuration.toInt()
-            ).toLong()
-        this.showRunningShadow =
-            typedArray.getBoolean(
-                R.styleable.LinearLoader_linear_showRunningShadow,
-                defaultShowRunningShadow
-            )
-        this.firstShadowColor =
-            typedArray.getColor(
-                R.styleable.LinearLoader_linear_firstShadowColor,
-                defaultFirstShadowColor
-            )
-        this.secondShadowColor =
-            typedArray.getColor(
-                R.styleable.LinearLoader_linear_secondShadowColor,
-                defaultSecondShadowColor
-            )
-        this.dotCount =
-            typedArray.getInt(R.styleable.LinearLoader_linear_dotCount, defaultDotCount)
-        this.expandedLeadingDotRadius = typedArray.getDimension(
-            R.styleable.LinearLoader_linear_expandedLeadingDotRadius,
-            dotRadius + defaultExpandedLeadingDotRadiusAddition
-        )
-        this.spacing =
-            typedArray.getDimensionPixelSize(
-                R.styleable.LinearLoader_linear_spacing,
-                defaultSpacing
-            )
-        this.singleDirection =
-            typedArray.getBoolean(
-                R.styleable.LinearLoader_linear_singleDirection,
-                defaultSingleDirection
-            )
-        this.expandLeadingDot =
-            typedArray.getBoolean(
-                R.styleable.LinearLoader_linear_expandLeadingDot,
-                defaultExpandLeadingDot
-            )
-
-        typedArray.recycle()
+        try {
+            with(typedArray) {
+                inactiveColor = getColor(
+                    R.styleable.LinearLoader_linear_inactiveColor,
+                    defaultInactiveColor
+                )
+                activeColor = getColor(
+                    R.styleable.LinearLoader_linear_activeColor,
+                    defaultActiveColor
+                )
+                dotRadius =
+                    getDimension(
+                        R.styleable.LinearLoader_linear_dotRadius,
+                        defaultDotRadius
+                    )
+                animDuration =
+                    getInt(
+                        R.styleable.LinearLoader_linear_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+                showRunningShadow =
+                    getBoolean(
+                        R.styleable.LinearLoader_linear_showRunningShadow,
+                        defaultShowRunningShadow
+                    )
+                firstShadowColor =
+                    getColor(
+                        R.styleable.LinearLoader_linear_firstShadowColor,
+                        defaultFirstShadowColor
+                    )
+                secondShadowColor =
+                    getColor(
+                        R.styleable.LinearLoader_linear_secondShadowColor,
+                        defaultSecondShadowColor
+                    )
+                dotCount =
+                    getInt(R.styleable.LinearLoader_linear_dotCount, defaultDotCount)
+                expandedLeadingDotRadius = getDimension(
+                    R.styleable.LinearLoader_linear_expandedLeadingDotRadius,
+                    dotRadius + defaultExpandedLeadingDotRadiusAddition
+                )
+                spacing =
+                    getDimensionPixelSize(
+                        R.styleable.LinearLoader_linear_spacing,
+                        defaultSpacing
+                    )
+                singleDirection =
+                    getBoolean(
+                        R.styleable.LinearLoader_linear_singleDirection,
+                        defaultSingleDirection
+                    )
+                expandLeadingDot =
+                    getBoolean(
+                        R.styleable.LinearLoader_linear_expandLeadingDot,
+                        defaultExpandLeadingDot
+                    )
+            }
+        } finally {
+            typedArray.recycle()
+        }
     }
 
     private fun initCoordinates() {
@@ -244,7 +250,7 @@ class LinearLoader : AnimationView {
             style = Paint.Style.FILL
             color = inactiveColor
         }
-        activedotPaint = Paint().apply {
+        activeDotPaint = Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
             color = activeColor
@@ -349,7 +355,7 @@ class LinearLoader : AnimationView {
                     xCor,
                     (if (expandLeadingDot) this.expandedLeadingDotRadius else dotRadius),
                     (if (expandLeadingDot) this.expandedLeadingDotRadius else dotRadius),
-                    activedotPaint!!
+                    activeDotPaint!!
                 )
             } else if (showRunningShadow && i + 1 == firstShadowPos) {
                 canvas.drawCircle(

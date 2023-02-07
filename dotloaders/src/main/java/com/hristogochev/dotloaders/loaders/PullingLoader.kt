@@ -13,7 +13,7 @@ import com.hristogochev.dotloaders.utils.onAnimationEnd
  * Modified by hristogochev on 02/02/23.
  */
 
-class PullLoader : AnimationLayout {
+class PullingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
@@ -100,45 +100,49 @@ class PullLoader : AnimationLayout {
     override fun initAttributes(attrs: AttributeSet) {
         super.initAttributes(attrs)
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PullLoader, 0, 0)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PullingLoader, 0, 0)
 
-        dotRadius =
-            typedArray.getDimension(
-                R.styleable.PullLoader_pull_dotRadius,
-                defaultDotRadius
-            )
-
-        useMultipleColors =
-            typedArray.getBoolean(
-                R.styleable.PullLoader_pull_useMultipleColors,
-                defaultUseMultipleColors
-            )
-        if (useMultipleColors) {
-            val dotsArrayId =
-                typedArray.getResourceId(
-                    R.styleable.PullLoader_pull_dotColors,
-                    0
-                )
-            dotColors =
-                if (dotsArrayId != 0) calcDotColorsArray(dotsArrayId, defaultDotColor)
-                else defaultDotColors
-        } else {
-            dotColor = typedArray.getColor(
-                R.styleable.PullLoader_pull_dotColor,
-                defaultDotColor
-            )
+        try {
+            with(typedArray) {
+                dotRadius =
+                    getDimension(
+                        R.styleable.PullingLoader_pulling_dotRadius,
+                        defaultDotRadius
+                    )
+                useMultipleColors =
+                    getBoolean(
+                        R.styleable.PullingLoader_pulling_useMultipleColors,
+                        defaultUseMultipleColors
+                    )
+                if (useMultipleColors) {
+                    val dotsArrayId =
+                        getResourceId(
+                            R.styleable.PullingLoader_pulling_dotColors,
+                            0
+                        )
+                    dotColors =
+                        if (dotsArrayId != 0) calcDotColorsArray(dotsArrayId, defaultDotColor)
+                        else defaultDotColors
+                } else {
+                    dotColor = getColor(
+                        R.styleable.PullingLoader_pulling_dotColor,
+                        defaultDotColor
+                    )
+                }
+                radius =
+                    getDimension(
+                        R.styleable.PullingLoader_pulling_radius,
+                        defaultRadius
+                    )
+                animDuration =
+                    getInt(
+                        R.styleable.PullingLoader_pulling_animDuration,
+                        defaultAnimDuration.toInt()
+                    ).toLong()
+            }
+        } finally {
+            typedArray.recycle()
         }
-        radius =
-            typedArray.getDimension(
-                R.styleable.PullLoader_pull_radius,
-                defaultRadius
-            )
-
-        animDuration =
-            typedArray.getInt(R.styleable.PullLoader_pull_animDuration, defaultAnimDuration.toInt())
-                .toLong()
-
-        typedArray.recycle()
     }
 
     override fun initViews() {
