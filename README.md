@@ -60,10 +60,14 @@ BounceLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.BounceLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:bounce_ballRadius="30dp"
-    app:bounce_ballcolor="@color/green" app:bounce_showShadow="true"
-    app:bounce_shadowColor="@color/light_gray" app:bounce_animDuration="1200" />
+<com.hristogochev.spinkit.loaders.BounceLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:bounce_ballRadius="30dp"
+    app:bounce_ballcolor="@color/green" 
+    app:bounce_showShadow="true"
+    app:bounce_shadowColor="@color/light_gray" 
+    app:bounce_animDuration="1200" />
 ```
 
 </details>
@@ -94,11 +98,17 @@ ClassicLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.ClassicLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:classic_activeColor="@color/red"
-    app:classic_inactiveColor="@color/white" app:classic_radius="40dp" app:classic_dotRadius="12dp"
-    app:classic_animDuration="200" app:classic_showRunningShadow="true"
-    app:classic_firstShadowColor="@color/green" app:classic_secondShadowColor="@color/blue" />
+<com.hristogochev.spinkit.loaders.ClassicLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:classic_activeColor="@color/red"
+    app:classic_inactiveColor="@color/white" 
+    app:classic_radius="40dp" 
+    app:classic_dotRadius="12dp"
+    app:classic_animDuration="200"
+    app:classic_showRunningShadow="true"
+    app:classic_firstShadowColor="@color/green" 
+    app:classic_secondShadowColor="@color/blue" />
 ```
 
 </details>
@@ -128,11 +138,16 @@ FidgetLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.FidgetLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:fidget_dotRadius="30dp"
-    app:fidget_drawOnlyStroke="true" app:fidget_strokeWidth="8dp"
-    app:fidget_firstDotColor="@color/red" app:fidget_secondDotColor="@color/green"
-    app:fidget_thirdDotColor="@color/blue" app:fidget_distanceMultiplier="4"
+<com.hristogochev.spinkit.loaders.FidgetLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:fidget_dotRadius="30dp"
+    app:fidget_drawOnlyStroke="true" 
+    app:fidget_strokeWidth="8dp"
+    app:fidget_firstDotColor="@color/red" 
+    app:fidget_secondDotColor="@color/green"
+    app:fidget_thirdDotColor="@color/blue" 
+    app:fidget_distanceMultiplier="4"
     app:fidget_animDuration="500" />
 ```
 
@@ -163,10 +178,16 @@ LazyLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.LazyLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:lazy_spacing="5dp" app:lazy_dotRadius="10dp"
-    app:lazy_firstDotColor="@color/red" app:lazy_secondDotColor="@color/green"
-    app:lazy_thirdDotColor="@color/blue" app:lazy_animDuration="500" app:lazy_firstDotDelay="100"
+<com.hristogochev.spinkit.loaders.LazyLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:lazy_spacing="5dp" 
+    app:lazy_dotRadius="10dp"
+    app:lazy_firstDotColor="@color/red" 
+    app:lazy_secondDotColor="@color/green"
+    app:lazy_thirdDotColor="@color/blue" 
+    app:lazy_animDuration="500" 
+    app:lazy_firstDotDelay="100"
     app:lazy_secondDotDelay="200" />
 ```
 
@@ -193,9 +214,13 @@ LightsLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.LightsLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:lights_size="4" app:lights_spacing="5dp"
-    app:lights_dotRadius="12dp" app:lights_dotColor="@color/green" />
+<com.hristogochev.spinkit.loaders.LightsLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:lights_size="4" 
+    app:lights_spacing="5dp"
+    app:lights_dotRadius="12dp" 
+    app:lights_dotColor="@color/green" />
 ```
 
 </details>
@@ -227,11 +252,18 @@ LinearLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.LinearLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:linear_activeColor="@color/light_gray"
-    app:linear_inactiveColor="@color/gray" app:linear_dotRadius="6dp" app:linear_dotCount="8"
-    app:linear_showRunningShadow="false" app:linear_spacing="6dp" app:linear_animDuration="200"
-    app:linear_singleDuration="false" app:linear_expandLeadingDot="false"
+<com.hristogochev.spinkit.loaders.LinearLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:linear_activeColor="@color/light_gray"
+    app:linear_inactiveColor="@color/gray" 
+    app:linear_dotRadius="6dp" 
+    app:linear_dotCount="8"
+    app:linear_showRunningShadow="false" 
+    app:linear_spacing="6dp" 
+    app:linear_animDuration="200"
+    app:linear_singleDuration="false" 
+    app:linear_expandLeadingDot="false"
     app:linear_expandLeadingDotRadius="10dp" />
 ```
 
@@ -267,9 +299,13 @@ PullingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.PullingLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:pulling_radius="42dp" app:pulling_dotRadius="10dp"
-    app:pulling_dotColors="@array/dot_colors" app:pulling_animDuration="2000" />
+<com.hristogochev.spinkit.loaders.PullingLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:pulling_radius="42dp"
+    app:pulling_dotRadius="10dp"
+    app:pulling_dotColors="@array/dot_colors" 
+    app:pulling_animDuration="2000" />
 ```
 
 </details>
@@ -297,10 +333,15 @@ PulsingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.PulsingLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:pulsing_dotRadius="12dp"
-    app:pulsing_dotColor="@color/green" app:pulsing_dotCount="6" app:pulsing_spacing="4dp"
-    app:pulsing_animDelay="200" app:pulsing_animDuration="1000" />
+<com.hristogochev.spinkit.loaders.PulsingLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:pulsing_dotRadius="12dp"
+    app:pulsing_dotColor="@color/green" 
+    app:pulsing_dotCount="6" 
+    app:pulsing_spacing="4dp"
+    app:pulsing_animDelay="200"
+    app:pulsing_animDuration="1000" />
 ```
 
 </details>
@@ -329,11 +370,16 @@ SlidingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.SlidingLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:sliding_dotRadius="10dp"
-    app:sliding_firstDotColor="@color/red" app:sliding_secondDotColor="@color/green"
-    app:sliding_thirdDotColor="@color/blue" app:sliding_spacing="6dp"
-    app:sliding_distanceToMove="12" app:sliding_animDuration="2000" />
+<com.hristogochev.spinkit.loaders.SlidingLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:sliding_dotRadius="10dp"
+    app:sliding_firstDotColor="@color/red"
+    app:sliding_secondDotColor="@color/green"
+    app:sliding_thirdDotColor="@color/blue" 
+    app:sliding_spacing="6dp"
+    app:sliding_distanceToMove="12"
+    app:sliding_animDuration="2000" />
 ```
 
 </details>
@@ -360,9 +406,13 @@ SpinningLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.SpinningLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:spinning_radius="40dp" app:spinning_dotRadius="10dp"
-    app:spinning_dotColor="@color/green" app:spinning_animDuration="4000" />
+<com.hristogochev.spinkit.loaders.SpinningLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:spinning_radius="40dp"
+    app:spinning_dotRadius="10dp"
+    app:spinning_dotColor="@color/green" 
+    app:spinning_animDuration="4000" />
 ```
 
 </details>
@@ -390,9 +440,14 @@ TrailingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.TrailingLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:trailing_radius="40dp" app:trailing_dotRadius="10dp"
-    app:trailing_dotColor="@color/green" app:trailing_dotTrailCount="5" app:trailing_animDelay="200"
+<com.hristogochev.spinkit.loaders.TrailingLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:trailing_radius="40dp"
+    app:trailing_dotRadius="10dp"
+    app:trailing_dotColor="@color/green"
+    app:trailing_dotTrailCount="5" 
+    app:trailing_animDelay="200"
     app:trailing_animDuration="1200" />
 ```
 
@@ -420,10 +475,14 @@ ZeeLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.ZeeLoader android:layout_width="wrap_content"
-    android:layout_height="wrap_content" app:zee_dotRadius="24dp"
-    app:zee_firstDotColor="@color/green" app:zee_secondDotColor="@color/blue"
-    app:zee_distanceMultiplier="4" app:zee_animDuration="300" />
+<com.hristogochev.spinkit.loaders.ZeeLoader 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" 
+    app:zee_dotRadius="24dp"
+    app:zee_firstDotColor="@color/green"
+    app:zee_secondDotColor="@color/blue"
+    app:zee_distanceMultiplier="4"
+    app:zee_animDuration="300" />
 ```
 
 </details>
