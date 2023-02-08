@@ -1,4 +1,4 @@
-# DotLoaders
+# SpinKit
 
 ### Notice
 
@@ -16,12 +16,12 @@ maven { url "https://jitpack.io" }
 And then add the following dependency to your build.gradle file:
 
 ```groovy
-implementation 'com.github.hristogochev:dotloaders:1.0.0'
+implementation 'com.github.hristogochev:spinkit:1.0.0'
 ```
 
 ### Features
 
-* 12 different dotloaders for your needs.
+* 12 different loaders for your needs.
 * Full compatibility with Jetpack Compose.
 * Full compatibility with XML.
 
@@ -45,6 +45,7 @@ implementation 'com.github.hristogochev:dotloaders:1.0.0'
 ![BounceLoader](./preview/bounceloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 BounceLoader(
     ballRadius = 30.dp,
@@ -56,15 +57,13 @@ BounceLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.BounceLoader 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:bounce_ballRadius="30dp"
-    app:bounce_ballcolor="@color/green"
-    app:bounce_showShadow="true"
-    app:bounce_shadowColor="@color/light_gray"
-    app:bounce_animDuration="1200" />
+
+<com.hristogochev.spinkit.loaders.BounceLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:bounce_ballRadius="30dp"
+    app:bounce_ballcolor="@color/green" app:bounce_showShadow="true"
+    app:bounce_shadowColor="@color/light_gray" app:bounce_animDuration="1200" />
 ```
 
 </details>
@@ -77,6 +76,7 @@ BounceLoader(
 ![ClassicLoader](./preview/classicloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 ClassicLoader(
     activeColor = Color.Red,
@@ -91,18 +91,14 @@ ClassicLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.ClassicLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:classic_activeColor="@color/red"
-    app:classic_inactiveColor="@color/white"
-    app:classic_radius="40dp"
-    app:classic_dotRadius="12dp"
-    app:classic_animDuration="200" 
-    app:classic_showRunningShadow="true"
-    app:classic_firstShadowColor="@color/green"
-    app:classic_secondShadowColor="@color/blue" />
+
+<com.hristogochev.spinkit.loaders.ClassicLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:classic_activeColor="@color/red"
+    app:classic_inactiveColor="@color/white" app:classic_radius="40dp" app:classic_dotRadius="12dp"
+    app:classic_animDuration="200" app:classic_showRunningShadow="true"
+    app:classic_firstShadowColor="@color/green" app:classic_secondShadowColor="@color/blue" />
 ```
 
 </details>
@@ -114,6 +110,7 @@ ClassicLoader(
 ![FidgetLoader](./preview/fidgetloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 FidgetLoader(
     dotRadius = 30.dp,
@@ -128,17 +125,14 @@ FidgetLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.FidgetLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:fidget_dotRadius="30dp"
-    app:fidget_drawOnlyStroke="true"
-    app:fidget_strokeWidth="8dp"
-    app:fidget_firstDotColor="@color/red"
-    app:fidget_secondDotColor="@color/green"
-    app:fidget_thirdDotColor="@color/blue"
-    app:fidget_distanceMultiplier="4"
+
+<com.hristogochev.spinkit.loaders.FidgetLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:fidget_dotRadius="30dp"
+    app:fidget_drawOnlyStroke="true" app:fidget_strokeWidth="8dp"
+    app:fidget_firstDotColor="@color/red" app:fidget_secondDotColor="@color/green"
+    app:fidget_thirdDotColor="@color/blue" app:fidget_distanceMultiplier="4"
     app:fidget_animDuration="500" />
 ```
 
@@ -151,6 +145,7 @@ FidgetLoader(
 ![LazyLoader](./preview/lazyloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 LazyLoader(
     spacing = 5.dp,
@@ -165,17 +160,13 @@ LazyLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.LazyLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:lazy_spacing="5dp"
-    app:lazy_dotRadius="10dp"
-    app:lazy_firstDotColor="@color/red"
-    app:lazy_secondDotColor="@color/green"
-    app:lazy_thirdDotColor="@color/blue"
-    app:lazy_animDuration="500"
-    app:lazy_firstDotDelay="100"
+
+<com.hristogochev.spinkit.loaders.LazyLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:lazy_spacing="5dp" app:lazy_dotRadius="10dp"
+    app:lazy_firstDotColor="@color/red" app:lazy_secondDotColor="@color/green"
+    app:lazy_thirdDotColor="@color/blue" app:lazy_animDuration="500" app:lazy_firstDotDelay="100"
     app:lazy_secondDotDelay="200" />
 ```
 
@@ -188,6 +179,7 @@ LazyLoader(
 ![LightsLoader](./preview/lightsloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 LightsLoader(
     size = 4,
@@ -198,14 +190,12 @@ LightsLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.LightsLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:lights_size="4"
-    app:lights_spacing="5dp"
-    app:lights_dotRadius="12dp"
-    app:lights_dotColor="@color/green" />
+
+<com.hristogochev.spinkit.loaders.LightsLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:lights_size="4" app:lights_spacing="5dp"
+    app:lights_dotRadius="12dp" app:lights_dotColor="@color/green" />
 ```
 
 </details>
@@ -217,6 +207,7 @@ LightsLoader(
 ![LinearLoader](./preview/linearloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 LinearLoader(
     activeColor = Color.LightGray,
@@ -233,20 +224,15 @@ LinearLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.LinearLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:linear_activeColor="@color/light_gray"
-    app:linear_inactiveColor="@color/gray"
-    app:linear_dotRadius="6dp"
-    app:linear_dotCount="8"
-    app:linear_showRunningShadow="false"
-    app:linear_spacing="6dp"
-    app:linear_animDuration="200"
-    app:linear_singleDuration="false"
-    app:linear_expandLeadingDot="false"
-    app:linear_expandLeadingDotRadius="10dp"  />
+
+<com.hristogochev.spinkit.loaders.LinearLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:linear_activeColor="@color/light_gray"
+    app:linear_inactiveColor="@color/gray" app:linear_dotRadius="6dp" app:linear_dotCount="8"
+    app:linear_showRunningShadow="false" app:linear_spacing="6dp" app:linear_animDuration="200"
+    app:linear_singleDuration="false" app:linear_expandLeadingDot="false"
+    app:linear_expandLeadingDotRadius="10dp" />
 ```
 
 </details>
@@ -258,6 +244,7 @@ LinearLoader(
 ![PullingLoader](./preview/pullingloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 PullingLoader(
     radius = 42.dp,
@@ -277,16 +264,13 @@ PullingLoader(
 ```
 
 #### XML implementation
-```xml
-<com.hristogochev.dotloaders.loaders.PullingLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:pulling_radius="42dp"
-    app:pulling_dotRadius="10dp"
-    app:pulling_dotColors="@array/dot_colors"
-    app:pulling_animDuration="2000" />
-```
 
+```xml
+
+<com.hristogochev.spinkit.loaders.PullingLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:pulling_radius="42dp" app:pulling_dotRadius="10dp"
+    app:pulling_dotColors="@array/dot_colors" app:pulling_animDuration="2000" />
+```
 
 </details>
 
@@ -297,6 +281,7 @@ PullingLoader(
 ![PulsingLoader](./preview/pulsingloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 PulsingLoader(
     dotRadius = 12.dp,
@@ -309,16 +294,13 @@ PulsingLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.PulsingLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:pulsing_dotRadius="12dp"
-    app:pulsing_dotColor="@color/green"
-    app:pulsing_dotCount="6"
-    app:pulsing_spacing="4dp"
-    app:pulsing_animDelay="200"
-    app:pulsing_animDuration="1000" />
+
+<com.hristogochev.spinkit.loaders.PulsingLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:pulsing_dotRadius="12dp"
+    app:pulsing_dotColor="@color/green" app:pulsing_dotCount="6" app:pulsing_spacing="4dp"
+    app:pulsing_animDelay="200" app:pulsing_animDuration="1000" />
 ```
 
 </details>
@@ -330,6 +312,7 @@ PulsingLoader(
 ![SlidingLoader](./preview/slidingloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 SlidingLoader(
     dotRadius = 10.dp,
@@ -341,18 +324,16 @@ SlidingLoader(
     animDuration = 2000
 )
 ```
+
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.SlidingLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:sliding_dotRadius="10dp"
-    app:sliding_firstDotColor="@color/red"
-    app:sliding_secondDotColor="@color/green"
-    app:sliding_thirdDotColor="@color/blue"
-    app:sliding_spacing="6dp"
-    app:sliding_distanceToMove="12"
-    app:sliding_animDuration="2000" />
+
+<com.hristogochev.spinkit.loaders.SlidingLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:sliding_dotRadius="10dp"
+    app:sliding_firstDotColor="@color/red" app:sliding_secondDotColor="@color/green"
+    app:sliding_thirdDotColor="@color/blue" app:sliding_spacing="6dp"
+    app:sliding_distanceToMove="12" app:sliding_animDuration="2000" />
 ```
 
 </details>
@@ -365,6 +346,7 @@ SlidingLoader(
 ![SpinningLoader](./preview/spinningloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 SpinningLoader(
     radius = 40.dp,
@@ -373,15 +355,14 @@ SpinningLoader(
     animDuration = 4000
 )
 ```
+
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.SpinningLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:spinning_radius="40dp"
-    app:spinning_dotRadius="10dp"
-    app:spinning_dotColor="@color/green"
-    app:spinning_animDuration="4000" />
+
+<com.hristogochev.spinkit.loaders.SpinningLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:spinning_radius="40dp" app:spinning_dotRadius="10dp"
+    app:spinning_dotColor="@color/green" app:spinning_animDuration="4000" />
 ```
 
 </details>
@@ -393,6 +374,7 @@ SpinningLoader(
 ![TrailingLoader](./preview/trailingloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 TrailingLoader(
     radius = 40.dp,
@@ -405,15 +387,12 @@ TrailingLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.TrailingLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:trailing_radius="40dp"
-    app:trailing_dotRadius="10dp"
-    app:trailing_dotColor="@color/green"
-    app:trailing_dotTrailCount="5"
-    app:trailing_animDelay="200"
+
+<com.hristogochev.spinkit.loaders.TrailingLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:trailing_radius="40dp" app:trailing_dotRadius="10dp"
+    app:trailing_dotColor="@color/green" app:trailing_dotTrailCount="5" app:trailing_animDelay="200"
     app:trailing_animDuration="1200" />
 ```
 
@@ -426,6 +405,7 @@ TrailingLoader(
 ![ZeeLoader](./preview/zeeloader.gif)
 
 #### Compose implementation
+
 ```kotlin
 ZeeLoader(
     dotRadius = 24.dp,
@@ -437,15 +417,13 @@ ZeeLoader(
 ```
 
 #### XML implementation
+
 ```xml
-<com.hristogochev.dotloaders.loaders.ZeeLoader
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:zee_dotRadius="24dp"
-    app:zee_firstDotColor="@color/green"
-    app:zee_secondDotColor="@color/blue"
-    app:zee_distanceMultiplier="4"
-    app:zee_animDuration="300" />
+
+<com.hristogochev.spinkit.loaders.ZeeLoader android:layout_width="wrap_content"
+    android:layout_height="wrap_content" app:zee_dotRadius="24dp"
+    app:zee_firstDotColor="@color/green" app:zee_secondDotColor="@color/blue"
+    app:zee_distanceMultiplier="4" app:zee_animDuration="300" />
 ```
 
 </details>

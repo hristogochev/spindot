@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -28,6 +28,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -41,8 +42,13 @@ android {
     composeOptions{
         kotlinCompilerExtensionVersion="1.4.0"
     }
-}
 
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
 
 dependencies {
     // Core
@@ -56,7 +62,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.3.1")
 
     // Library
-    implementation(project(":dotloaders"))
+    implementation(project(":spinkit"))
 
     // XML
     implementation("com.google.android.material:material:1.8.0")
