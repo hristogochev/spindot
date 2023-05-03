@@ -16,7 +16,7 @@ import com.hristogochev.spindot.animation.AnimationLayout
 import com.hristogochev.spindot.basicviews.DotsView
 import com.hristogochev.spindot.utils.getColorResource
 
-class SpinningLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class SpinningLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f

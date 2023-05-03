@@ -17,7 +17,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class PulsingLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class PulsingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
@@ -41,7 +41,7 @@ class PulsingLoader : com.hristogochev.spindot.animation.AnimationLayout {
     private var areDotsExpanding = true
 
     // Views
-    private lateinit var dotsArray: List<com.hristogochev.spindot.basicviews.DotView>
+    private lateinit var dotsArray: List<DotView>
 
     // Custom constructors
     constructor(
@@ -140,7 +140,7 @@ class PulsingLoader : com.hristogochev.spindot.animation.AnimationLayout {
         setVerticalGravity(Gravity.BOTTOM)
 
         dotsArray = (0 until dotCount).map {
-            com.hristogochev.spindot.basicviews.DotView(context, dotRadius, dotColor)
+            DotView(context, dotRadius, dotColor)
         }
 
         val size = (2 * dotRadius).toInt()

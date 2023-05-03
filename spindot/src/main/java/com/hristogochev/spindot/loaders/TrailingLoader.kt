@@ -17,7 +17,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class TrailingLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class TrailingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 50f
@@ -36,9 +36,9 @@ class TrailingLoader : com.hristogochev.spindot.animation.AnimationLayout {
     private var animDelay = animDuration / defaultAnimDelayDivider
 
     // Views
-    private lateinit var mainDot: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var mainDot: DotView
     private lateinit var relativeLayout: RelativeLayout
-    private lateinit var trailingDots: List<com.hristogochev.spindot.basicviews.DotView>
+    private lateinit var trailingDots: List<DotView>
 
     // Animation attributes
     private var calWidthHeight: Int = 0
@@ -133,10 +133,10 @@ class TrailingLoader : com.hristogochev.spindot.animation.AnimationLayout {
             gravity = Gravity.CENTER_HORIZONTAL
         }
 
-        mainDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, dotColor)
+        mainDot = DotView(context, dotRadius, dotColor)
 
         trailingDots = (0 until dotTrailCount).map {
-            com.hristogochev.spindot.basicviews.DotView(context, dotRadius, dotColor)
+            DotView(context, dotRadius, dotColor)
         }
 
         val relParam = RelativeLayout.LayoutParams(calWidthHeight, calWidthHeight)

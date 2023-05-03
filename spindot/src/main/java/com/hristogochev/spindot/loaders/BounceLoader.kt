@@ -18,7 +18,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class BounceLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class BounceLoader : AnimationLayout {
     companion object {
         private const val STATE_GOING_DOWN: Int = 0
         private const val STATE_SQUEEZING: Int = 1
@@ -52,8 +52,8 @@ class BounceLoader : com.hristogochev.spindot.animation.AnimationLayout {
 
     // Views
     private var relativeLayout: RelativeLayout? = null
-    private lateinit var ballDotView: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var ballShadowView: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var ballDotView: DotView
+    private lateinit var ballShadowView: DotView
 
     // Custom constructors
     constructor(
@@ -135,7 +135,7 @@ class BounceLoader : com.hristogochev.spindot.animation.AnimationLayout {
         relativeLayout = RelativeLayout(context)
 
         if (showShadow) {
-            ballShadowView = com.hristogochev.spindot.basicviews.DotView(
+            ballShadowView = DotView(
                 context = context,
                 circleRadius = ballRadius,
                 circleColor = shadowColor,
@@ -153,7 +153,7 @@ class BounceLoader : com.hristogochev.spindot.animation.AnimationLayout {
             relativeLayout?.addView(ballShadowView, shadowParam)
         }
 
-        ballDotView = com.hristogochev.spindot.basicviews.DotView(
+        ballDotView = DotView(
             context = context,
             circleRadius = ballRadius,
             circleColor = ballColor

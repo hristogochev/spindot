@@ -18,7 +18,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class ZeeLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class ZeeLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 50f
@@ -39,8 +39,8 @@ class ZeeLoader : com.hristogochev.spindot.animation.AnimationLayout {
 
     // Views
     private var calWidthHeight: Int = 0
-    private lateinit var firstDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var secondDot: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var firstDot: DotView
+    private lateinit var secondDot: DotView
     private lateinit var relativeLayout: RelativeLayout
 
     // Animation attributes
@@ -131,7 +131,7 @@ class ZeeLoader : com.hristogochev.spindot.animation.AnimationLayout {
 
         if (calWidthHeight == 0) calWidthHeight = (2 * dotRadius * distanceMultiplier).toInt()
 
-        firstDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, firstDotColor)
+        firstDot = DotView(context, dotRadius, firstDotColor)
         val firstParam = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -140,7 +140,7 @@ class ZeeLoader : com.hristogochev.spindot.animation.AnimationLayout {
             addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE)
         }
 
-        secondDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, secondDotColor)
+        secondDot = DotView(context, dotRadius, secondDotColor)
         val secondParam = RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT

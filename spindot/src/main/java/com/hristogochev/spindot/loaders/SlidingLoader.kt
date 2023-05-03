@@ -17,7 +17,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class SlidingLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class SlidingLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
@@ -53,9 +53,9 @@ class SlidingLoader : com.hristogochev.spindot.animation.AnimationLayout {
     private var isForwardDir = true
 
     // Views
-    private lateinit var firstDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var secondDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var thirdDot: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var firstDot: DotView
+    private lateinit var secondDot: DotView
+    private lateinit var thirdDot: DotView
 
 
     // Custom constructors
@@ -147,9 +147,9 @@ class SlidingLoader : com.hristogochev.spindot.animation.AnimationLayout {
     }
 
     override fun initViews() {
-        firstDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, firstDotColor)
-        secondDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, secondDotColor)
-        thirdDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, thirdDotColor)
+        firstDot = DotView(context, dotRadius, firstDotColor)
+        secondDot = DotView(context, dotRadius, secondDotColor)
+        thirdDot = DotView(context, dotRadius, thirdDotColor)
 
         val size = (2 * dotRadius).toInt()
 

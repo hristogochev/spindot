@@ -16,7 +16,7 @@ import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.random
 import java.util.ArrayList
 
-class LightsLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class LightsLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultSize = 3
@@ -35,7 +35,7 @@ class LightsLoader : com.hristogochev.spindot.animation.AnimationLayout {
 
     // Circles
     private var calWidthHeight: Int = 0
-    private var dotsList = ArrayList<com.hristogochev.spindot.basicviews.DotView>()
+    private var dotsList = ArrayList<DotView>()
 
     // General
     private var dotDiameter = (2 * dotRadius).toInt()
@@ -129,7 +129,7 @@ class LightsLoader : com.hristogochev.spindot.animation.AnimationLayout {
 
             for (countJ in 0 until size) {
                 val dotView =
-                    com.hristogochev.spindot.basicviews.DotView(context, dotRadius, dotColor)
+                    DotView(context, dotRadius, dotColor)
 
                 val innerParam = LayoutParams(
                     LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT

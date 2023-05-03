@@ -18,8 +18,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-
-class FidgetLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class FidgetLoader : AnimationLayout {
     // Default input attributes
     private val defaultDotRadius = 50f
     private val defaultDistanceMultiplier = 4
@@ -44,9 +43,9 @@ class FidgetLoader : com.hristogochev.spindot.animation.AnimationLayout {
     private var animDuration = defaultAnimDuration
 
     // Views
-    private lateinit var firstDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var secondDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var thirdDot: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var firstDot: DotView
+    private lateinit var secondDot: DotView
+    private lateinit var thirdDot: DotView
     private lateinit var relativeLayout: RelativeLayout
 
     // Animation attributes
@@ -169,21 +168,21 @@ class FidgetLoader : com.hristogochev.spindot.animation.AnimationLayout {
             calWidthHeight = (dotsDiameter * distanceMultiplier) + strokeWidth
         }
 
-        firstDot = com.hristogochev.spindot.basicviews.DotView(
+        firstDot = DotView(
             context,
             dotRadius,
             firstDotColor,
             drawOnlyStroke,
             strokeWidth
         )
-        secondDot = com.hristogochev.spindot.basicviews.DotView(
+        secondDot = DotView(
             context,
             dotRadius,
             secondDotColor,
             drawOnlyStroke,
             strokeWidth
         )
-        thirdDot = com.hristogochev.spindot.basicviews.DotView(
+        thirdDot = DotView(
             context,
             dotRadius,
             thirdDotColor,

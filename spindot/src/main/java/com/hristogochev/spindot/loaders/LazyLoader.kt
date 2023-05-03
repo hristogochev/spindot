@@ -18,7 +18,7 @@ import com.hristogochev.spindot.basicviews.DotView
 import com.hristogochev.spindot.utils.getColorResource
 import com.hristogochev.spindot.utils.onAnimationEnd
 
-class LazyLoader : com.hristogochev.spindot.animation.AnimationLayout {
+class LazyLoader : AnimationLayout {
 
     // Default input attributes
     private val defaultDotRadius = 30f
@@ -43,9 +43,9 @@ class LazyLoader : com.hristogochev.spindot.animation.AnimationLayout {
     private var secondDotDelay = defaultSecondDotDelay
 
     // Views
-    private lateinit var firstDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var secondDot: com.hristogochev.spindot.basicviews.DotView
-    private lateinit var thirdDot: com.hristogochev.spindot.basicviews.DotView
+    private lateinit var firstDot: DotView
+    private lateinit var secondDot: DotView
+    private lateinit var thirdDot: DotView
 
 
     // General
@@ -158,9 +158,9 @@ class LazyLoader : com.hristogochev.spindot.animation.AnimationLayout {
     override fun initViews() {
         dotsDiameter = (2 * dotRadius).toInt()
 
-        firstDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, firstDotColor)
-        secondDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, secondDotColor)
-        thirdDot = com.hristogochev.spindot.basicviews.DotView(context, dotRadius, thirdDotColor)
+        firstDot = DotView(context, dotRadius, firstDotColor)
+        secondDot = DotView(context, dotRadius, secondDotColor)
+        thirdDot = DotView(context, dotRadius, thirdDotColor)
 
         val params = LayoutParams(dotsDiameter, dotsDiameter)
             .apply { leftMargin = spacing }
