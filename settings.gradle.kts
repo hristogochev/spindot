@@ -17,7 +17,8 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "spinkit"
-include(":spinkit")
-include(":sample")
-
+rootProject.name = "spindot"
+include(":spindot")
+if (System.getenv("JITPACK") == null) {
+    include(":sample")
+}

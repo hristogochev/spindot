@@ -1,4 +1,4 @@
-# SpinKit
+# SpinDot
 
 ### Notice
 
@@ -16,25 +16,24 @@ maven { url "https://jitpack.io" }
 And then add the following dependency to your build.gradle file:
 
 ```groovy
-implementation 'com.github.hristogochev:spinkit:1.0.0'
+implementation 'com.github.hristogochev:spindot:1.0.0'
 ```
 
 ### Features
 
-* 12 different loaders for your needs.
+* 10 different dot loaders.
 * Full compatibility with Jetpack Compose.
 * Full compatibility with XML.
 
 ### Differences with the original
 
 * Only available for API 21 and forward.
+* The CircularDots and LinearDots loaders are missing and will be added later.
 * Each loader is now available for Jetpack Compose.
 * Additional optimizations have been applied resulting in smoother experience.
 * You can now disable the automatic playing of animations and control it manually.
 * Animations only play while visible, otherwise they automatically stop to save resources.
 * Project has been updated to the newest Kotlin and Compose versions.
-* Code has been made more maintainable by removing tight coupling and extracting common logic.
-* Each loader can now be modified separately without breaking the others.
 
 ### Preview
 
@@ -60,7 +59,7 @@ BounceLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.BounceLoader 
+<com.hristogochev.spindot.loaders.BounceLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:bounce_ballRadius="30dp"
@@ -72,46 +71,6 @@ BounceLoader(
 
 </details>
 
-
-<details>
-  <summary>Classic Loader</summary>
-<br>
-
-![ClassicLoader](./preview/classicloader.gif)
-
-#### Compose implementation
-
-```kotlin
-ClassicLoader(
-    activeColor = Color.Red,
-    inactiveColor = Color.White,
-    radius = 40.dp,
-    dotRadius = 12.dp,
-    animDuration = 200,
-    showRunningShadow = true,
-    firstShadowColor = Color.Green,
-    secondShadowColor = Color.Blue
-)
-```
-
-#### XML implementation
-
-```xml
-
-<com.hristogochev.spinkit.loaders.ClassicLoader 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" 
-    app:classic_activeColor="@color/red"
-    app:classic_inactiveColor="@color/white" 
-    app:classic_radius="40dp" 
-    app:classic_dotRadius="12dp"
-    app:classic_animDuration="200"
-    app:classic_showRunningShadow="true"
-    app:classic_firstShadowColor="@color/green" 
-    app:classic_secondShadowColor="@color/blue" />
-```
-
-</details>
 
 <details>
   <summary>Fidget Loader</summary>
@@ -138,7 +97,7 @@ FidgetLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.FidgetLoader 
+<com.hristogochev.spindot.loaders.FidgetLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:fidget_dotRadius="30dp"
@@ -178,7 +137,7 @@ LazyLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.LazyLoader 
+<com.hristogochev.spindot.loaders.LazyLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:lazy_spacing="5dp" 
@@ -214,7 +173,7 @@ LightsLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.LightsLoader 
+<com.hristogochev.spindot.loaders.LightsLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:lights_size="4" 
@@ -225,49 +184,6 @@ LightsLoader(
 
 </details>
 
-<details>
-  <summary>Linear Loader</summary>
-<br>
-
-![LinearLoader](./preview/linearloader.gif)
-
-#### Compose implementation
-
-```kotlin
-LinearLoader(
-    activeColor = Color.LightGray,
-    inactiveColor = Color.Gray,
-    dotRadius = 6.dp,
-    dotCount = 8,
-    showRunningShadow = false,
-    spacing = 6.dp,
-    animDuration = 200,
-    singleDirection = false,
-    expandLeadingDot = true,
-    expandedLeadingDotRadius = 10.dp
-)
-```
-
-#### XML implementation
-
-```xml
-
-<com.hristogochev.spinkit.loaders.LinearLoader 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:linear_activeColor="@color/light_gray"
-    app:linear_inactiveColor="@color/gray" 
-    app:linear_dotRadius="6dp" 
-    app:linear_dotCount="8"
-    app:linear_showRunningShadow="false" 
-    app:linear_spacing="6dp" 
-    app:linear_animDuration="200"
-    app:linear_singleDuration="false" 
-    app:linear_expandLeadingDot="false"
-    app:linear_expandLeadingDotRadius="10dp" />
-```
-
-</details>
 
 <details>
   <summary>Pulling Loader</summary>
@@ -299,7 +215,7 @@ PullingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.PullingLoader 
+<com.hristogochev.spindot.loaders.PullingLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:pulling_radius="42dp"
@@ -333,7 +249,7 @@ PulsingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.PulsingLoader 
+<com.hristogochev.spindot.loaders.PulsingLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:pulsing_dotRadius="12dp"
@@ -370,7 +286,7 @@ SlidingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.SlidingLoader 
+<com.hristogochev.spindot.loaders.SlidingLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:sliding_dotRadius="10dp"
@@ -406,7 +322,7 @@ SpinningLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.SpinningLoader 
+<com.hristogochev.spindot.loaders.SpinningLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:spinning_radius="40dp"
@@ -440,7 +356,7 @@ TrailingLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.TrailingLoader 
+<com.hristogochev.spindot.loaders.TrailingLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:trailing_radius="40dp"
@@ -475,7 +391,7 @@ ZeeLoader(
 
 ```xml
 
-<com.hristogochev.spinkit.loaders.ZeeLoader 
+<com.hristogochev.spindot.loaders.ZeeLoader 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" 
     app:zee_dotRadius="24dp"
@@ -486,3 +402,7 @@ ZeeLoader(
 ```
 
 </details>
+
+### License
+
+Licensed under [Apache-2.0 license](https://github.com/hristogochev/spindot/blob/master/LICENSE).

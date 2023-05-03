@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.hristogochev.sample.ui.theme.SpinKitTheme
-import com.hristogochev.spinkit.loaders.compose.*
+import com.hristogochev.sample.ui.theme.SpinDotTheme
+import com.hristogochev.spindot.loaders.compose.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            SpinKitTheme {
+            SpinDotTheme {
                 var loader by remember {
                     mutableStateOf(0)
                 }
@@ -47,17 +47,8 @@ class MainActivity : ComponentActivity() {
                             shadowColor = Color.LightGray,
                             animDuration = 1200
                         )
-                        1 -> ClassicLoader(
-                            activeColor = Color.Red,
-                            inactiveColor = Color.White,
-                            radius = 40.dp,
-                            dotRadius = 12.dp,
-                            animDuration = 200,
-                            showRunningShadow = true,
-                            firstShadowColor = Color.Green,
-                            secondShadowColor = Color.Blue
-                        )
-                        2 -> FidgetLoader(
+
+                        1 -> FidgetLoader(
                             dotRadius = 30.dp,
                             drawOnlyStroke = true,
                             strokeWidth = 8.dp,
@@ -67,7 +58,8 @@ class MainActivity : ComponentActivity() {
                             distanceMultiplier = 4,
                             animDuration = 500
                         )
-                        3 -> LazyLoader(
+
+                        2 -> LazyLoader(
                             spacing = 5.dp,
                             dotRadius = 10.dp,
                             firstDotColor = Color.Red,
@@ -77,25 +69,15 @@ class MainActivity : ComponentActivity() {
                             firstDotDelay = 100,
                             secondDotDelay = 200,
                         )
-                        4 -> LightsLoader(
+
+                        3 -> LightsLoader(
                             size = 4,
                             spacing = 5.dp,
                             dotRadius = 12.dp,
                             dotColor = Color.Green
                         )
-                        5 -> LinearLoader(
-                            activeColor = Color.LightGray,
-                            inactiveColor = Color.Gray,
-                            dotRadius = 6.dp,
-                            dotCount = 8,
-                            showRunningShadow = false,
-                            spacing = 6.dp,
-                            animDuration = 200,
-                            singleDirection = false,
-                            expandLeadingDot = true,
-                            expandedLeadingDotRadius = 10.dp
-                        )
-                        6 -> PullingLoader(
+
+                        4 -> PullingLoader(
                             radius = 42.dp,
                             dotRadius = 10.dp,
                             dotColors = listOf(
@@ -110,7 +92,8 @@ class MainActivity : ComponentActivity() {
                             ),
                             animDuration = 2000,
                         )
-                        7 -> PulsingLoader(
+
+                        5 -> PulsingLoader(
                             dotRadius = 12.dp,
                             dotColor = Color.Green,
                             dotCount = 6,
@@ -118,7 +101,8 @@ class MainActivity : ComponentActivity() {
                             animDelay = 200,
                             animDuration = 1000,
                         )
-                        8 -> SlidingLoader(
+
+                        6 -> SlidingLoader(
                             dotRadius = 10.dp,
                             firstDotColor = Color.Red,
                             secondDotColor = Color.Green,
@@ -127,13 +111,15 @@ class MainActivity : ComponentActivity() {
                             distanceToMove = 12,
                             animDuration = 2000
                         )
-                        9 -> SpinningLoader(
+
+                        7 -> SpinningLoader(
                             radius = 40.dp,
                             dotRadius = 10.dp,
                             dotColor = Color.Green,
                             animDuration = 4000
                         )
-                        10 -> TrailingLoader(
+
+                        8 -> TrailingLoader(
                             radius = 40.dp,
                             dotRadius = 10.dp,
                             dotColor = Color.Green,
@@ -141,7 +127,8 @@ class MainActivity : ComponentActivity() {
                             animDelay = 200,
                             animDuration = 1200
                         )
-                        11 -> ZeeLoader(
+
+                        9 -> ZeeLoader(
                             dotRadius = 24.dp,
                             firstDotColor = Color.Green,
                             secondDotColor = Color.Blue,
